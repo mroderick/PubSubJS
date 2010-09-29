@@ -26,7 +26,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *  PubSubJS is a dependency free library for doing ['publish/subscribe'](http://en.wikipedia.org/wiki/Publish/subscribe)
  *  messaging in JavaScript.
  *  
- *  In order to no have no surprising behaviour where the execution chain generates more than one message, 
+ *  In order to not have surprising behaviour where the execution chain generates more than one message, 
  *  publication of messages with PubSub are done asyncronously (this also helps keep your code responsive, by 
  *  dividing work into smaller chunkcs, allowing the event loop to do it's business).
  * 
@@ -58,7 +58,7 @@ var PubSub = {};
 
     /**
      *  PubSub.publish( message[, data] ) -> Boolean
-     *  - message (String): The message to pass
+     *  - message (String): The message to publish
      *  - data: The data to pass to subscribers
      *  Publishes the the passed message, passing the data to it's subscribers
     **/
