@@ -23,7 +23,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /*jslint evil: false, strict: false, undef: true, white: false, onevar:false, plusplus:false */
 /*global setTimeout:true */
 /** section: PubSub
- *  PubSub is a dependency free library for doing ['publish/subscribe'](http://en.wikipedia.org/wiki/Publish/subscribe)
+ *  PubSubJS is a dependency free library for doing ['publish/subscribe'](http://en.wikipedia.org/wiki/Publish/subscribe)
  *  messaging in JavaScript.
  *  
  *  In order to no have no surprising behaviour where the execution chain generates more than one message, 
