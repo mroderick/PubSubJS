@@ -96,9 +96,9 @@ var PubSub = {};
     };
 
     /**
-     *  PubSub.unsubscribe( token ) -> Number | Boolean
+     *  PubSub.unsubscribe( token ) -> String | Boolean
      *  - token (String): The token of the function to unsubscribe
-     *  Unsubscribes a subscriber
+     *  Unsubscribes a specific subscriber from a specific message using the unique token
     **/
     p.unsubscribe = function( token ){
         for ( var m in messages ){
