@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>benchmark.js test page · jsPerf</title>
+<link rel="stylesheet" href="http://a.jsperf.com/100801.css">
+<meta name="description" content="This is just a test document for benchmark.js.">
+<!--[if lte IE 8]><script src="http://a.jsperf.com/html5.js"></script><![endif]-->
+<script src="benchmark.js"></script>
+</head>
+<body>
+<article>
+<hgroup>
+ <h1><code>benchmark.js</code> test page</h1>
+ <h2>JavaScript performance comparison</h2>
+</hgroup>
+<h2>Info</h2>
+<p>This is just a test document for <code>pubsub.js</code> comparing the speed of publishing messages to that of triggering custom events with jQuery</p>
+<h2>Preparation code</h2>
+<pre><code>var callback1 = function(){};
+var callback2 = function(){};
+var payload = { somekey : 'some value' };
+
+var body = $('body');
+body.bind('my-event', callback1);
+PubSub.subscribe('my-event', callback2);
+</code></pre>
+<button id="run">Run tests</button>
+<p id="status"><noscript><strong>To run the tests, please enable JavaScript and reload the page.</strong></noscript><span>Ready to run tests</span></p>
+<table id="test-table">
+ <caption>Testing in <span id="user-agent">Chrome 5.0.375.126</span></caption>
+ <thead>
+  <tr>
+   <th colspan="2">Test</th>
+   <th title="Operations per second (higher is better)">Ops/sec</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <th scope="row" id="title-1">jQuery - trigger <span id="extra-1"></span></th>
+   <td><pre><code>body.trigger( 'my-event', payload );</code></pre></td>
+   <td id="results-1" class="results">pending…</td>
+  </tr>
+  <tr>
+   <th scope="row" id="title-2">PubSub - publish <span id="extra-2"></span></th>
+   <td><pre><code>PubSub.publish( 'my-event', payload );</code></pre></td>
+   <td id="results-2" class="results">pending…</td>
+  </tr>
+ </tbody>
+</table>
+
+<script src="../pubsub.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<script>
+
+    var callback1 = function(){};
+    var callback2 = function(){};
+    var payload = { somekey : 'some value' };
+
+    var body = $('body');
+    body.bind('my-event', callback1);
+    PubSub.subscribe('my-event', callback2)
+
+    benchmark.test('jQuery - trigger', 1, function(){
+        body.trigger( 'my-event', payload );
+    });
+    
+    benchmark.test('PubSub - publish', 2, function() {
+        PubSub.publish( 'my-event', payload );
+    });
+
+</script>
+</article>
