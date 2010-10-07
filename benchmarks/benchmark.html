@@ -2,27 +2,33 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>benchmark.js test page · jsPerf</title>
-<link rel="stylesheet" href="http://a.jsperf.com/100801.css">
+<title>PubSub Benchmarks</title>
+<link rel="stylesheet" href="benchmarks.css">
 <meta name="description" content="This is just a test document for benchmark.js.">
-<!--[if lte IE 8]><script src="http://a.jsperf.com/html5.js"></script><![endif]-->
+<!--[if lte IE 8]><script src="html5.js"></script><![endif]-->
 <script src="benchmark.js"></script>
 </head>
 <body>
 <article>
 <hgroup>
- <h1><code>benchmark.js</code> test page</h1>
+ <h1><code>PubSubJS</code> test page</h1>
  <h2>JavaScript performance comparison</h2>
 </hgroup>
 <h2>Info</h2>
-<p>This is just a test document for <code>pubsub.js</code> comparing the speed of publishing messages to that of triggering custom events with jQuery</p>
+<p>This is just a test document for <code>pubsub.js</code> comparing the speed of publishing messages to that of triggering custom events with jQuery 1.4.2</p>
 <h2>Preparation code</h2>
 <pre><code>var callback1 = function(){};
 var callback2 = function(){};
 var payload = { somekey : 'some value' };
 
+// we'll use the body element to exchange messages for jQuery
+// if using deeper nested elements, jQuery will be slower, as custom events bubble
 var body = $('body');
+
+// subscribe our callback1 function to the custom event for jQuery, only once
 body.bind('my-event', callback1);
+
+// subscribe our callback2 function to the message for PubSub
 PubSub.subscribe('my-event', callback2);
 </code></pre>
 <button id="run">Run tests</button>
@@ -42,15 +48,20 @@ PubSub.subscribe('my-event', callback2);
    <td id="results-1" class="results">pending…</td>
   </tr>
   <tr>
-   <th scope="row" id="title-2">PubSub - publish <span id="extra-2"></span></th>
+   <th scope="row" id="title-2">PubSub - publish - asyncronous<span id="extra-2"></span></th>
    <td><pre><code>PubSub.publish( 'my-event', payload );</code></pre></td>
    <td id="results-2" class="results">pending…</td>
+  </tr>
+  <tr>
+   <th scope="row" id="title-3">PubSub - publish - syncronous <span id="extra-2"></span></th>
+   <td><pre><code>PubSub.publish( 'my-event', payload, true );</code></pre></td>
+   <td id="results-3" class="results">pending…</td>
   </tr>
  </tbody>
 </table>
 
 <script src="../pubsub.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="jquery.min.js"></script>
 
 <script>
 
@@ -66,8 +77,12 @@ PubSub.subscribe('my-event', callback2);
         body.trigger( 'my-event', payload );
     });
     
-    benchmark.test('PubSub - publish', 2, function() {
+    benchmark.test('PubSub - publish - asyncronous', 2, function() {
         PubSub.publish( 'my-event', payload );
+    });
+
+    benchmark.test('PubSub - publish - syncronous', 3, function() {
+        PubSub.publish( 'my-event', payload, true );
     });
 
 </script>

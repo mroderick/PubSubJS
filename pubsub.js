@@ -29,6 +29,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *  In order to not have surprising behaviour where the execution chain generates more than one message, 
  *  publication of messages with PubSub are done asyncronously (this also helps keep your code responsive, by 
  *  dividing work into smaller chunkcs, allowing the event loop to do it's business).
+ *
+ *  If you're feeling adventurous, you can also use syncronous message publication, which can lead to some very
+ *  confusing conditions, when one message triggers publication of another message in the same execution chain.
+ *  Don't say I didn't warn you.
  * 
  *  ##### Examples
  *  
@@ -44,6 +48,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *      // publish a message asyncronously
  *      PubSub.publish( 'MY MESSAGE', 'hello world!' );
  *      
+ *      // publish a message syncronously, which is faster by orders of magnitude, but will get confusing
+ *      // when one message triggers new messages in the same execution chain
+ *      // USE WITH CATTION, HERE BE DRAGONS!!!
+ *      PubSub.publish( 'MY MESSAGE', 'hello world!', true );
+ *      
  *      // unsubscribe from further messages, using setTimeout to allow for easy pasting of this code into an example :-)
  *      setTimeout(function(){
  *          PubSub.unsubscribe( token );
@@ -57,22 +66,30 @@ var PubSub = {};
     var lastUid = -1;
 
     /**
-     *  PubSub.publish( message[, data] ) -> Boolean
+     *  PubSub.publish( message[, data, sync = false] ) -> Boolean
      *  - message (String): The message to publish
      *  - data: The data to pass to subscribers
-     *  Publishes the the passed message, passing the data to it's subscribers
+     *  - sync (Boolean): Forces publication to be syncronous, which is more confusing, but faster
+     *  Publishes the the message, passing the data to it's subscribers
     **/
-    p.publish = function( message, data ){
+    p.publish = function( message, data, sync ){
+        // if there are no subscribers to this message, just return here
         if ( !messages.hasOwnProperty( message ) ){
             return false;
         }
-        // create a timeout to force message processing to be async
-        setTimeout( function(){
-            for ( var i = 0, j = messages[message].length; i < j; i++ ){
-                messages[message][i].func( message, data );
-            }
-        }, 0);
         
+        var publish = function(){
+            var subscribers = messages[message];
+            for ( var i = 0, j = subscribers.length; i < j; i++ ){
+                subscribers[i].func( message, data );
+            }
+        };
+        
+        if ( sync === true ){
+            publish();
+        } else {
+            setTimeout( publish, 0 );
+        }
         return true;
     };
 
@@ -88,6 +105,8 @@ var PubSub = {};
             messages[message] = [];
         }
         
+        // forcing token as String, to allow for future expansions without breaking usage
+        // and allow for easy use as key names for the 'messages' object
         var token = (++lastUid).toString();
         messages[message].push( { token : token, func : func } );
         
