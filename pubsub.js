@@ -80,8 +80,17 @@ var PubSub = {};
         
         var publish = function(){
             var subscribers = messages[message];
+            var throwException = function(e){
+                return function(){
+                    throw e;
+                };
+            }; 
             for ( var i = 0, j = subscribers.length; i < j; i++ ){
-                subscribers[i].func( message, data );
+                try {
+                    subscribers[i].func( message, data );
+                } catch( e ){
+                    setTimeout( throwException(e), 0);
+                }
             }
         };
         

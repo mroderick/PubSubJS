@@ -137,6 +137,25 @@ TestCase( "PubSub", {
         stub.restore();
     },
     
+    "test publish method should call all subscribers, even if there are exeptions" : function(){
+        var message = getUniqueString();
+        var error = getUniqueString();
+        var func1 = function(){
+            throw('some error');
+        };
+        var spy1 = sinon.spy();
+        var spy2 = sinon.spy();
+        
+        PubSub.subscribe( message, func1 );
+        PubSub.subscribe( message, spy1 );
+        PubSub.subscribe( message, spy2 );
+
+        PubSub.publish( message, undefined, true );
+        
+        assert( spy1.called );        
+        assert( spy2.called );        
+    },
+    
     "test unsubscribe method should return token when succesful" : function(){
         var func = function(){};
         var message = getUniqueString();
