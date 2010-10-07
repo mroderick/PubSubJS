@@ -1,6 +1,6 @@
 # PubSubJS
 
-PubSubJS is a dependency free library for doing ['publish/subscribe'](http://en.wikipedia.org/wiki/Publish/subscribe)
+PubSubJS is a dependency free library for doing [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe)
 messaging in JavaScript.
 
 In order to not have surprising behaviour where the execution chain generates more than one message, 
@@ -53,9 +53,11 @@ The minified version is done with YUI Compressor (for safety), those that prefer
     
 ## Testing
 
-The tests are done using ['JsTestDriver'](http://code.google.com/p/js-test-driver/), provided are a couple of scripts to get you running (if you're on a unix based system and have Java installed).
+The tests are done using [JsTestDriver](http://code.google.com/p/js-test-driver/) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). 
+
+Provided are a couple of scripts to get you running (if you're on a unix based system and have Java installed).
 
 * cd into `test`
 * start the server by running `test/start-server.sh`
-* connect a couple of browsers to ['http://localhost:9876'](http://localhost:9876)
+* connect a couple of browsers to [http://localhost:9876](http://localhost:9876)
 * run the test suite by running `test/run-tests.sh`
