@@ -1,7 +1,7 @@
 # PubSubJS
 
 PubSubJS is a dependency free library for doing [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe)
-messaging in JavaScript.
+messaging in [JavaScript](https://developer.mozilla.org/en/JavaScript).
 
 In order to not have surprising behaviour where the execution chain generates more than one message, 
 publication of messages with PubSub are done asyncronously (this also helps keep your code responsive, by 
