@@ -137,7 +137,7 @@ TestCase( "PubSub", {
         stub.restore();
     },
     
-    "test publish method should call all subscribers, even if there are exeptions" : function(){
+    "test publish method should call all subscribers, even if there are exceptions" : function(){
         var message = getUniqueString();
         var error = getUniqueString();
         var func1 = function(){
