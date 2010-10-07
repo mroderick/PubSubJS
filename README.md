@@ -58,6 +58,6 @@ The tests are done using [JsTestDriver](http://code.google.com/p/js-test-driver/
 Provided are a couple of scripts to get you running (if you're on a unix based system and have Java installed).
 
 * cd into `test`
-* start the server by running `test/start-server.sh`
+* start the server by running `./start-server.sh`
 * connect a couple of browsers to [http://localhost:9876](http://localhost:9876)
-* run the test suite by running `test/run-tests.sh`
+* run the test suite by running `./run-tests.sh`
