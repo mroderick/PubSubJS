@@ -51,7 +51,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *      // publish a message syncronously, which is faster by orders of magnitude, but will get confusing
  *      // when one message triggers new messages in the same execution chain
  *      // USE WITH CATTION, HERE BE DRAGONS!!!
- *      PubSub.publish( 'MY MESSAGE', 'hello world!', true );
+ *      PubSub.publishSync( 'MY MESSAGE', 'hello world!' );
  *      
  *      // unsubscribe from further messages, using setTimeout to allow for easy pasting of this code into an example :-)
  *      setTimeout(function(){
@@ -64,21 +64,14 @@ var PubSub = {};
     
     var messages = {};
     var lastUid = -1;
-
-    /**
-     *  PubSub.publish( message[, data, sync = false] ) -> Boolean
-     *  - message (String): The message to publish
-     *  - data: The data to pass to subscribers
-     *  - sync (Boolean): Forces publication to be syncronous, which is more confusing, but faster
-     *  Publishes the the message, passing the data to it's subscribers
-    **/
-    p.publish = function( message, data, sync ){
+    
+    var publish = function( message, data, sync ){
         // if there are no subscribers to this message, just return here
         if ( !messages.hasOwnProperty( message ) ){
             return false;
         }
         
-        var publish = function(){
+        var deliverMessage = function(){
             var subscribers = messages[message];
             var throwException = function(e){
                 return function(){
@@ -95,11 +88,35 @@ var PubSub = {};
         };
         
         if ( sync === true ){
-            publish();
+            deliverMessage();
         } else {
-            setTimeout( publish, 0 );
+            setTimeout( deliverMessage, 0 );
         }
         return true;
+    };
+
+    p.version = '0.1';
+    
+    /**
+     *  PubSub.publish( message[, data] ) -> Boolean
+     *  - message (String): The message to publish
+     *  - data: The data to pass to subscribers
+     *  - sync (Boolean): Forces publication to be syncronous, which is more confusing, but faster
+     *  Publishes the the message, passing the data to it's subscribers
+    **/
+    p.publish = function( message, data ){
+        return publish( message, data, false );
+    };
+    
+    /**
+     *  PubSub.publishSync( message[, data] ) -> Boolean
+     *  - message (String): The message to publish
+     *  - data: The data to pass to subscribers
+     *  - sync (Boolean): Forces publication to be syncronous, which is more confusing, but faster
+     *  Publishes the the message synchronously, passing the data to it's subscribers
+    **/
+    p.publishSync = function( message, data ){
+        return publish( message, data, true );
     };
 
     /**
@@ -141,5 +158,4 @@ var PubSub = {};
         }
         return false;
     };
-
 }(PubSub));

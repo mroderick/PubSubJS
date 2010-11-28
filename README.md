@@ -39,7 +39,7 @@ Don't say I didn't warn you.
     // but will get confusing when one message triggers new messages in the 
     // same execution chain
     // USE WITH CATTION, HERE BE DRAGONS!!!
-    PubSub.publish( 'MY MESSAGE', 'hello world!', true );
+    PubSub.publishSync( 'MY MESSAGE', 'hello world!' );
     
     // unsubscribe from further messages, using setTimeout to allow for easy 
     // pasting of this code into an example :-)
