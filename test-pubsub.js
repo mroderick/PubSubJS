@@ -1,4 +1,4 @@
-(function( global ){
+(function(){
     "use strict";
 
     // helps us make sure that the order of the tests have no impact on their succes
@@ -135,9 +135,7 @@
             assert( spy.calledWith( message, data ) );        
         },
 
-        "test publish method should publish method asyncronously" : function(){
-            var setTimeout = sinon.stub( global, 'setTimeout' );
-
+        "test publish method should publish method asyncronously" : sinon.test(function(){
             var message = getUniqueString();
             var spy = sinon.spy();
             var data = getUniqueString();
@@ -145,14 +143,12 @@
             PubSub.subscribe( message, spy );        
             PubSub.publish( message, data );
 
-            assert( setTimeout.calledOnce );        
-
-            setTimeout.restore();
-        },
+            assert( !spy.called );
+            this.clock.tick(1);
+            assert( spy.called );
+        }),
 
         "test publishSync method should allow syncronous publication" : function(){
-            var setTimeout = sinon.stub( global, 'setTimeout' );
-
             var message = getUniqueString();
             var spy = sinon.spy();
             var data = getUniqueString();
@@ -160,10 +156,7 @@
             PubSub.subscribe( message, spy );        
             PubSub.publishSync( message, data );
 
-            // make sure that setTimeout was never called
-            assertEquals( 0, setTimeout.callCount );        
-
-            setTimeout.restore();
+            assert( spy.called );
         },
 
         "test publish method should call all subscribers, even if there are exceptions" : function(){
@@ -212,4 +205,4 @@
             assertFalse( PubSub.unsubscribe( token ) );        
         }
     });
-}(this));
+}());
