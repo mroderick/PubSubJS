@@ -47,17 +47,5 @@ Don't say I didn't warn you.
         PubSub.unsubscribe( token );
     }, 0);
 
-## Minified version
-
-The minified version is done with YUI Compressor (for safety), those that prefer other compressors already knows how to do this themselves :-)
-    
 ## Testing
-
-The tests are done using [JsTestDriver](http://code.google.com/p/js-test-driver/) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). 
-
-Provided are a couple of scripts to get you running (if you're on a unix based system and have Java installed).
-
-* cd into `test`
-* start the server by running `./start-server.sh`
-* connect a couple of browsers to [http://localhost:9876](http://localhost:9876)
-* run the test suite by running `./run-tests.sh`
+The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). 

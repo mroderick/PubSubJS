@@ -62,6 +62,8 @@ var PubSub = {};
 (function(p){
     "use strict";
     
+    p.version = "1.0";
+    
     var messages = {};
     var lastUid = -1;
     

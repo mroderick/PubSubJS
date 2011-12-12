@@ -1,3 +1,0 @@
-#!/bin/bash
-echo Running tests with pubsub.conf configuration...
-java -jar JsTestDriver.jar --tests all --config pubsub.conf --reset --captureConsole
