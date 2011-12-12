@@ -62,7 +62,7 @@ var PubSub = {};
 (function(p){
     "use strict";
     
-    p.version = "1.0";
+    p.version = "1.0.1";
     
     var messages = {};
     var lastUid = -1;
@@ -97,8 +97,6 @@ var PubSub = {};
         return true;
     };
 
-    p.version = '0.1';
-    
     /**
      *  PubSub.publish( message[, data] ) -> Boolean
      *  - message (String): The message to publish

@@ -211,6 +211,11 @@
             PubSub.unsubscribe( token );
             // unsubscribe again
             assert.equals( PubSub.unsubscribe( token ), false );        
+        },
+        
+        "test should report version correctly" : function(){
+            var expectedVersion = "1.0.1";
+            assert.equals( PubSub.version, expectedVersion );
         }
     });
 }(this));
