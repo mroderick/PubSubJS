@@ -20,8 +20,8 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-/*jslint evil: false, strict: false, undef: true, white: false, onevar:false, plusplus:false */
-/*global setTimeout:true */
+/*jslint white:true, plusplus:true */
+/*global setTimeout */
 /** section: PubSub
  *  PubSubJS is a dependency free library for doing ['publish/subscribe'](http://en.wikipedia.org/wiki/Publish/subscribe)
  *  messaging in JavaScript.
@@ -62,32 +62,33 @@ var PubSub = {};
 (function(p){
     "use strict";
     
-    p.version = "1.0.1";
+    p.version = "1.0.2";
     
-    var messages = {};
-    var lastUid = -1;
+    var messages = {},
+		lastUid = -1;
     
-    var publish = function( message, data, sync ){
+	function publish( message, data, sync ){
         // if there are no subscribers to this message, just return here
         if ( !messages.hasOwnProperty( message ) ){
             return false;
         }
         
-        var deliverMessage = function(){
-            var subscribers = messages[message];
-            var throwException = function(e){
-                return function(){
-                    throw e;
-                };
-            }; 
-            for ( var i = 0, j = subscribers.length; i < j; i++ ){
+		function deliverMessage(){
+            var subscribers = messages[message],
+				throwException = function(e){
+	                return function(){
+	                    throw e;
+	                };
+	            },
+				i, j; 
+            for ( i = 0, j = subscribers.length; i < j; i++ ){
                 try {
                     subscribers[i].func( message, data );
                 } catch( e ){
                     setTimeout( throwException(e), 0);
                 }
             }
-        };
+        }
         
         if ( sync === true ){
             deliverMessage();
@@ -95,7 +96,7 @@ var PubSub = {};
             setTimeout( deliverMessage, 0 );
         }
         return true;
-    };
+    }
 
     /**
      *  PubSub.publish( message[, data] ) -> Boolean
@@ -146,9 +147,10 @@ var PubSub = {};
      *  Unsubscribes a specific subscriber from a specific message using the unique token
     **/
     p.unsubscribe = function( token ){
-        for ( var m in messages ){
+		var m, i, j;
+        for ( m in messages ){
             if ( messages.hasOwnProperty( m ) ){
-                for ( var i = 0, j = messages[m].length; i < j; i++ ){
+                for ( i = 0, j = messages[m].length; i < j; i++ ){
                     if ( messages[m][i].token === token ){
                         messages[m].splice( i, 1 );
                         return token;

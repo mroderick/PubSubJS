@@ -1,10 +1,11 @@
 var config = module.exports;
 config["PubSubJS"] = {
+	rootPath: "../",
     environment: "browser",
     sources: [
-        "../src/pubsub.js"
+        "src/pubsub.js"
     ],
     tests: [
-        "test-pubsub.js"
+        "test/test-pubsub.js"
     ]
 }

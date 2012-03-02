@@ -1,221 +1,225 @@
+/*jslint white:true, plusplus:true */
+/*global
+	PubSub,
+	buster,
+	assert,
+	sinon
+*/
 (function( global ){
-    "use strict";
+	"use strict";
 
-    // helps us make sure that the order of the tests have no impact on their succes
-    var getUniqueString = function(){
-        if ( getUniqueString.uid === undefined ){
-            getUniqueString.uid = 0;
-        }    
-        getUniqueString.uid++;
+	var EXPECTED_VERSION = "1.0.2";
 
-        return "my unique String number " + getUniqueString.uid.toString();
-    };
+	// helps us make sure that the order of the tests have no impact on their succes
+	function getUniqueString(){
+		if ( getUniqueString.uid === undefined ){
+			getUniqueString.uid = 0;
+		}	 
+		getUniqueString.uid++;
 
-    // makes sure that all tokens in the passed array are different
-    var assertAllTokensDifferent = function( tokens ){
-        var length = tokens.length;
-        assert( tokens.length > 0 );
-        // compare all tokens
-        for ( var j = 0; j < length; j++ ){
-            for ( var k = j + 1; k < length; k++ ){
-                assert( tokens[j] !== tokens[k] );
-            }
-        }
+		return "my unique String number " + getUniqueString.uid.toString();
+	}
 
-        // make sure we actually tested something
-        assert.equals( j, length );
-        assert.equals( k, length );
-    };
+	// makes sure that all tokens in the passed array are different
+	function assertAllTokensDifferent( tokens ){
+		var length = tokens.length,
+			j, k;
+		assert( tokens.length > 0 );
+		// compare all tokens
+		for ( j = 0; j < length; j++ ){
+			for ( k = j + 1; k < length; k++ ){
+				assert( tokens[j] !== tokens[k] );
+			}
+		}
 
-    buster.testCase( "PubSub", {
-        
-        "test subscribe method should return token as String" : function(){
-            var func = function(){};
-            var message = getUniqueString();
-            var token = PubSub.subscribe( message , func );
-            assert.typeOf( token, "string" );
-        },
-        
-        "test subscribe method should return new token for several subscribtions with same function" : function(){
-            var func = function(){};
-            var tokens = [];
-            var iterations = 10;
-            var message = getUniqueString();
+		// make sure we actually tested something
+		assert.equals( j, length );
+		assert.equals( k, length );
+	}
 
-            // build an array of tokens
-            for ( var i = 0; i < iterations; i++ ){
-                tokens.push( PubSub.subscribe( message, func ) );
-            }
-            // make sure all tokens are different
-            assertAllTokensDifferent( tokens );
-        },
-        
-        "test subscribe method should return unique token for unique functions" : function(){
-            var tokens = [];
-            var iterations = 10;
-            var message = getUniqueString();
+	buster.testCase( "PubSub", {
+		
+		"test should report version correctly" : function(){
+			assert.equals( PubSub.version, EXPECTED_VERSION );
+		},		
+		
+		"test subscribe method should return token as String" : function(){
+			var func = function(){},
+				message = getUniqueString(),
+				token = PubSub.subscribe( message , func );
+			assert.typeOf( token, "string" );
+		},
+		
+		"test subscribe method should return new token for several subscribtions with same function" : function(){
+			var func = function(){},
+				tokens = [],
+				iterations = 10,
+				message = getUniqueString(),
+				i;
 
-            // build an array of tokens, passing in a different function for each subscription
-            for ( var i = 0; i < iterations; i++ ){
-                var func = (function( value ){
-                    return function(){
-                        return value;
-                    };
-                }(i));
-                tokens.push( PubSub.subscribe( message, func ) );
-            }
+			// build an array of tokens
+			for ( i = 0; i < iterations; i++ ){
+				tokens.push( PubSub.subscribe( message, func ) );
+			}
+			// make sure all tokens are different
+			assertAllTokensDifferent( tokens );
+		},
+		
+		"test subscribe method should return unique token for unique functions" : function(){
+			var tokens = [],
+				iterations = 10,
+				message = getUniqueString(),
+				i;
+			
+			function bakeFunc( value ){
+				return function(){
+					return value;
+				};
+			}
 
-            // make sure all tokens are different
-            assertAllTokensDifferent( tokens );        
-        },
+			// build an array of tokens, passing in a different function for each subscription
+			for ( i = 0; i < iterations; i++ ){
+				tokens.push( PubSub.subscribe( message, bakeFunc( i ) ) );
+			}
 
-        "test publish method should return false if there are no subscribers" : function(){
-            var message = getUniqueString();
-            assert.equals( PubSub.publish( message ), false );
-        },        
-        
-        "test publish method should return true if there are subscribers to a message" : function(){
-            var message = getUniqueString();
-            var func = function(){};
+			// make sure all tokens are different
+			assertAllTokensDifferent( tokens );		   
+		},
 
-            PubSub.subscribe( message, func );
-            assert( PubSub.publish( message ) );
-        },
+		"test publish method should return false if there are no subscribers" : function(){
+			var message = getUniqueString();
+			assert.equals( PubSub.publish( message ), false );
+		},		  
+		
+		"test publish method should return true if there are subscribers to a message" : function(){
+			var message = getUniqueString(),
+				func = function(){};
 
-        "test publish method should call all subscribers for a message exactly once" : function(){
-            var message = getUniqueString();
+			PubSub.subscribe( message, func );
+			assert( PubSub.publish( message ) );
+		},
 
-            var spy1 = sinon.spy();
-            PubSub.subscribe( message, spy1 );
+		"test publish method should call all subscribers for a message exactly once" : function(){
+			var message = getUniqueString(),
+				spy1 = sinon.spy(),
+				spy2 = sinon.spy();
 
-            var spy2 = sinon.spy();
-            PubSub.subscribe( message, spy2 );
+			PubSub.subscribe( message, spy1 );
+			PubSub.subscribe( message, spy2 );
 
-            PubSub.publishSync( message, 'my payload' ); // force sync here, easier to test
+			PubSub.publishSync( message, 'my payload' ); // force sync here, easier to test
 
-            assert( spy1.calledOnce );
-            assert( spy2.calledOnce );        
-        },
+			assert( spy1.calledOnce );
+			assert( spy2.calledOnce );		  
+		},
 
-        "test publish method should call all ONLY subscribers of the published message" : function(){
-            var message1 = getUniqueString();
-            var message2 = getUniqueString();
+		"test publish method should call all ONLY subscribers of the published message" : function(){
+			var message1 = getUniqueString(),
+				message2 = getUniqueString(),
+				spy1 = sinon.spy(),
+				spy2 = sinon.spy();
+				
+			PubSub.subscribe( message1, spy1 );
+			PubSub.subscribe( message2, spy2 );
 
-            var spy1 = sinon.spy();
-            PubSub.subscribe( message1, spy1 );
+			PubSub.publishSync( message1, 'some payload' );
 
-            var spy2 = sinon.spy();
-            PubSub.subscribe( message2, spy2 );
+			// ensure the first subscriber IS called
+			assert(	 spy1.called );
+			// ensure the second subscriber IS NOT called
+			assert.equals( spy2.callCount, 0 );
+		},
+		
+		"test publish method should call subscribers with message as first argument" : function(){
+			var message = getUniqueString(),
+				spy = sinon.spy();
 
-            PubSub.publishSync( message1, 'some payload' );
+			PubSub.subscribe( message, spy );		 
+			PubSub.publishSync( message, 'some payload' );
 
-            // ensure the first subscriber IS called
-            assert(  spy1.called );
-            // ensure the second subscriber IS NOT called
-            assert.equals( spy2.callCount, 0 );
-        },
-        
-        "test publish method should call subscribers with message as first argument" : function(){
-            var message = getUniqueString();
-            var spy = sinon.spy();
+			assert( spy.calledWith( message ) );		
+		},
 
-            PubSub.subscribe( message, spy );        
-            PubSub.publishSync( message, 'some payload' );
+		"test publish method should call subscribers with data as second argument" : function(){
+			var message = getUniqueString(),
+				spy = sinon.spy(),
+				data = getUniqueString();
 
-            assert( spy.calledWith( message ) );        
-        },
+			PubSub.subscribe( message, spy );		 
+			PubSub.publishSync( message, data );
 
-        "test publish method should call subscribers with data as second argument" : function(){
-            var message = getUniqueString();
-            var spy = sinon.spy();
-            var data = getUniqueString();
+			assert( spy.calledWith( message, data ) );		  
+		},
+		
+		"test publish method should publish method asyncronously" : function(){
+			var setTimeout = sinon.stub( global, 'setTimeout' ),
+				message = getUniqueString(),
+				spy = sinon.spy(),
+				data = getUniqueString();
 
-            PubSub.subscribe( message, spy );        
-            PubSub.publishSync( message, data );
+			PubSub.subscribe( message, spy );		 
+			PubSub.publish( message, data );
 
-            assert( spy.calledWith( message, data ) );        
-        },
-        
-        "test publish method should publish method asyncronously" : function(){
-            var setTimeout = sinon.stub( global, 'setTimeout' );
+			assert( setTimeout.calledOnce );		
 
-            var message = getUniqueString();
-            var spy = sinon.spy();
-            var data = getUniqueString();
+			setTimeout.restore();
+		},
+		
+		"test publishSync method should allow syncronous publication" : function(){
+			var setTimeout = sinon.stub( global, 'setTimeout' ),
+				message = getUniqueString(),
+				spy = sinon.spy(),
+				data = getUniqueString();
 
-            PubSub.subscribe( message, spy );        
-            PubSub.publish( message, data );
+			PubSub.subscribe( message, spy );		 
+			PubSub.publishSync( message, data );
 
-            assert( setTimeout.calledOnce );        
+			// make sure that setTimeout was never called
+			assert.equals( setTimeout.callCount, 0 );		 
 
-            setTimeout.restore();
-        },
-        
-        "test publishSync method should allow syncronous publication" : function(){
-            var setTimeout = sinon.stub( global, 'setTimeout' );
+			setTimeout.restore();
+		},
+		
+		"test publish method should call all subscribers, even if there are exceptions" : function(){
+			var message = getUniqueString(),
+				func1 = function(){
+					throw('some error');
+				},
+				spy1 = sinon.spy(),
+				spy2 = sinon.spy();
 
-            var message = getUniqueString();
-            var spy = sinon.spy();
-            var data = getUniqueString();
+			PubSub.subscribe( message, func1 );
+			PubSub.subscribe( message, spy1 );
+			PubSub.subscribe( message, spy2 );
 
-            PubSub.subscribe( message, spy );        
-            PubSub.publishSync( message, data );
+			PubSub.publishSync( message, undefined );
 
-            // make sure that setTimeout was never called
-            assert.equals( setTimeout.callCount, 0 );        
+			assert( spy1.called );		  
+			assert( spy2.called );		  
+		},
 
-            setTimeout.restore();
-        },
-        
-        "test publish method should call all subscribers, even if there are exceptions" : function(){
-            var message = getUniqueString();
-            var error = getUniqueString();
-            var func1 = function(){
-                throw('some error');
-            };
-            var spy1 = sinon.spy();
-            var spy2 = sinon.spy();
+		"test unsubscribe method should return token when succesful" : function(){
+			var func = function(){},
+				message = getUniqueString(),
+				token = PubSub.subscribe( message, func),
+				result = PubSub.unsubscribe( token );
+				
+			assert.equals( result, token );		   
+		},
 
-            PubSub.subscribe( message, func1 );
-            PubSub.subscribe( message, spy1 );
-            PubSub.subscribe( message, spy2 );
+		"test unsubscribe method should return false when unsuccesful" : function(){
+			var unknownToken = 'my unknown token',
+				result = PubSub.unsubscribe( unknownToken ),
+				func = function(){},
+				message = getUniqueString(),
+				token = PubSub.subscribe( message, func );
 
-            PubSub.publishSync( message, undefined );
+			// first, let's try a completely unknown token
+			assert.equals( result, false );
 
-            assert( spy1.called );        
-            assert( spy2.called );        
-        },
-
-        "test unsubscribe method should return token when succesful" : function(){
-            var func = function(){};
-            var message = getUniqueString();
-            var token = PubSub.subscribe( message, func);
-
-            var result = PubSub.unsubscribe( token );
-            assert.equals( result, token );        
-        },
-
-        "test unsubscribe method should return false when unsuccesful" : function(){
-
-            // first, let's try a completely unknown token
-            var unknownToken = 'my unknown token';
-            var result = PubSub.unsubscribe( unknownToken );
-            assert.equals( result, false );
-
-            // now let's try unsubscribing the same method twice
-            var func = function(){};
-            var message = getUniqueString();
-            var token = PubSub.subscribe( message, func );
-
-            // unsubscribe once
-            PubSub.unsubscribe( token );
-            // unsubscribe again
-            assert.equals( PubSub.unsubscribe( token ), false );        
-        },
-        
-        "test should report version correctly" : function(){
-            var expectedVersion = "1.0.1";
-            assert.equals( PubSub.version, expectedVersion );
-        }
-    });
+			// now let's try unsubscribing the same method twice
+			PubSub.unsubscribe( token );
+			assert.equals( PubSub.unsubscribe( token ), false );		
+		}
+	});
 }(this));
