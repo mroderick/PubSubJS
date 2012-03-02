@@ -61,9 +61,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 var PubSub = {};
 (function(p){
     "use strict";
-    
+
     p.version = "1.0.2";
-    
+
     var messages = {},
 		lastUid = -1;
     
@@ -89,7 +89,7 @@ var PubSub = {};
                 }
             }
         }
-        
+
         if ( sync === true ){
             deliverMessage();
         } else {
