@@ -47,5 +47,27 @@ Don't say I didn't warn you.
         PubSub.unsubscribe( token );
     }, 0);
 
+## Tips
+
+Use "constants" for topics and not string literals. PubSubJS uses strings as topics, and will happily try to deliver your messages with ANY topic. So, save yourself from frustrating debugging by letting the JavaScript engine complain when you make typos.
+
+### Example of use of "constants"
+
+	// BAD
+	PubSub.subscribe("hello", function( msg, data ){ 
+		console.log( data ) 
+	});
+	
+	PubSub.publish("helo", "world");
+	
+	// BETTER
+	var MY_TOPIC = "hello";
+	PubSub.subscribe(MY_TOPIC, function( msg, data ){ 
+		console.log( data ) 
+	});
+	
+	PubSub.publish(MY_TOPIC, "world");
+	
+
 ## Testing
 The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). 
