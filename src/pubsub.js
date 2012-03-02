@@ -28,7 +28,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *  
  *  In order to not have surprising behaviour where the execution chain generates more than one message, 
  *  publication of messages with PubSub are done asyncronously (this also helps keep your code responsive, by 
- *  dividing work into smaller chunkcs, allowing the event loop to do it's business).
+ *  dividing work into smaller chunks, allowing the event loop to do it's business).
  *
  *  If you're feeling adventurous, you can also use syncronous message publication, which can lead to some very
  *  confusing conditions, when one message triggers publication of another message in the same execution chain.
