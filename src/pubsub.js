@@ -107,7 +107,7 @@ var PubSub = {};
     p.publish = function( message, data ){
         return publish( message, data, false );
     };
-    
+
     /**
      *  PubSub.publishSync( message[, data] ) -> Boolean
      *  - message (String): The message to publish
@@ -130,12 +130,12 @@ var PubSub = {};
         if ( !messages.hasOwnProperty( message ) ){
             messages[message] = [];
         }
-        
+
         // forcing token as String, to allow for future expansions without breaking usage
         // and allow for easy use as key names for the 'messages' object
         var token = (++lastUid).toString();
         messages[message].push( { token : token, func : func } );
-        
+
         // return token for unsubscribing
         return token;
     };
