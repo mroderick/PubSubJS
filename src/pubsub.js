@@ -70,11 +70,46 @@ var PubSub = {};
 	function publish( message, data, sync ){
         // if there are no subscribers to this message, just return here
         if ( !messages.hasOwnProperty( message ) ){
-            return false;
+            // check upper levels
+            var found = false;
+            namespaceIterator(message, function(name) {
+                found = messages.hasOwnProperty( name );
+                if (found){ 
+                    return false;
+                }
+                return true;
+            });
+            
+            if (!found) {
+                return false;
+            }
         }
         
-		function deliverMessage(){
-            var subscribers = messages[message],
+        function namespaceIterator(name, func) {
+            var found = false;
+            var pos = name.lastIndexOf('.');
+            while (pos !== -1){
+                name = name.substr(0, pos);
+                if (!func(name))
+                    break;
+                pos = name.lastIndexOf('.')
+            }
+        }
+        
+        function deliverNamespaced(){
+            if (messages.hasOwnProperty( message )) {
+                deliverMessage(message, message);
+            }
+            namespaceIterator(message, function(name) {
+                if (messages.hasOwnProperty( name )) {
+                    deliverMessage(message, name);
+                }
+                return true;
+            });
+        }
+        
+		function deliverMessage(originalMessage, matchedMessage){
+            var subscribers = messages[matchedMessage],
 				throwException = function(e){
 	                return function(){
 	                    throw e;
@@ -83,7 +118,7 @@ var PubSub = {};
 				i, j; 
             for ( i = 0, j = subscribers.length; i < j; i++ ){
                 try {
-                    subscribers[i].func( message, data );
+                    subscribers[i].func( originalMessage, data );
                 } catch( e ){
                     setTimeout( throwException(e), 0);
                 }
@@ -91,9 +126,10 @@ var PubSub = {};
         }
 
         if ( sync === true ){
-            deliverMessage();
+            console.log('sync');
+            deliverNamespaced();
         } else {
-            setTimeout( deliverMessage, 0 );
+            setTimeout( deliverNamespaced, 0 );
         }
         return true;
     }
