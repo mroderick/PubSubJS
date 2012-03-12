@@ -16,7 +16,7 @@ Don't say I didn't warn you.
 * No dependencies
 * No modification of subscribers (jQuery custom events modify subscribers)
 * No use of DOM for exchanging messages
-* No reliance of running in a browser (well the testsuite does, but meh)
+* No reliance of running in a browser
 * Easy to understand (messages are async by default)
 * Small(ish)
 
@@ -74,6 +74,20 @@ when you make typos.
 ## Testing
 The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). 
 
+## Future of PubSubJS
+
+* Build script to create the following wrappers
+	* AMD / CommonJS module
+	* jQuery plugin
+	* Ender.js wrapper
+* Hierarchical addressing of topics, using either dots (some.hierarchy.of.topics) or slashes (/some/hierarchy/of/topics).
+* Better and more extensive usage examples
+
 ## More about Publish/Subscribe
 
-* [The Many Faces of Publish/Subscribe]<http://www.cs.ru.nl/~pieter/oss/manyfaces.pdf> (PDF)
+* [The Many Faces of Publish/Subscribe](http://www.cs.ru.nl/~pieter/oss/manyfaces.pdf) (PDF)
+* [Addy Osmani's mini book on Patterns](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript)
+
+## Versioning
+
+PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioning.
