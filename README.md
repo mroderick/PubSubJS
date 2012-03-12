@@ -38,7 +38,7 @@ Don't say I didn't warn you.
     // publish a message syncronously, which is faster by orders of magnitude,
     // but will get confusing when one message triggers new messages in the 
     // same execution chain
-    // USE WITH CATTION, HERE BE DRAGONS!!!
+    // USE WITH CAUTION, HERE BE DRAGONS!!!
     PubSub.publishSync( 'MY MESSAGE', 'hello world!' );
     
     // unsubscribe from further messages, using setTimeout to allow for easy 
