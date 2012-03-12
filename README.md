@@ -49,7 +49,9 @@ Don't say I didn't warn you.
 
 ## Tips
 
-Use "constants" for topics and not string literals. PubSubJS uses strings as topics, and will happily try to deliver your messages with ANY topic. So, save yourself from frustrating debugging by letting the JavaScript engine complain when you make typos.
+Use "constants" for topics and not string literals. PubSubJS uses strings as topics, and will happily try to deliver 
+your messages with ANY topic. So, save yourself from frustrating debugging by letting the JavaScript engine complain
+when you make typos.
 
 ### Example of use of "constants"
 
@@ -71,3 +73,7 @@ Use "constants" for topics and not string literals. PubSubJS uses strings as top
 
 ## Testing
 The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). 
+
+## More about Publish/Subscribe
+
+* [The Many Faces of Publish/Subscribe]<http://www.cs.ru.nl/~pieter/oss/manyfaces.pdf> (PDF)
