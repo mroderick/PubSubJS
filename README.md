@@ -20,6 +20,7 @@ Don't say I didn't warn you.
 * Easy to understand (messages are async by default)
 * Small(ish)
 * Compatible! ES3 compatiable, should be able to run everywhere that can execute JavaScript
+* AMD / CommonJS module
 
 ## Examples
 
@@ -78,7 +79,6 @@ The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sino
 ## Future of PubSubJS
 
 * Build script to create the following wrappers
-	* AMD / CommonJS module
 	* jQuery plugin
 	* Ender.js wrapper
 * Hierarchical addressing of topics, using either dots (some.hierarchy.of.topics) or slashes (/some/hierarchy/of/topics).
@@ -92,3 +92,8 @@ The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sino
 ## Versioning
 
 PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioning.
+
+## Changelog
+
+* v1.0.3
+	* AMD / CommonJS module support (@fernandogmar)

@@ -8,7 +8,7 @@
 (function( global ){
 	"use strict";
 
-	var EXPECTED_VERSION = "1.0.2";
+	var EXPECTED_VERSION = "1.0.3";
 
 	// helps us make sure that the order of the tests have no impact on their succes
 	function getUniqueString(){
