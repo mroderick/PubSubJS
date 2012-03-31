@@ -58,11 +58,31 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *			PubSub.unsubscribe( token );
  *		}, 0)
 **/ 
-var PubSub = {};
-(function(p){
-	"use strict";
+(function() {
+    "use strict";
+    
+    var PubSub = {
+        version: "1.0.3"
+    };
+    
+    // Establish the root object, `window` in the browser, or `global` on the server.
+    var root = this;
+    
+    // Export the Underscore object for **Node.js** and **"CommonJS"**, with
+    // backwards-compatibility for the old `require()` API. If we're not in
+    // CommonJS, add `PubSub` to the global object via a string identifier for
+    // the Closure Compiler "advanced" mode. Registration as an AMD module
+    // via define() happens at the end of this file.
+    if (typeof exports !== 'undefined') {
+        if (typeof module !== 'undefined' && module.exports) {
+            exports = module.exports = PubSub;
+        }
+        exports.PubSub = PubSub;
+    }
+    else {
+        root['PubSub'] = PubSub;
+    }  
 
-	p.version = "1.0.2";
 
 	var messages = {},
 		lastUid = -1;
@@ -105,7 +125,7 @@ var PubSub = {};
 	 *	- sync (Boolean): Forces publication to be syncronous, which is more confusing, but faster
 	 *	Publishes the the message, passing the data to it's subscribers
 	**/
-	p.publish = function( message, data ){
+	PubSub.publish = function( message, data ){
 		return publish( message, data, false );
 	};
 
@@ -116,7 +136,7 @@ var PubSub = {};
 	 *	- sync (Boolean): Forces publication to be syncronous, which is more confusing, but faster
 	 *	Publishes the the message synchronously, passing the data to it's subscribers
 	**/
-	p.publishSync = function( message, data ){
+	PubSub.publishSync = function( message, data ){
 		return publish( message, data, true );
 	};
 
@@ -126,7 +146,7 @@ var PubSub = {};
 	 *	- func (Function): The function to call when a new message is published
 	 *	Subscribes the passed function to the passed message. Every returned token is unique and should be stored if you need to unsubscribe
 	**/
-	p.subscribe = function( message, func ){
+	PubSub.subscribe = function( message, func ){
 		// message is not registered yet
 		if ( !messages.hasOwnProperty( message ) ){
 			messages[message] = [];
@@ -146,7 +166,7 @@ var PubSub = {};
 	 *	- token (String): The token of the function to unsubscribe
 	 *	Unsubscribes a specific subscriber from a specific message using the unique token
 	**/
-	p.unsubscribe = function( token ){
+	PubSub.unsubscribe = function( token ){
 		var m, i, j;
 		for ( m in messages ){
 			if ( messages.hasOwnProperty( m ) ){
@@ -160,4 +180,13 @@ var PubSub = {};
 		}
 		return false;
 	};
-}(PubSub));
+    
+    // AMD define happens at the end for compatibility with AMD loaders
+    // that don't enforce next-turn semantics on modules.
+    if (typeof define === 'function' && define.amd) {
+        define('pubsub', function(){
+            return PubSub;
+        });
+    }
+
+}).call(this);
