@@ -19,7 +19,7 @@ Don't say I didn't warn you.
 * No reliance of running in a browser
 * Easy to understand (messages are async by default)
 * Small(ish)
-* Compatible! ES3 compatiable, should be able to run everywhere that can execute JavaScript
+* Compatible! ES3 compatible, should be able to run everywhere that can execute JavaScript
 * AMD / CommonJS module
 
 ## Examples
