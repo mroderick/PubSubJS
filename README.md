@@ -97,3 +97,7 @@ PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioni
 
 * v1.0.3
 	* AMD / CommonJS module support (@fernandogmar)
+	
+## License
+
+MIT: http://mrgnrdrck.mit-license.org
