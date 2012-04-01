@@ -49,18 +49,18 @@
 			this.clock.restore();
 		},
 		
-		"test should report version correctly" : function(){
+		"should report version correctly" : function(){
 			assert.equals( PubSub.version, EXPECTED_VERSION );
 		},		
 		
-		"test subscribe method should return token as String" : function(){
+		"subscribe method should return token as String" : function(){
 			var func = function(){},
 				message = getUniqueString(),
 				token = PubSub.subscribe( message , func );
 			assert.typeOf( token, "string" );
 		},
 		
-		"test subscribe method should return new token for several subscribtions with same function" : function(){
+		"subscribe method should return new token for several subscribtions with same function" : function(){
 			var func = function(){},
 				tokens = [],
 				iterations = 10,
@@ -75,7 +75,7 @@
 			assertAllTokensDifferent( tokens );
 		},
 		
-		"test subscribe method should return unique token for unique functions" : function(){
+		"subscribe method should return unique token for unique functions" : function(){
 			var tokens = [],
 				iterations = 10,
 				message = getUniqueString(),
@@ -96,12 +96,12 @@
 			assertAllTokensDifferent( tokens );		   
 		},
 
-		"test publish method should return false if there are no subscribers" : function(){
+		"publish method should return false if there are no subscribers" : function(){
 			var message = getUniqueString();
 			assert.equals( PubSub.publish( message ), false );
 		},		  
 		
-		"test publish method should return true if there are subscribers to a message" : function(){
+		"publish method should return true if there are subscribers to a message" : function(){
 			var message = getUniqueString(),
 				func = function(){};
 
@@ -109,7 +109,7 @@
 			assert( PubSub.publish( message ) );
 		},
 
-		"test publish method should call all subscribers for a message exactly once" : function(){
+		"publish method should call all subscribers for a message exactly once" : function(){
 			var message = getUniqueString(),
 				spy1 = this.spy(),
 				spy2 = this.spy();
@@ -123,7 +123,7 @@
 			assert( spy2.calledOnce );		  
 		},
 
-		"test publish method should call all ONLY subscribers of the published message" : function(){
+		"publish method should call all ONLY subscribers of the published message" : function(){
 			var message1 = getUniqueString(),
 				message2 = getUniqueString(),
 				spy1 = this.spy(),
@@ -140,7 +140,7 @@
 			assert.equals( spy2.callCount, 0 );
 		},
 		
-		"test publish method should call subscribers with message as first argument" : function(){
+		"publish method should call subscribers with message as first argument" : function(){
 			var message = getUniqueString(),
 				spy = this.spy();
 
@@ -150,7 +150,7 @@
 			assert( spy.calledWith( message ) );		
 		},
 
-		"test publish method should call subscribers with data as second argument" : function(){
+		"publish method should call subscribers with data as second argument" : function(){
 			var message = getUniqueString(),
 				spy = this.spy(),
 				data = getUniqueString();
@@ -161,7 +161,7 @@
 			assert( spy.calledWith( message, data ) );		  
 		},
 		
-		"test publish method should publish method asyncronously" : function(){
+		"publish method should publish method asyncronously" : function( done ){
 			var message = getUniqueString(),
 				spy = this.spy(),
 				data = getUniqueString();
@@ -172,9 +172,11 @@
 			assert.equals( spy.callCount, 0 );
 			this.clock.tick(1);		
 			assert.equals( spy.callCount, 1 );
+			
+			done();
 		},
 		
-		"test publishSync method should allow syncronous publication" : function(){
+		"publishSync method should allow syncronous publication" : function(){
 			var message = getUniqueString(),
 				spy = this.spy(),
 				data = getUniqueString();
@@ -185,7 +187,7 @@
 			assert.equals( spy.callCount, 1 );
 		},
 		
-		"test publish method should call all subscribers, even if there are exceptions" : function(){
+		"publish method should call all subscribers, even if there are exceptions" : function(){
 			var message = getUniqueString(),
 				func1 = function(){
 					throw('some error');
@@ -203,7 +205,7 @@
 			assert( spy2.called );		  
 		},
 
-		"test unsubscribe method should return token when succesful" : function(){
+		"unsubscribe method should return token when succesful" : function(){
 			var func = function(){},
 				message = getUniqueString(),
 				token = PubSub.subscribe( message, func),
@@ -212,7 +214,7 @@
 			assert.equals( result, token );		   
 		},
 
-		"test unsubscribe method should return false when unsuccesful" : function(){
+		"unsubscribe method should return false when unsuccesful" : function(){
 			var unknownToken = 'my unknown token',
 				result = PubSub.unsubscribe( unknownToken ),
 				func = function(){},
