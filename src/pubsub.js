@@ -45,35 +45,29 @@ License: MIT – http://mrgnrdrck.mit-license.org
  *			PubSub.unsubscribe( token );
  *		}, 0)
 **/ 
-(function() {
-    "use strict";
-    
-    var PubSub = {
-        version: "1.0.3"
-    };
-    
-    // Establish the root object, `window` in the browser, or `global` on the server.
-    var root = this;
-    
-    // Export the Underscore object for **Node.js** and **"CommonJS"**, with
-    // backwards-compatibility for the old `require()` API. If we're not in
-    // CommonJS, add `PubSub` to the global object via a string identifier for
-    // the Closure Compiler "advanced" mode. Registration as an AMD module
-    // via define() happens at the end of this file.
-    if (typeof exports !== 'undefined') {
-        if (typeof module !== 'undefined' && module.exports) {
-            exports = module.exports = PubSub;
-        }
-        exports.PubSub = PubSub;
-    }
-    else {
-        root['PubSub'] = PubSub;
-    }  
-
-
-	var messages = {},
+(function(root){
+	"use strict";
+	
+	var PubSub = {
+			version: "1.0.3-dev"
+		},
+		messages = {},
 		lastUid = -1;
 	
+	// Export the PubSub object for **Node.js** and **"CommonJS"**, with
+	// backwards-compatibility for the old `require()` API. If we're not in
+	// CommonJS, add `PubSub` to the global object via a string identifier for
+	// the Closure Compiler "advanced" mode. Registration as an AMD module
+	// via define() happens at the end of this file.
+	if (typeof exports !== 'undefined') {
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = PubSub;
+		}
+		exports.PubSub = PubSub;
+	} else {
+		root.PubSub = PubSub;
+	}
+
 	function publish( message, data, sync ){
 		// if there are no subscribers to this message, just return here
 		if ( !messages.hasOwnProperty( message ) ){
@@ -167,13 +161,13 @@ License: MIT – http://mrgnrdrck.mit-license.org
 		}
 		return false;
 	};
-    
-    // AMD define happens at the end for compatibility with AMD loaders
-    // that don't enforce next-turn semantics on modules.
-    if (typeof define === 'function' && define.amd) {
-        define('pubsub', function(){
-            return PubSub;
-        });
-    }
+	
+	// AMD define happens at the end for compatibility with AMD loaders
+	// that don't enforce next-turn semantics on modules.
+	if (typeof define === 'function' && define.amd) {
+		define('pubsub', function(){
+			return PubSub;
+		});
+	}
 
-}).call(this);
+}(this));
