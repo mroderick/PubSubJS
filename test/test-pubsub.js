@@ -3,12 +3,14 @@
 	PubSub,
 	buster,
 	assert,
+	require,
 	sinon
 */
 (function( global ){
 	"use strict";
-
-	var EXPECTED_VERSION = "1.0.3";
+	
+	var PubSub = global.PubSub || require("../src/pubsub"),
+		EXPECTED_VERSION = "1.0.3-dev";
 
 	// helps us make sure that the order of the tests have no impact on their succes
 	function getUniqueString(){
@@ -38,6 +40,14 @@
 	}
 
 	buster.testCase( "PubSub", {
+		
+		setUp : function(){
+			this.clock = this.useFakeTimers();
+		},
+		
+		tearDown: function(){
+			this.clock.restore();
+		},
 		
 		"test should report version correctly" : function(){
 			assert.equals( PubSub.version, EXPECTED_VERSION );
@@ -101,8 +111,8 @@
 
 		"test publish method should call all subscribers for a message exactly once" : function(){
 			var message = getUniqueString(),
-				spy1 = sinon.spy(),
-				spy2 = sinon.spy();
+				spy1 = this.spy(),
+				spy2 = this.spy();
 
 			PubSub.subscribe( message, spy1 );
 			PubSub.subscribe( message, spy2 );
@@ -116,8 +126,8 @@
 		"test publish method should call all ONLY subscribers of the published message" : function(){
 			var message1 = getUniqueString(),
 				message2 = getUniqueString(),
-				spy1 = sinon.spy(),
-				spy2 = sinon.spy();
+				spy1 = this.spy(),
+				spy2 = this.spy();
 				
 			PubSub.subscribe( message1, spy1 );
 			PubSub.subscribe( message2, spy2 );
@@ -132,7 +142,7 @@
 		
 		"test publish method should call subscribers with message as first argument" : function(){
 			var message = getUniqueString(),
-				spy = sinon.spy();
+				spy = this.spy();
 
 			PubSub.subscribe( message, spy );		 
 			PubSub.publishSync( message, 'some payload' );
@@ -142,7 +152,7 @@
 
 		"test publish method should call subscribers with data as second argument" : function(){
 			var message = getUniqueString(),
-				spy = sinon.spy(),
+				spy = this.spy(),
 				data = getUniqueString();
 
 			PubSub.subscribe( message, spy );		 
@@ -152,32 +162,27 @@
 		},
 		
 		"test publish method should publish method asyncronously" : function(){
-			var setTimeout = sinon.stub( global, 'setTimeout' ),
-				message = getUniqueString(),
-				spy = sinon.spy(),
+			var message = getUniqueString(),
+				spy = this.spy(),
 				data = getUniqueString();
 
 			PubSub.subscribe( message, spy );		 
 			PubSub.publish( message, data );
 
-			assert( setTimeout.calledOnce );		
-
-			setTimeout.restore();
+			assert.equals( spy.callCount, 0 );
+			this.clock.tick(1);		
+			assert.equals( spy.callCount, 1 );
 		},
 		
 		"test publishSync method should allow syncronous publication" : function(){
-			var setTimeout = sinon.stub( global, 'setTimeout' ),
-				message = getUniqueString(),
-				spy = sinon.spy(),
+			var message = getUniqueString(),
+				spy = this.spy(),
 				data = getUniqueString();
 
 			PubSub.subscribe( message, spy );		 
 			PubSub.publishSync( message, data );
 
-			// make sure that setTimeout was never called
-			assert.equals( setTimeout.callCount, 0 );		 
-
-			setTimeout.restore();
+			assert.equals( spy.callCount, 1 );
 		},
 		
 		"test publish method should call all subscribers, even if there are exceptions" : function(){
@@ -185,8 +190,8 @@
 				func1 = function(){
 					throw('some error');
 				},
-				spy1 = sinon.spy(),
-				spy2 = sinon.spy();
+				spy1 = this.spy(),
+				spy2 = this.spy();
 
 			PubSub.subscribe( message, func1 );
 			PubSub.subscribe( message, spy1 );
