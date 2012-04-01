@@ -49,7 +49,7 @@ License: MIT – http://mrgnrdrck.mit-license.org
 	"use strict";
 	
 	var PubSub = {
-			version: "1.0.3-dev"
+			version: "1.0.4-dev"
 		},
 		messages = {},
 		lastUid = -1;
