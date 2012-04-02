@@ -101,3 +101,10 @@ PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioni
 ## License
 
 MIT: http://mrgnrdrck.mit-license.org
+
+## Alternatives
+
+These are a few alternative projects that also implement topic based publish subscribe in JavaScript.
+
+* http://www.joezimjs.com/projects/publish-subscribe-jquery-plugin/
+* http://amplifyjs.com/api/pubsub/
