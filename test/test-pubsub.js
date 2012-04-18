@@ -10,7 +10,7 @@
 	"use strict";
 	
 	var PubSub = global.PubSub || require("../src/pubsub"),
-		EXPECTED_VERSION = "1.0.3-dev";
+		EXPECTED_VERSION = "1.0.4-dev";
 
 	// helps us make sure that the order of the tests have no impact on their succes
 	function getUniqueString(){
