@@ -58,7 +58,7 @@
 				message = getUniqueString(),
 				token = PubSub.subscribe( message , func );
 
-			assert( typeof token === "string" );
+			assert.isString( token );
 		},
 		
 		"subscribe method should return new token for several subscribtions with same function" : function(){
