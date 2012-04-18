@@ -57,7 +57,8 @@
 			var func = function(){},
 				message = getUniqueString(),
 				token = PubSub.subscribe( message , func );
-			assert.typeOf( token, "string" );
+
+			assert( typeof token === "string" );
 		},
 		
 		"subscribe method should return new token for several subscribtions with same function" : function(){
