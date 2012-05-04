@@ -71,32 +71,67 @@ License: MIT – http://mrgnrdrck.mit-license.org
 	function publish( message, data, sync ){
 		// if there are no subscribers to this message, just return here
 		if ( !messages.hasOwnProperty( message ) ){
-			return false;
-		}
+            // check upper levels
+            var found = false;
+            namespaceIterator(message, function(name) {
+                found = messages.hasOwnProperty( name );
+                if (found){ 
+                    return false;
+                }
+                return true;
+            });
+            
+            if (!found) {
+                return false;
+            }
+        }
+        
+        function namespaceIterator(name, func) {
+            var found = false;
+            var pos = name.lastIndexOf('.');
+            while (pos !== -1){
+                name = name.substr(0, pos);
+                if (!func(name))
+                    break;
+                pos = name.lastIndexOf('.')
+            }
+        }
+        
+        function deliverNamespaced(){
+            if (messages.hasOwnProperty( message )) {
+                deliverMessage(message, message);
+            }
+            namespaceIterator(message, function(name) {
+                if (messages.hasOwnProperty( name )) {
+                    deliverMessage(message, name);
+                }
+                return true;
+            });
+        }
 		
-		function deliverMessage(){
-			var subscribers = messages[message],
+		function deliverMessage(originalMessage, matchedMessage){
+            var subscribers = messages[matchedMessage],
 				throwException = function(e){
-					return function(){
-						throw e;
-					};
-				},
+	                return function(){
+	                    throw e;
+	                };
+	            },
 				i, j; 
-			for ( i = 0, j = subscribers.length; i < j; i++ ){
-				try {
-					subscribers[i].func( message, data );
-				} catch( e ){
-					setTimeout( throwException(e), 0);
-				}
-			}
-		}
+            for ( i = 0, j = subscribers.length; i < j; i++ ){
+                try {
+                    subscribers[i].func( originalMessage, data );
+                } catch( e ){
+                    setTimeout( throwException(e), 0);
+                }
+            }
+        }
 
-		if ( sync === true ){
-			deliverMessage();
-		} else {
-			setTimeout( deliverMessage, 0 );
-		}
-		return true;
+        if ( sync === true ){
+            deliverNamespaced();
+        } else {
+            setTimeout( deliverNamespaced, 0 );
+        }
+        return true;
 	}
 
 	/**
