@@ -347,15 +347,9 @@
 				data = getUniqueString();
 			
 			
-			var token1 = PubSub.subscribe( messages[0], function() {
-				console.log('here');
-				spy();
-			} ); //This should be called
+			var token1 = PubSub.subscribe( messages[0], spy ); //This should be called
 			var token2 = PubSub.subscribe( messages[1], spy );
-			var token3 = PubSub.subscribe( messages[2], function() {
-				console.log('here2');
-				spy();
-			} ); //This should be called
+			var token3 = PubSub.subscribe( messages[2], spy ); //This should be called
 			
 			PubSub.unsubscribe( token2 ); //Take out middle child
 			

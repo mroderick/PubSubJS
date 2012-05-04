@@ -127,7 +127,6 @@ License: MIT – http://mrgnrdrck.mit-license.org
         }
 
         if ( sync === true ){
-            console.log('sync');
             deliverNamespaced();
         } else {
             setTimeout( deliverNamespaced, 0 );
