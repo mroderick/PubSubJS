@@ -119,7 +119,6 @@ https://github.com/mroderick/PubSubJS
 	 *	PubSub.publish( message[, data] ) -> Boolean
 	 *	- message (String): The message to publish
 	 *	- data: The data to pass to subscribers
-	 *	- sync (Boolean): Forces publication to be syncronous, which is more confusing, but faster
 	 *	Publishes the the message, passing the data to it's subscribers
 	**/
 	PubSub.publish = function( message, data ){
@@ -130,7 +129,6 @@ https://github.com/mroderick/PubSubJS
 	 *	PubSub.publishSync( message[, data] ) -> Boolean
 	 *	- message (String): The message to publish
 	 *	- data: The data to pass to subscribers
-	 *	- sync (Boolean): Forces publication to be syncronous, which is more confusing, but faster
 	 *	Publishes the the message synchronously, passing the data to it's subscribers
 	**/
 	PubSub.publishSync = function( message, data ){
