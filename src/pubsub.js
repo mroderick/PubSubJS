@@ -1,6 +1,8 @@
 /*
 Copyright (c) 2010,2011,2012 Morgan Roderick http://roderick.dk
 License: MIT - http://mrgnrdrck.mit-license.org
+
+https://github.com/mroderick/PubSubJS
 */
 /*jslint white:true, plusplus:true */
 /*global
@@ -9,48 +11,12 @@ License: MIT - http://mrgnrdrck.mit-license.org
 	exports,
 	define
 */
-/** section: PubSub
- *	PubSubJS is a dependency free library for doing ['publish/subscribe'](http://en.wikipedia.org/wiki/Publish/subscribe)
- *	messaging in JavaScript.
- *	
- *	In order to not have surprising behaviour where the execution chain generates more than one message, 
- *	publication of messages with PubSub are done asyncronously (this also helps keep your code responsive, by 
- *	dividing work into smaller chunks, allowing the event loop to do it's business).
- *
- *	If you're feeling adventurous, you can also use syncronous message publication, which can lead to some very
- *	confusing conditions, when one message triggers publication of another message in the same execution chain.
- *	Don't say I didn't warn you.
- * 
- *	##### Examples
- *	
- *		// create a function to receive the message
- *		var mySubscriber = function( msg, data ){
- *			console.log( msg, data );
- *		};
- * 
- *		// add the function to the list of subscribers to a particular message
- *		// we're keeping the returned token, in order to be able to unsubscribe from the message later on
- *		var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
- *
- *		// publish a message asyncronously
- *		PubSub.publish( 'MY MESSAGE', 'hello world!' );
- *		
- *		// publish a message syncronously, which is faster by orders of magnitude, but will get confusing
- *		// when one message triggers new messages in the same execution chain
- *		// USE WITH CATTION, HERE BE DRAGONS!!!
- *		PubSub.publishSync( 'MY MESSAGE', 'hello world!' );
- *		
- *		// unsubscribe from further messages, using setTimeout to allow for easy pasting of this code into an example :-)
- *		setTimeout(function(){
- *			PubSub.unsubscribe( token );
- *		}, 0)
-**/ 
 (function(root){
 	"use strict";
 	
 	var PubSub = {
 			name: 'PubSubJS',
-			version: '1.0.4-dev'
+			version: '1.1.0-dev'
 		},
 		messages = {},
 		lastUid = -1;
