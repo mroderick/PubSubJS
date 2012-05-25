@@ -101,9 +101,9 @@ https://github.com/mroderick/PubSubJS
 
 	function publish( message, data, sync ){
 		var deliver = createDeliveryFunction( message, data ),
-			hasSubsribers = messageHasSubscribers( message );
+			hasSubscribers = messageHasSubscribers( message );
 
-		if ( !hasSubsribers ){
+		if ( !hasSubscribers ){
 			return false;
 		}
 
