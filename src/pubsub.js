@@ -39,6 +39,7 @@ https://github.com/mroderick/PubSubJS
 	 *	Iterates the supplied namespace from most specific to least specific, applying the supplied function to each level
 	 *	@param { String } name
 	 *	@param { Function } func
+	 *	@private
 	 */
 	function namespaceIterator( name, func ){
 		var found = false,
