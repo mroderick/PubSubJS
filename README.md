@@ -45,11 +45,38 @@ Don't say I didn't warn you.
     // USE WITH CAUTION, HERE BE DRAGONS!!!
     PubSub.publishSync( 'MY MESSAGE', 'hello world!' );
     
-    // unsubscribe from further messages, using setTimeout to allow for easy 
-    // pasting of this code into an example :-)
-    setTimeout(function(){
-        PubSub.unsubscribe( token );
-    }, 0);
+
+### Cancel specific subscripiton
+
+    // create a function to receive the message
+    var mySubscriber = function( msg, data ){
+        console.log( msg, data );
+    };
+
+    // add the function to the list of subscribers to a particular message
+    // we're keeping the returned token, in order to be able to unsubscribe 
+    // from the message later on
+    var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
+
+    // unsubscribe from further messages
+    PubSub.unsubscribe( token );
+
+
+### Cancel all subscriptions for a function
+
+    // create a function to receive the message
+    var mySubscriber = function( msg, data ){
+        console.log( msg, data );
+    };
+
+    // add the function to the list of subscribers to a particular message
+    // we're keeping the returned token, in order to be able to unsubscribe 
+    // from the message later on
+    var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
+
+    // unsubscribe mySubscriber from ALL further messages
+    PubSub.unsubscribe( mySubscriber );
+
 
 ### Hierarchical addressing
 
@@ -80,6 +107,7 @@ Don't say I didn't warn you.
     // topics, three times in total
     // But, mySpecificSubscriber will only be called once, as it only
     // subscribes to the 'car.drive' topic
+
 
 ## Tips
 

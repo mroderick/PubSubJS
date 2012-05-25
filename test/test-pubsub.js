@@ -10,7 +10,7 @@
 	"use strict";
 	
 	var PubSub = global.PubSub || require("../src/pubsub"),
-		EXPECTED_VERSION = "1.1.0";
+		EXPECTED_VERSION = "1.2.0";
 
 	// helps us make sure that the order of the tests have no impact on their succes
 	function getUniqueString(){
@@ -344,12 +344,12 @@
 			
 			var messages = ['library', 'library.music', 'library.music.jazz'],
 				spy = this.spy(),
-				data = getUniqueString();
+				data = getUniqueString(),
 			
 			
-			var token1 = PubSub.subscribe( messages[0], spy ); //This should be called
-			var token2 = PubSub.subscribe( messages[1], spy );
-			var token3 = PubSub.subscribe( messages[2], spy ); //This should be called
+				token1 = PubSub.subscribe( messages[0], spy ), //This should be called
+				token2 = PubSub.subscribe( messages[1], spy ),
+				token3 = PubSub.subscribe( messages[2], spy ); //This should be called
 			
 			PubSub.unsubscribe( token2 ); //Take out middle child
 			
@@ -415,7 +415,37 @@
 			assert.equals( spy.callCount, 2 );
 			
 			done();
-		}
-		
+		},
+
+		"unsubscribe method with fuction argument should return true when succesful" : function(){
+			var func = function(){},
+				message = getUniqueString(),
+				token = PubSub.subscribe( message, func),
+				result = PubSub.unsubscribe( func );
+
+			assert.equals( result, true );        
+		},
+
+		"unsubscribe method with function argument should return false when unsuccesful" : function(){
+			var func = function(){},
+				message = getUniqueString(),
+				unknownToken = 'my unknown token',
+				result = PubSub.unsubscribe( unknownToken );
+
+			// first, let's try a completely unknown token
+
+			assert.equals( result, false );
+
+			// now let's try unsubscribing the same method twice
+			PubSub.subscribe( message, func );
+			PubSub.subscribe( message, func );
+			PubSub.subscribe( message, func );
+
+			// unsubscribe once, this should remove all subscriptions for message
+			PubSub.unsubscribe( func );
+
+			// unsubscribe again
+			assert.equals( PubSub.unsubscribe( func ), false );        
+		 }
 	});
 }(this));

@@ -16,7 +16,7 @@ https://github.com/mroderick/PubSubJS
 	
 	var PubSub = {
 			name: 'PubSubJS',
-			version: '1.1.0'
+			version: '1.2.0'
 		},
 		messages = {},
 		lastUid = -1;
@@ -157,23 +157,36 @@ https://github.com/mroderick/PubSubJS
 	};
 
 	/**
-	 *	PubSub.unsubscribe( token ) -> String | Boolean
-	 *	- token (String): The token of the function to unsubscribe
-	 *	Unsubscribes a specific subscriber from a specific message using the unique token
+	 *	PubSub.unsubscribe( tokenOrFunction ) -> String | Boolean
+	 *  - tokenOrFunction (String|Function): The token of the function to unsubscribe or func passed in on subscribe
+	 *  Unsubscribes a specific subscriber from a specific message using the unique token 
+     *  or if using Function as argument, it will remove all subscriptions with that function	
 	**/
-	PubSub.unsubscribe = function( token ){
-		var m, i, j;
+	PubSub.unsubscribe = function( tokenOrFunction ){
+		var isToken = typeof tokenOrFunction === 'string',
+			key = isToken ? 'token' : 'func',
+			succesfulReturnValue = isToken ? tokenOrFunction : true,
+
+			result = false,
+			m, i, j;
+		
 		for ( m in messages ){
 			if ( messages.hasOwnProperty( m ) ){
-				for ( i = 0, j = messages[m].length; i < j; i++ ){
-					if ( messages[m][i].token === token ){
+				for ( i = messages[m].length-1 ; i >= 0; i-- ){
+					if ( messages[m][i][key] === tokenOrFunction ){
 						messages[m].splice( i, 1 );
-						return token;
+						result = succesfulReturnValue;
+
+						// tokens are unique, so we can just return here
+						if ( isToken ){
+							return result;
+						}
 					}
 				}
-			}
-		}
-		return false;
+             }
+         }
+
+         return result;
 	};
 	
 	// AMD define happens at the end for compatibility with AMD loaders
