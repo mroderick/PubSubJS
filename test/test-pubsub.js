@@ -61,7 +61,7 @@
 			assert.isString( token );
 		},
 		
-		"subscribe method should return new token for several subscribtions with same function" : function(){
+		"subscribe method should return new token for several subscriptions with same function" : function(){
 			var func = function(){},
 				tokens = [],
 				iterations = 10,
@@ -71,6 +71,20 @@
 			// build an array of tokens
 			for ( i = 0; i < iterations; i++ ){
 				tokens.push( PubSub.subscribe( message, func ) );
+			}
+			// make sure all tokens are different
+			assertAllTokensDifferent( tokens );
+		},
+		
+		"subscribe method should return unique tokens for each namespaced subscription" : function(){
+			var func = function(){},
+				tokens = [],
+				messages = ['library', 'library.music', 'library.music.jazz'],
+				i;
+
+			// build an array of tokens
+			for ( i = 0; i < messages.length; i++ ){
+				tokens.push( PubSub.subscribe( messages[i], func ) );
 			}
 			// make sure all tokens are different
 			assertAllTokensDifferent( tokens );
@@ -205,6 +219,148 @@
 			assert( spy1.called );		  
 			assert( spy2.called );		  
 		},
+		
+		"publish method should not call any children in a namespace" : function( done ) {
+			var messages = ['library', 'library.music'],
+				spy = this.spy(),
+				data = getUniqueString();
+			
+			
+			PubSub.subscribe( messages[0], spy ); //This should be called
+			PubSub.subscribe( messages[1], spy );
+			PubSub.publish( messages[0], data );
+
+			assert.equals( spy.callCount, 0 );
+			this.clock.tick(1);		
+			assert.equals( spy.callCount, 1 );
+			
+			done();
+		},
+		
+		"publish method should call a parent namespace" : function( done ) {
+			// Publishing library.music should trigger parent library
+			var messages = ['library', 'library.music'],
+				spy = this.spy(),
+				data = getUniqueString();
+			
+			
+			PubSub.subscribe( messages[0], spy ); //This should be called
+			PubSub.subscribe( messages[1], spy ); //This should be called
+			PubSub.publish( messages[1], data );
+
+			assert.equals( spy.callCount, 0 );
+			this.clock.tick(1);		
+			assert.equals( spy.callCount, 2 );
+			
+			done();
+		},
+		
+		"publish method should call only a parent namespace" : function( done ) {
+			//Publishing library.music should only trigger parents descendants
+			//Even if it has a child
+			var messages = ['library', 'library.music', 'library.music.jazz'],
+				spy = this.spy(),
+				data = getUniqueString();
+			
+			
+			PubSub.subscribe( messages[0], spy ); //This should be called
+			PubSub.subscribe( messages[1], spy ); //This should be called
+			PubSub.subscribe( messages[2], spy );
+			PubSub.publish( messages[1], data );
+
+			assert.equals( spy.callCount, 0 );
+			this.clock.tick(1);		
+			assert.equals( spy.callCount, 2 );
+			
+			done();
+		},
+		
+		"publish method should call all parent namespaces" : function( done ) {
+			//Publishing library.music.jazz should trigger all parents
+			var messages = ['library', 'library.music', 'library.music.jazz'],
+				spy = this.spy(),
+				data = getUniqueString();
+			
+			
+			PubSub.subscribe( messages[0], spy ); //This should be called
+			PubSub.subscribe( messages[1], spy ); //This should be called
+			PubSub.subscribe( messages[2], spy ); //This should be called
+			PubSub.publish( messages[2], data );
+
+			assert.equals( spy.callCount, 0 );
+			this.clock.tick(1);		
+			assert.equals( spy.callCount, 3 );
+			
+			done();
+		},
+		
+		"publish method should call only parent descendants" : function( done ) {
+			//Publishing library.music.jazz should trigger only all parents descendants
+			//Skipping library.playlist and library.playlist.*
+			var messages = ['library', 'library.music', 'library.music.jazz', 'library.playlist', 'library.playlist.mine'],
+				spy = this.spy(),
+				data = getUniqueString();
+			
+			
+			PubSub.subscribe( messages[0], spy ); //This should be called
+			PubSub.subscribe( messages[1], spy ); //This should be called
+			PubSub.subscribe( messages[2], spy ); //This should be called
+			PubSub.subscribe( messages[3], spy );
+			PubSub.subscribe( messages[4], spy );
+			PubSub.publish( messages[2], data );
+
+			assert.equals( spy.callCount, 0 );
+			this.clock.tick(1);		
+			assert.equals( spy.callCount, 3 );
+			
+			done();
+		},
+		
+		"publish method should call all parent descendants deeply" : function( done ) {
+			//Publishing library.music.jazz.soft.swing should trigger all but
+			//library.music.playlist.jazz
+			var messages = ['library', 'library.music', 'library.music.jazz', 'library.music.jazz.soft', 'library.music.jazz.soft.swing', 'library.music.playlist.jazz'],
+				spy = this.spy(),
+				data = getUniqueString();
+			
+			
+			PubSub.subscribe( messages[0], spy ); //This should be called
+			PubSub.subscribe( messages[1], spy ); //This should be called
+			PubSub.subscribe( messages[2], spy ); //This should be called
+			PubSub.subscribe( messages[3], spy ); //This should be called
+			PubSub.subscribe( messages[4], spy ); //This should be called
+			PubSub.subscribe( messages[5], spy ); //This should be called
+			PubSub.subscribe( messages[6], spy );
+			PubSub.publish( messages[4], data );
+
+			assert.equals( spy.callCount, 0 );
+			this.clock.tick(1);		
+			assert.equals( spy.callCount, 5 );
+			
+			done();
+		},
+		
+		"publish method should still call all parents, even when middle child is unsubscribed" : function( done ) {
+			
+			var messages = ['library', 'library.music', 'library.music.jazz'],
+				spy = this.spy(),
+				data = getUniqueString();
+			
+			
+			var token1 = PubSub.subscribe( messages[0], spy ); //This should be called
+			var token2 = PubSub.subscribe( messages[1], spy );
+			var token3 = PubSub.subscribe( messages[2], spy ); //This should be called
+			
+			PubSub.unsubscribe( token2 ); //Take out middle child
+			
+			PubSub.publish( messages[2], data );
+
+			assert.equals( spy.callCount, 0 );
+			this.clock.tick(1);		
+			assert.equals( spy.callCount, 2 );
+			
+			done();
+		},
 
 		"unsubscribe method should return token when succesful" : function(){
 			var func = function(){},
@@ -228,6 +384,38 @@
 			// now let's try unsubscribing the same method twice
 			PubSub.unsubscribe( token );
 			assert.equals( PubSub.unsubscribe( token ), false );		
+		},
+		
+		"unsubscribe method should return tokens when succesfully removing namespaced message" : function(){
+			var func = function(){},
+				messages = ['playlist.music', 'playlist.music.jazz'],
+				token1 = PubSub.subscribe( messages[0], func),
+				token2 = PubSub.subscribe( messages[1], func ),
+				result1 = PubSub.unsubscribe( token1 ),
+				result2 = PubSub.unsubscribe( token2 );
+				
+			assert.equals( result1, token1 );
+			assert.equals( result2, token2 );  
+		},
+		
+		"unsubscribe method should unsubscribe parent without affecting orphans" : function( done ){
+			var func = function(){},
+				data = getUniqueString(),
+				spy = this.spy(),
+				messages = ['playlist', 'playlist.music', 'playlist.music.jazz'],
+				token1 = PubSub.subscribe( messages[0], spy ), //Gets unsubscribed
+				token2 = PubSub.subscribe( messages[1], spy ), //This should be called
+				token3 = PubSub.subscribe( messages[2], spy ), //This should be called
+				result1 = PubSub.unsubscribe( token1 );
+			
+			PubSub.publish( messages[2], data );
+			
+			assert.equals( spy.callCount, 0 );
+			this.clock.tick(1);		
+			assert.equals( spy.callCount, 2 );
+			
+			done();
 		}
+		
 	});
 }(this));
