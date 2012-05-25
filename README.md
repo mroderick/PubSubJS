@@ -24,6 +24,8 @@ Don't say I didn't warn you.
 
 ## Examples
 
+### Basic example
+
     // create a function to receive the message
     var mySubscriber = function( msg, data ){
         console.log( msg, data );
@@ -48,6 +50,36 @@ Don't say I didn't warn you.
     setTimeout(function(){
         PubSub.unsubscribe( token );
     }, 0);
+
+### Hierarchical addressing
+
+    // create a subscriber to receive all messages from a hierarchy of topics
+    var myToplevelSubscriber = function( msg, data ){
+        console.log( 'top level: ', msg, data );
+    }
+ 
+    // subscribe to all topics in the 'car' hierarchy
+    PubSub.subscribe( 'car', myToplevelSubscriber );
+
+
+    // create a subscriber to receive only leaf message from hierarchy op topics
+    var mySpecificSubscriber = function( msg, data ){
+        console.log('specific: ', msg, data );
+    }
+
+    // subscribe only to 'car.drive' topics
+    PubSub.subscribe( 'car.drive', mySpecificSubscriber );
+
+
+    // Publish some topics
+    PubSub.publish( 'car.purchase', { name : 'my new car' } );
+    PubSub.publish( 'car.drive', { speed : '14' } );
+    PubSub.publish( 'car.sell', { newOwner : 'someone else' } );
+
+    // In this scenario, myToplevelSubscriber will be called for all 
+    // topics, three times in total
+    // But, mySpecificSubscriber will only be called once, as it only
+    // subscribes to the 'car.drive' topic
 
 ## Tips
 
@@ -81,7 +113,6 @@ The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sino
 * Build script to create the following wrappers
 	* jQuery plugin
 	* Ender.js wrapper
-* Hierarchical addressing of topics, using either dots (some.hierarchy.of.topics) or slashes (/some/hierarchy/of/topics).
 * Better and more extensive usage examples
 
 ## More about Publish/Subscribe
@@ -95,6 +126,8 @@ PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioni
 
 ## Changelog
 
+* v1.1.0
+    * Hierarchical addressing of topics ("namespacing") (@jgauffin, @fideloper)
 * v1.0.3
 	* AMD / CommonJS module support (@fernandogmar)
 	
