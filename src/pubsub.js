@@ -35,70 +35,83 @@ https://github.com/mroderick/PubSubJS
 		root.PubSub = PubSub;
 	}
 
-	function publish( message, data, sync ){
-		// if there are no subscribers to this message, just return here
-		if ( !messages.hasOwnProperty( message ) ){
-            // check upper levels
-            var found = false;
-            namespaceIterator(message, function(name) {
-                found = messages.hasOwnProperty( name );
-                if (found){ 
-                    return false;
-                }
-                return true;
-            });
-            
-            if (!found) {
-                return false;
-            }
-        }
-        
-        function namespaceIterator(name, func) {
-            var found = false;
-            var pos = name.lastIndexOf('.');
-            while (pos !== -1){
-                name = name.substr(0, pos);
-                if (!func(name))
-                    break;
-                pos = name.lastIndexOf('.')
-            }
-        }
-        
-        function deliverNamespaced(){
-            if (messages.hasOwnProperty( message )) {
-                deliverMessage(message, message);
-            }
-            namespaceIterator(message, function(name) {
-                if (messages.hasOwnProperty( name )) {
-                    deliverMessage(message, name);
-                }
-                return true;
-            });
-        }
-		
-		function deliverMessage(originalMessage, matchedMessage){
-            var subscribers = messages[matchedMessage],
-				throwException = function(e){
-	                return function(){
-	                    throw e;
-	                };
-	            },
-				i, j; 
-            for ( i = 0, j = subscribers.length; i < j; i++ ){
-                try {
-                    subscribers[i].func( originalMessage, data );
-                } catch( e ){
-                    setTimeout( throwException(e), 0);
-                }
-            }
-        }
+	/**
+	 *	Iterates the supplied namespace from most specific to least specific, applying the supplied function to each level
+	 *	@param { String } name
+	 *	@param { Function } func
+	 */
+	function namespaceIterator( name, func ){
+		var found = false,
+			position = name.lastIndexOf( '.' );
 
-        if ( sync === true ){
-            deliverNamespaced();
-        } else {
-            setTimeout( deliverNamespaced, 0 );
-        }
-        return true;
+		while( position !== -1 ){
+			name = name.substr( 0, position );
+			if (!func(name)){
+				break;
+			}
+			position = name.lastIndexOf('.');
+		}
+	}
+
+	function deliverMessage( originalMessage, matchedMessage, data ){
+		var subscribers = messages[matchedMessage],
+			throwException = function( ex ){
+				return function(){
+					throw ex;
+				};
+			},
+			i, j; 
+
+		for ( i = 0, j = subscribers.length; i < j; i++ ){
+			try {
+				subscribers[i].func( originalMessage, data );
+			} catch( ex ){
+				setTimeout( throwException( ex ), 0);
+			}
+		}
+	}
+
+	function createDeliveryFunction( message, data ){
+		return function deliverNamespaced(){
+			if ( messages.hasOwnProperty( message ) ) {
+				deliverMessage(message, message, data);
+			}
+
+			namespaceIterator(message, function( name ){
+				if ( messages.hasOwnProperty( name ) ){
+					deliverMessage(message, name, data );
+				}
+				return true;
+			});
+		};
+	}
+
+	function messageHasSubscribers( message ){
+		var found = messages.hasOwnProperty( message );
+		if ( !found ){
+			// check upper levels
+			namespaceIterator(message, function(name){
+				found = messages.hasOwnProperty( name );
+				return found;
+			});
+		}
+		return found;
+	}
+
+	function publish( message, data, sync ){
+		var deliver = createDeliveryFunction( message, data ),
+			hasSubsribers = messageHasSubscribers( message );
+
+		if ( !hasSubsribers ){
+			return false;
+		}
+
+		if ( sync === true ){
+			deliver();
+		} else {
+			setTimeout( deliver, 0 );
+		}
+		return true;
 	}
 
 	/**
@@ -171,5 +184,4 @@ https://github.com/mroderick/PubSubJS
 			return PubSub;
 		});
 	}
-
 }(this));
