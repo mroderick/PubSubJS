@@ -153,6 +153,8 @@ The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sino
 PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioning.
 
 ## Changelog
+* v1.2.2
+    * Fix issue 9, where a subscriber would not get notified, if there were no subscribers above it in hierarchy.
 * v1.2.0
     * Remove all subscriptions for a function (@mrgnrdrck)
 * v1.1.0
