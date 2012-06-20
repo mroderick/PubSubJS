@@ -10,7 +10,7 @@
 	"use strict";
 	
 	var PubSub = global.PubSub || require("../src/pubsub"),
-		TestHelper = global.TestHelper || require("../test/test-helper");
+		TestHelper = global.TestHelper || require("../test/helper");
 
 	buster.testCase( "subscribe method", {
 
