@@ -16,7 +16,7 @@ https://github.com/mroderick/PubSubJS
 	
 	var PubSub = {
 			name: 'PubSubJS',
-			version: '1.2.1'
+			version: '1.2.2'
 		},
 		messages = {},
 		lastUid = -1;
@@ -90,8 +90,6 @@ https://github.com/mroderick/PubSubJS
 	function publish( message, data, sync ){
 		var deliver = createDeliveryFunction( message, data ),
 			hasSubscribers = messageHasSubscribers( message );
-
-		console.log('message: ', hasSubscribers );
 
 		if ( !hasSubscribers ){
 			return false;
