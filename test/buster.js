@@ -6,7 +6,8 @@ config["PubSubJS browser"] = {
         "src/pubsub.js"
     ],
     tests: [
-        "test/test-pubsub.js"
+        "test/helper.js",
+        "test/test-*.js"
     ]
 }
 
@@ -17,6 +18,7 @@ config["PubSubJS node"] = {
         "src/pubsub.js"
     ],
     tests: [
-        "test/test-pubsub.js"
+        "test/helper.js",
+        "test/test-*.js"
     ]
 }
