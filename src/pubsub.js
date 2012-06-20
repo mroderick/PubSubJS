@@ -35,25 +35,6 @@ https://github.com/mroderick/PubSubJS
 		root.PubSub = PubSub;
 	}
 
-	/**
-	 *	Iterates the supplied namespace from most specific to least specific, applying the supplied function to each level
-	 *	@param { String } name
-	 *	@param { Function } func
-	 *	@private
-	 */
-	function namespaceIterator( name, func ){
-		var found = false,
-			position = name.lastIndexOf( '.' );
-
-		while( position !== -1 ){
-			name = name.substr( 0, position );
-			if (!func(name)){
-				break;
-			}
-			position = name.lastIndexOf('.');
-		}
-	}
-
 	function deliverMessage( originalMessage, matchedMessage, data ){
 		var subscribers = messages[matchedMessage],
 			throwException = function( ex ){
@@ -74,34 +55,43 @@ https://github.com/mroderick/PubSubJS
 
 	function createDeliveryFunction( message, data ){
 		return function deliverNamespaced(){
+			var topic = String( message ),
+				position = topic.lastIndexOf( '.' );
+
 			if ( messages.hasOwnProperty( message ) ) {
 				deliverMessage(message, message, data);
 			}
 
-			namespaceIterator(message, function( name ){
-				if ( messages.hasOwnProperty( name ) ){
-					deliverMessage(message, name, data );
+			while( position !== -1 ){
+				topic = topic.substr( 0, position );
+				position = topic.lastIndexOf('.');
+
+				if ( messages.hasOwnProperty( topic ) ){
+					deliverMessage( message, topic, data );
 				}
-				return true;
-			});
+			}
 		};
 	}
 
 	function messageHasSubscribers( message ){
-		var found = messages.hasOwnProperty( message );
-		if ( !found ){
-			// check upper levels
-			namespaceIterator(message, function(name){
-				found = messages.hasOwnProperty( name );
-				return found;
-			});
+		var topic = String( message ),
+			found = messages.hasOwnProperty( topic ),
+			position = topic.lastIndexOf( '.' );
+
+		while ( !found && position !== -1 ){
+			topic = topic.substr( 0, position );
+			position = topic.lastIndexOf('.');
+			found = messages.hasOwnProperty( topic );
 		}
+
 		return found;
 	}
 
 	function publish( message, data, sync ){
 		var deliver = createDeliveryFunction( message, data ),
 			hasSubscribers = messageHasSubscribers( message );
+
+		console.log('message: ', hasSubscribers );
 
 		if ( !hasSubscribers ){
 			return false;
@@ -149,7 +139,7 @@ https://github.com/mroderick/PubSubJS
 
 		// forcing token as String, to allow for future expansions without breaking usage
 		// and allow for easy use as key names for the 'messages' object
-		var token = (++lastUid).toString();
+		var token = String(++lastUid);
 		messages[message].push( { token : token, func : func } );
 
 		// return token for unsubscribing
