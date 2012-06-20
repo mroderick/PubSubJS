@@ -11,7 +11,7 @@
 	
 	var PubSub = global.PubSub || require("../src/pubsub"),
 		TestHelper = global.TestHelper || require("../test/helper"),
-		EXPECTED_VERSION = "1.2.0";
+		EXPECTED_VERSION = "1.2.1";
 
 	buster.testCase( "PubSub module", {		
 		"should report version correctly" : function(){
