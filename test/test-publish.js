@@ -107,22 +107,29 @@
 			assert.equals( spy.callCount, 1 );
 		},
 		
-		"publish method should call all subscribers, even if there are exceptions" : function(){
+		"publish method should call all subscribers, even if there are exceptions" : function( done ){
 			var message = TestHelper.getUniqueString(),
 				func1 = function(){
 					throw('some error');
 				},
 				spy1 = this.spy(),
-				spy2 = this.spy();
+				spy2 = this.spy(),
+				clock = this.useFakeTimers();
 
 			PubSub.subscribe( message, func1 );
 			PubSub.subscribe( message, spy1 );
 			PubSub.subscribe( message, spy2 );
 
-			PubSub.publishSync( message, undefined );
+			assert.exception( function(){
+				PubSub.publishSync( message, 'some data' );
+				clock.tick(1);
+			});
 
 			assert( spy1.called );		  
 			assert( spy2.called );		  
+
+			done();
+			clock.restore();
 		}		
 	});
 
