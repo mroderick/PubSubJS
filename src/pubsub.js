@@ -148,7 +148,7 @@ https://github.com/mroderick/PubSubJS
 	 *	PubSub.unsubscribe( tokenOrFunction ) -> String | Boolean
 	 *  - tokenOrFunction (String|Function): The token of the function to unsubscribe or func passed in on subscribe
 	 *  Unsubscribes a specific subscriber from a specific message using the unique token 
-     *  or if using Function as argument, it will remove all subscriptions with that function	
+	 *  or if using Function as argument, it will remove all subscriptions with that function	
 	**/
 	PubSub.unsubscribe = function( tokenOrFunction ){
 		var isToken = typeof tokenOrFunction === 'string',
@@ -171,10 +171,10 @@ https://github.com/mroderick/PubSubJS
 						}
 					}
 				}
-             }
-         }
+			}
+		}
 
-         return result;
+		return result;
 	};
 	
 	// AMD define happens at the end for compatibility with AMD loaders
