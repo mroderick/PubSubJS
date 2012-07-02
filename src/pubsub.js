@@ -20,7 +20,7 @@ https://github.com/mroderick/PubSubJS
 		},
 		messages = {},
 		lastUid = -1;
-	
+
 	// Export the PubSub object for **Node.js** and **"CommonJS"**, with
 	// backwards-compatibility for the old `require()` API. If we're not in
 	// CommonJS, add `PubSub` to the global object via a string identifier for
@@ -35,21 +35,34 @@ https://github.com/mroderick/PubSubJS
 		root.PubSub = PubSub;
 	}
 
+	/**
+	 *	Returns a function that throws the passed exception, for use as argument for setTimeout
+	 *	@param { Object } ex An Error object
+	 */
+	function throwException( ex ){
+		return function reThrowException(){
+			throw ex;
+		};
+	}
+
+	function callSubscriber( subscriber, message, data ){
+		try {
+			subscriber( message, data );
+		} catch( ex ){
+			setTimeout( throwException( ex ), 0);
+		}
+	}
+
 	function deliverMessage( originalMessage, matchedMessage, data ){
 		var subscribers = messages[matchedMessage],
-			throwException = function( ex ){
-				return function(){
-					throw ex;
-				};
-			},
 			i, j; 
 
+		if ( !messages.hasOwnProperty( matchedMessage ) ) {
+			return;
+		}
+
 		for ( i = 0, j = subscribers.length; i < j; i++ ){
-			try {
-				subscribers[i].func( originalMessage, data );
-			} catch( ex ){
-				setTimeout( throwException( ex ), 0);
-			}
+			callSubscriber( subscribers[i].func, originalMessage, data );
 		}
 	}
 
@@ -58,17 +71,14 @@ https://github.com/mroderick/PubSubJS
 			var topic = String( message ),
 				position = topic.lastIndexOf( '.' );
 
-			if ( messages.hasOwnProperty( message ) ) {
-				deliverMessage(message, message, data);
-			}
+			// deliver the message as it is now
+			deliverMessage(message, message, data);
 
+			// trim the hierarchy and deliver message to each level
 			while( position !== -1 ){
 				topic = topic.substr( 0, position );
 				position = topic.lastIndexOf('.');
-
-				if ( messages.hasOwnProperty( topic ) ){
-					deliverMessage( message, topic, data );
-				}
+				deliverMessage( message, topic, data );
 			}
 		};
 	}
@@ -180,7 +190,7 @@ https://github.com/mroderick/PubSubJS
 	// AMD define happens at the end for compatibility with AMD loaders
 	// that don't enforce next-turn semantics on modules.
 	if (typeof define === 'function' && define.amd) {
-		define('pubsub', function(){
+		define('pubsub', function definition(){
 			return PubSub;
 		});
 	}
