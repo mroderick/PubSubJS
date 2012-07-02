@@ -16,7 +16,7 @@ https://github.com/mroderick/PubSubJS
 	
 	var PubSub = {
 			name: 'PubSubJS',
-			version: '1.2.3-dev'
+			version: '1.3.0'
 		},
 		messages = {},
 		lastUid = -1;
@@ -194,4 +194,4 @@ https://github.com/mroderick/PubSubJS
 			return PubSub;
 		});
 	}
-}(this));
+}( typeof window !== 'undefined' && window || this));

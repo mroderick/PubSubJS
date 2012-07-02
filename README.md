@@ -131,7 +131,36 @@ when you make typos.
 	});
 	
 	PubSub.publish(MY_TOPIC, "world");
-	
+
+## Plugin for jQuery
+
+By default PubSubJS can be used in any browser or CommonJS environment, including [node](http://nodejs.org). Additionally, PubSubJS can be built specifically for jQuery.
+
+    $ rake jquery
+
+Produces jquery.pubsub.js
+
+### Use with jQUery
+
+    var topic = 'greeting',
+        data = 'world'
+        subscriber = function sayHello( data ){
+            console.log( 'hello ' + data );
+        };
+
+    // add a subscription
+    var token = $.pubsub('subscribe', topic, sayHello );
+
+    // unsubscribing
+    $.pubsub('unsubscribe', token)          // remove a specific subscription
+    $.pubsub('unsubscribe', subscriber);    // remove all subscriptions for subscriber
+
+    // publishing a topic
+    $.pubsub('publish', topic, data);
+
+    // publishing topic syncronously
+    $.pubsub('publishSync', topic, data);
+
 
 ## Testing
 The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). 
@@ -139,7 +168,6 @@ The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sino
 ## Future of PubSubJS
 
 * Build script to create the following wrappers
-	* jQuery plugin
 	* Ender.js wrapper
 * Better and more extensive usage examples
 
@@ -153,6 +181,8 @@ The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sino
 PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioning.
 
 ## Changelog
+* v1.3.0
+    * Added jQuery plugin via rake task
 * v1.2.2
     * Fix issue 9, where a subscriber would not get notified, if there were no subscribers above it in hierarchy.
 * v1.2.0
