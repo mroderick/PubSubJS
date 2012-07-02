@@ -140,7 +140,7 @@ By default PubSubJS can be used in any browser or CommonJS environment, includin
 
 Produces jquery.pubsub.js
 
-### Use with jQUery
+### Use with jQuery
 
     var topic = 'greeting',
         data = 'world'
