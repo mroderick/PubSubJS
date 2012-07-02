@@ -11,7 +11,16 @@ https://github.com/mroderick/PubSubJS
 	exports,
 	define
 */
-(function(root){
+(function (name, global, definition){
+	if (typeof module !== 'undefined'){
+		module.exports = definition(name, global);
+  	} else if (typeof define === 'function' && typeof define.amd  === 'object'){
+  	 	define(definition);	
+  	} else {
+  		global[name] = definition(name, global);	
+  	} 
+})('PubSub', typeof window !== 'undefined' && window || this, function (name, global){
+
 	"use strict";
 	
 	var PubSub = {
@@ -20,20 +29,6 @@ https://github.com/mroderick/PubSubJS
 		},
 		messages = {},
 		lastUid = -1;
-
-	// Export the PubSub object for **Node.js** and **"CommonJS"**, with
-	// backwards-compatibility for the old `require()` API. If we're not in
-	// CommonJS, add `PubSub` to the global object via a string identifier for
-	// the Closure Compiler "advanced" mode. Registration as an AMD module
-	// via define() happens at the end of this file.
-	if (typeof exports !== 'undefined') {
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = PubSub;
-		}
-		exports.PubSub = PubSub;
-	} else {
-		root.PubSub = PubSub;
-	}
 
 	/**
 	 *	Returns a function that throws the passed exception, for use as argument for setTimeout
@@ -187,11 +182,5 @@ https://github.com/mroderick/PubSubJS
 		return result;
 	};
 	
-	// AMD define happens at the end for compatibility with AMD loaders
-	// that don't enforce next-turn semantics on modules.
-	if (typeof define === 'function' && define.amd) {
-		define('pubsub', function definition(){
-			return PubSub;
-		});
-	}
-}( typeof window !== 'undefined' && window || this));
+	return PubSub;
+});
