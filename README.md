@@ -202,3 +202,4 @@ These are a few alternative projects that also implement topic based publish sub
 
 * http://www.joezimjs.com/projects/publish-subscribe-jquery-plugin/
 * http://amplifyjs.com/api/pubsub/
+* http://radio.uxder.com/ — oriented towards 'channels', free of dependencies
