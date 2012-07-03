@@ -165,6 +165,8 @@ Produces jquery.pubsub.js
 ## Testing
 The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). 
 
+**Note:** Before running the tests, you should [download jQuery 1.7.2](http://code.jquery.com/jquery-1.7.2.js) and put it in the lib folder.
+
 ## Future of PubSubJS
 
 * Build script to create the following wrappers

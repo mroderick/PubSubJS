@@ -3,5 +3,4 @@
 .project
 .settings/
 .tmp*
-
-
+lib/jquery*.js
