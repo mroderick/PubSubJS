@@ -4,3 +4,4 @@
 .settings/
 .tmp*
 lib/jquery*.js
+jquery.pubsub.js
