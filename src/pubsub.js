@@ -19,7 +19,7 @@ https://github.com/mroderick/PubSubJS
   	} else {
   		global[name] = definition(name, global);	
   	} 
-})('PubSub', typeof window !== 'undefined' && window || this, function (name, global){
+})('PubSub', typeof window !== 'undefined' && window || this, function PubSub(name, global){
 
 	"use strict";
 	
