@@ -1,4 +1,3 @@
-/*jslint white:true, plusplus:true */
 /*global
 	PubSub,
 	buster,
@@ -13,14 +12,13 @@
 	var PubSub = global.PubSub || require("../src/pubsub"),
 		TestHelper = global.TestHelper || require("../test/helper");
 
-
 	/**
 	 *	This is a test proving that bug 9 has been fixed.
 	 *	See https://github.com/mroderick/PubSubJS/issues/9
 	 */
-	buster.testCase( "Bug 9", {
+	buster.testCase( "Bug 9, publish method", {
 
-		"publish method should notify all subscribers in a hierarchy" : function( done ){
+		"should notify all subscribers in a hierarchy" : function( done ){
 			var subscriber1 = this.spy(),
 				subscriber2 = this.spy(),
 				subscriber3 = this.spy(),
@@ -42,7 +40,7 @@
 			clock.restore();
 		},
 
-		"publish method should notify individual subscribers to topics further up the hierarchy, even when there are no subscribers further up" : function( done ){
+		"should notify individual subscribers, even when there are no subscribers further up" : function( done ){
 
 			var rootTopic = 'a.b.c',
 				subscriber = this.spy(),

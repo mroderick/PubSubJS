@@ -1,3 +1,9 @@
+/*global
+	exports,
+	module,
+	assert,
+	define
+*/
 (function(root){
 	"use strict";
 

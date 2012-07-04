@@ -4,22 +4,23 @@ License: MIT - http://mrgnrdrck.mit-license.org
 
 https://github.com/mroderick/PubSubJS
 */
-/*jslint white:true, plusplus:true */
 /*global
 	setTimeout,
 	module,
 	exports,
-	define
+	define,
+	window
 */
 (function (name, global, definition){
+	"use strict";
 	if (typeof module !== 'undefined'){
 		module.exports = definition(name, global);
-  	} else if (typeof define === 'function' && typeof define.amd  === 'object'){
-  	 	define(definition);	
-  	} else {
-  		global[name] = definition(name, global);	
-  	} 
-})('PubSub', typeof window !== 'undefined' && window || this, function PubSub(name, global){
+	} else if (typeof define === 'function' && typeof define.amd  === 'object'){
+		define(definition);	
+	} else {
+		global[name] = definition(name, global);	
+	} 
+}('PubSub', ( typeof window !== 'undefined' && window ) || this, function definition(name, global){
 
 	"use strict";
 	
@@ -132,7 +133,8 @@ https://github.com/mroderick/PubSubJS
 	 *	PubSub.subscribe( message, func ) -> String
 	 *	- message (String): The message to subscribe to
 	 *	- func (Function): The function to call when a new message is published
-	 *	Subscribes the passed function to the passed message. Every returned token is unique and should be stored if you need to unsubscribe
+	 *	Subscribes the passed function to the passed message. Every returned token is unique and should be stored if 
+	 *	you need to unsubscribe
 	**/
 	PubSub.subscribe = function( message, func ){
 		// message is not registered yet
@@ -183,4 +185,4 @@ https://github.com/mroderick/PubSubJS
 	};
 	
 	return PubSub;
-});
+}));

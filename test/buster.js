@@ -1,4 +1,3 @@
-/*jslint white:true, plusplus:true */
 /*global
 	module
 */

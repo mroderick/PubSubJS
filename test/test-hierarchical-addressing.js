@@ -1,4 +1,3 @@
-/*jslint white:true, plusplus:true */
 /*global
 	PubSub,
 	buster,
@@ -99,10 +98,15 @@
 		"publish method should call only parent descendants" : function( done ) {
 			//Publishing library.music.jazz should trigger only all parents descendants
 			//Skipping library.playlist and library.playlist.*
-			var messages = ['library', 'library.music', 'library.music.jazz', 'library.playlist', 'library.playlist.mine'],
+			var messages = [
+					'library',
+					'library.music',
+					'library.music.jazz',
+					'library.playlist',
+					'library.playlist.mine'
+				],
 				spy = this.spy(),
 				data = TestHelper.getUniqueString();
-			
 			
 			PubSub.subscribe( messages[0], spy ); //This should be called
 			PubSub.subscribe( messages[1], spy ); //This should be called
@@ -121,7 +125,14 @@
 		"publish method should call all parent descendants deeply" : function( done ) {
 			//Publishing library.music.jazz.soft.swing should trigger all but
 			//library.music.playlist.jazz
-			var messages = ['library', 'library.music', 'library.music.jazz', 'library.music.jazz.soft', 'library.music.jazz.soft.swing', 'library.music.playlist.jazz'],
+			var messages = [
+					'library',
+					'library.music',
+					'library.music.jazz',
+					'library.music.jazz.soft',
+					'library.music.jazz.soft.swing',
+					'library.music.playlist.jazz'
+				],
 				spy = this.spy(),
 				data = TestHelper.getUniqueString();
 			
