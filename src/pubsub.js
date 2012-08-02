@@ -90,7 +90,7 @@ https://github.com/mroderick/PubSubJS
 			found = messages.hasOwnProperty( topic );
 		}
 
-		return found;
+		return found && messages[topic].length;
 	}
 
 	function publish( message, data, sync ){
