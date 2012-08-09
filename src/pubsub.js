@@ -152,6 +152,22 @@ https://github.com/mroderick/PubSubJS
 	};
 
 	/**
+	 *	PubSub.subscribe( message, contextObjMethod, contextObj ) -> String
+	 *	- message (String): The message to subscribe to
+	 *	- contextObjMethod (Function): The method of contextObj to call when a new message is published
+	 * 	- contextObj (Object): The object to be taken as context for the method execution
+	 *	Subscribes the passed object method to the passed message. On publish the method will be executes 
+	 * 	using the passed contextObj as context.
+	 * 	Every returned token is unique and should be stored if 
+	 *	you need to unsubscribe
+	**/	
+	PubSub.subscribeWithContext = function(message, contextObjMethod, contextObj) {
+    		return PubSub.subscribe(message, function(msg, data) {
+        			contextObjMethod.apply(contextObj, [msg, data])
+    				});
+	};
+
+	/**
 	 *	PubSub.unsubscribe( tokenOrFunction ) -> String | Boolean
 	 *  - tokenOrFunction (String|Function): The token of the function to unsubscribe or func passed in on subscribe
 	 *  Unsubscribes a specific subscriber from a specific message using the unique token 
