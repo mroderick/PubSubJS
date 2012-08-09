@@ -49,15 +49,15 @@ Don't say I didn't warn you.
 
     // create an object to receive the message
     var Subscriber = function(name) {
-	var _name = name;
-	this.getName = function() {
-	   return _name;
-	};
-	// method to receive the message, referred to object context
-	this.acceptNotify = function(msg, data) {
-	   var logMsg = "Message received by " + this.getName() + ": '" + msg + "' -> " + data;
-	   console.log(logMsg);
-	};
+        var _name = name;
+        this.getName = function() {
+                return _name;
+        };
+        // method to receive the message, referred to object context
+        this.acceptNotify = function(msg, data) {
+                var logMsg = "Message received by " + this.getName() + ": '" + msg + "' -> " + data;
+                console.log(logMsg);
+        };
     };	
     var mySubscriberObj = new Subscriber("Pippo");
 
