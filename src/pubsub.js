@@ -133,10 +133,13 @@ https://github.com/mroderick/PubSubJS
 	 *	PubSub.subscribe( message, func ) -> String
 	 *	- message (String): The message to subscribe to
 	 *	- func (Function): The function to call when a new message is published
-	 *	Subscribes the passed function to the passed message. Every returned token is unique and should be stored if 
+	 * 	- context (Object): [optional] The object that acts as the execution context for func
+	 *	Subscribes the passed function to the passed message. If context is passed on publish 
+	 * 	func will be executed using that object as execution context.
+	 * 	Every returned token is unique and should be stored if 
 	 *	you need to unsubscribe
 	**/
-	PubSub.subscribe = function( message, func ){
+	PubSub.subscribe = function( message, func, context ){
 		// message is not registered yet
 		if ( !messages.hasOwnProperty( message ) ){
 			messages[message] = [];
@@ -145,26 +148,17 @@ https://github.com/mroderick/PubSubJS
 		// forcing token as String, to allow for future expansions without breaking usage
 		// and allow for easy use as key names for the 'messages' object
 		var token = String(++lastUid);
-		messages[message].push( { token : token, func : func } );
+		var func2sub = func;
+		// consider execution context if passed
+		if(context) {
+			func2sub = function(msg, data) {
+        			func.apply(context, [msg, data])
+    				});
+		} 
+		messages[message].push( { token : token, func : func2sub } );
 
 		// return token for unsubscribing
 		return token;
-	};
-
-	/**
-	 *	PubSub.subscribe( message, contextObjMethod, contextObj ) -> String
-	 *	- message (String): The message to subscribe to
-	 *	- contextObjMethod (Function): The method of contextObj to call when a new message is published
-	 * 	- contextObj (Object): The object to be taken as context for the method execution
-	 *	Subscribes the passed object method to the passed message. On publish the method will be executes 
-	 * 	using the passed contextObj as context.
-	 * 	Every returned token is unique and should be stored if 
-	 *	you need to unsubscribe
-	**/	
-	PubSub.subscribeWithContext = function(message, contextObjMethod, contextObj) {
-    		return PubSub.subscribe(message, function(msg, data) {
-        			contextObjMethod.apply(contextObj, [msg, data])
-    				});
 	};
 
 	/**
