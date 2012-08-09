@@ -153,7 +153,7 @@ https://github.com/mroderick/PubSubJS
 		if(context) {
 			func2sub = function(msg, data) {
         			func.apply(context, [msg, data])
-    				});
+    				};
 		} 
 		messages[message].push( { token : token, func : func2sub } );
 
