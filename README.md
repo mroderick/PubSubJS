@@ -45,7 +45,7 @@ Don't say I didn't warn you.
     // USE WITH CAUTION, HERE BE DRAGONS!!!
     PubSub.publishSync( 'MY MESSAGE', 'hello world!' );
 
-### Subscription with context
+### Subscription with context 
 
     // create an object to receive the message
     var Subscriber = function(name) {
