@@ -44,7 +44,30 @@ Don't say I didn't warn you.
     // same execution chain
     // USE WITH CAUTION, HERE BE DRAGONS!!!
     PubSub.publishSync( 'MY MESSAGE', 'hello world!' );
-    
+
+### Subscription with context
+
+    // create an object to receive the message
+    var Subscriber = function(name) {
+	var _name = name;
+	this.getName = function() {
+	   return _name;
+	};
+	// method to receive the message, referred to object context
+	this.acceptNotify = function(msg, data) {
+	   var logMsg = "Message received by " + this.getName() + ": '" + msg + "' -> " + data;
+	   console.log(logMsg);
+	};
+    };	
+    var mySubscriberObj = new Subscriber("Pippo");
+
+    // add the object method to the list of subscribers to a particular message, passing also the context objec
+    // we're keeping the returned token, in order to be able to unsubscribe 
+    // from the message later on
+    var token = PubSub.subscribe( 'MY MESSAGE', mySubscriberObj.acceptNotify , mySubscriberObj );
+
+    // publish a message asyncronously
+    PubSub.publish( 'MY MESSAGE', 'hello world!' );
 
 ### Cancel specific subscripiton
 
