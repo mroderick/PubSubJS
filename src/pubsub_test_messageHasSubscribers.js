@@ -101,16 +101,16 @@ https://github.com/mroderick/PubSubJS
 		var topic = String( message ),
 			found = messages.hasOwnProperty( topic ),
 			position = topic.lastIndexOf( '.' ),
-			numOfSub = (found) ? messages[topic].length : 0;
+			hasSub = found && messages[topic].length > 0;
 
-		while ( !found && position !== -1 && numOfSub == 0){
+		while ( position !== -1 && !hasSub  ){
 			topic = topic.substr( 0, position );
 			position = topic.lastIndexOf('.');
 			found = messages.hasOwnProperty( topic );
-			numOfSub = (found) ? messages[topic].length : 0;
+			hasSub = found && messages[topic].length > 0;
 		}
 
-		return numOfSub > 0;
+		return hasSub;
 	}	
 
 	function publish( message, data, sync ){
