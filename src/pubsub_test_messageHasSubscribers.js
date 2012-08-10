@@ -79,6 +79,8 @@ https://github.com/mroderick/PubSubJS
 		};
 	}
 
+	//current
+	/*
 	function messageHasSubscribers( message ){
 		var topic = String( message ),
 			found = messages.hasOwnProperty( topic ),
@@ -92,6 +94,24 @@ https://github.com/mroderick/PubSubJS
 
 		return found;
 	}
+	*/
+	
+	//modified
+	function messageHasSubscribers( message ){
+		var topic = String( message ),
+			found = messages.hasOwnProperty( topic ),
+			position = topic.lastIndexOf( '.' ),
+			hasSub = found && messages[topic].length > 0;
+
+		while ( position !== -1 && !hasSub  ){
+			topic = topic.substr( 0, position );
+			position = topic.lastIndexOf('.');
+			found = messages.hasOwnProperty( topic );
+			hasSub = found && messages[topic].length > 0;
+		}
+
+		return hasSub;
+	}	
 
 	function publish( message, data, sync ){
 		var deliver = createDeliveryFunction( message, data ),
