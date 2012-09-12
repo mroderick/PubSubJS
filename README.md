@@ -26,87 +26,92 @@ Don't say I didn't warn you.
 
 ### Basic example
 
-    // create a function to receive the message
-    var mySubscriber = function( msg, data ){
-        console.log( msg, data );
-    };
+```javascript
+// create a function to receive the message
+var mySubscriber = function( msg, data ){
+    console.log( msg, data );
+};
 
-    // add the function to the list of subscribers to a particular message
-    // we're keeping the returned token, in order to be able to unsubscribe 
-    // from the message later on
-    var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
+// add the function to the list of subscribers to a particular message
+// we're keeping the returned token, in order to be able to unsubscribe 
+// from the message later on
+var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
 
-    // publish a message asyncronously
-    PubSub.publish( 'MY MESSAGE', 'hello world!' );
-    
-    // publish a message syncronously, which is faster by orders of magnitude,
-    // but will get confusing when one message triggers new messages in the 
-    // same execution chain
-    // USE WITH CAUTION, HERE BE DRAGONS!!!
-    PubSub.publishSync( 'MY MESSAGE', 'hello world!' );
-    
+// publish a message asyncronously
+PubSub.publish( 'MY MESSAGE', 'hello world!' );
+
+// publish a message syncronously, which is faster by orders of magnitude,
+// but will get confusing when one message triggers new messages in the 
+// same execution chain
+// USE WITH CAUTION, HERE BE DRAGONS!!!
+PubSub.publishSync( 'MY MESSAGE', 'hello world!' );
+```    
 
 ### Cancel specific subscripiton
 
-    // create a function to receive the message
-    var mySubscriber = function( msg, data ){
-        console.log( msg, data );
-    };
+```javascript
+// create a function to receive the message
+var mySubscriber = function( msg, data ){
+    console.log( msg, data );
+};
 
-    // add the function to the list of subscribers to a particular message
-    // we're keeping the returned token, in order to be able to unsubscribe 
-    // from the message later on
-    var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
+// add the function to the list of subscribers to a particular message
+// we're keeping the returned token, in order to be able to unsubscribe 
+// from the message later on
+var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
 
-    // unsubscribe from further messages
-    PubSub.unsubscribe( token );
-
+// unsubscribe from further messages
+PubSub.unsubscribe( token );
+```
 
 ### Cancel all subscriptions for a function
 
-    // create a function to receive the message
-    var mySubscriber = function( msg, data ){
-        console.log( msg, data );
-    };
+```javascript
+// create a function to receive the message
+var mySubscriber = function( msg, data ){
+    console.log( msg, data );
+};
 
-    // add the function to the list of subscribers to a particular message
-    // we're keeping the returned token, in order to be able to unsubscribe 
-    // from the message later on
-    var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
+// add the function to the list of subscribers to a particular message
+// we're keeping the returned token, in order to be able to unsubscribe 
+// from the message later on
+var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
 
-    // unsubscribe mySubscriber from ALL further messages
-    PubSub.unsubscribe( mySubscriber );
-
+// unsubscribe mySubscriber from ALL further messages
+PubSub.unsubscribe( mySubscriber );
+```
 
 ### Hierarchical addressing
 
-    // create a subscriber to receive all messages from a hierarchy of topics
-    var myToplevelSubscriber = function( msg, data ){
-        console.log( 'top level: ', msg, data );
-    }
- 
-    // subscribe to all topics in the 'car' hierarchy
-    PubSub.subscribe( 'car', myToplevelSubscriber );
+```javascript
+// create a subscriber to receive all messages from a hierarchy of topics
+var myToplevelSubscriber = function( msg, data ){
+    console.log( 'top level: ', msg, data );
+}
+
+// subscribe to all topics in the 'car' hierarchy
+PubSub.subscribe( 'car', myToplevelSubscriber );
 
 
-    // create a subscriber to receive only leaf message from hierarchy op topics
-    var mySpecificSubscriber = function( msg, data ){
-        console.log('specific: ', msg, data );
-    }
+// create a subscriber to receive only leaf message from hierarchy op topics
+var mySpecificSubscriber = function( msg, data ){
+    console.log('specific: ', msg, data );
+}
 
-    // subscribe only to 'car.drive' topics
-    PubSub.subscribe( 'car.drive', mySpecificSubscriber );
+// subscribe only to 'car.drive' topics
+PubSub.subscribe( 'car.drive', mySpecificSubscriber );
 
 
-    // Publish some topics
-    PubSub.publish( 'car.purchase', { name : 'my new car' } );
-    PubSub.publish( 'car.drive', { speed : '14' } );
-    PubSub.publish( 'car.sell', { newOwner : 'someone else' } );
+// Publish some topics
+PubSub.publish( 'car.purchase', { name : 'my new car' } );
+PubSub.publish( 'car.drive', { speed : '14' } );
+PubSub.publish( 'car.sell', { newOwner : 'someone else' } );
 
-    // In this scenario, myToplevelSubscriber will be called for all 
-    // topics, three times in total
-    // But, mySpecificSubscriber will only be called once, as it only
-    // subscribes to the 'car.drive' topic
+// In this scenario, myToplevelSubscriber will be called for all 
+// topics, three times in total
+// But, mySpecificSubscriber will only be called once, as it only
+// subscribes to the 'car.drive' topic
+```
 
 
 ## Tips
@@ -117,20 +122,22 @@ when you make typos.
 
 ### Example of use of "constants"
 
-	// BAD
-	PubSub.subscribe("hello", function( msg, data ){ 
-		console.log( data ) 
-	});
-	
-	PubSub.publish("helo", "world");
-	
-	// BETTER
-	var MY_TOPIC = "hello";
-	PubSub.subscribe(MY_TOPIC, function( msg, data ){ 
-		console.log( data ) 
-	});
-	
-	PubSub.publish(MY_TOPIC, "world");
+```javascript
+// BAD
+PubSub.subscribe("hello", function( msg, data ){ 
+	console.log( data ) 
+});
+
+PubSub.publish("helo", "world");
+
+// BETTER
+var MY_TOPIC = "hello";
+PubSub.subscribe(MY_TOPIC, function( msg, data ){ 
+	console.log( data ) 
+});
+
+PubSub.publish(MY_TOPIC, "world");
+```
 
 ## Plugin for jQuery
 
@@ -142,28 +149,30 @@ Produces jquery.pubsub.js
 
 ### Use with jQuery
 
-    var topic = 'greeting',
-        data = 'world'
-        subscriber = function sayHello( data ){
-            console.log( 'hello ' + data );
-        };
 
-    // add a subscription
-    var token = $.pubsub('subscribe', topic, sayHello );
+```javascript
+var topic = 'greeting',
+    data = 'world'
+    subscriber = function sayHello( data ){
+        console.log( 'hello ' + data );
+    };
 
-    // unsubscribing
-    $.pubsub('unsubscribe', token)          // remove a specific subscription
-    $.pubsub('unsubscribe', subscriber);    // remove all subscriptions for subscriber
+// add a subscription
+var token = $.pubsub('subscribe', topic, sayHello );
 
-    // publishing a topic
-    $.pubsub('publish', topic, data);
+// unsubscribing
+$.pubsub('unsubscribe', token)          // remove a specific subscription
+$.pubsub('unsubscribe', subscriber);    // remove all subscriptions for subscriber
 
-    // publishing topic syncronously
-    $.pubsub('publishSync', topic, data);
+// publishing a topic
+$.pubsub('publish', topic, data);
 
+// publishing topic syncronously
+$.pubsub('publishSync', topic, data);
+```
 
 ## Testing
-The tests are done using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). 
+The tests are implemented using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). 
 
 **Note:** Before running the tests, you should [download jQuery 1.7.2](http://code.jquery.com/jquery-1.7.2.js) and put it in the lib folder.
 
