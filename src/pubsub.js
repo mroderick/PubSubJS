@@ -13,7 +13,9 @@ https://github.com/mroderick/PubSubJS
 */
 (function (name, global, definition){
 	"use strict";
-	if (typeof module !== 'undefined'){
+	var commonJSModule = typeof module == "object" && typeof require == "function";
+
+	if ( commonJSModule ){
 		module.exports = definition(name, global);
 	} else if (typeof define === 'function' && typeof define.amd  === 'object'){
 		define(definition);	
