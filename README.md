@@ -192,6 +192,8 @@ The tests are implemented using [BusterJS](http://busterjs.org) and the excellen
 PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioning.
 
 ## Changelog
+* v1.3.1
+    * Fixing issue-13, where CommonJS detection mistook QUnit for CommonJS environment.
 * v1.3.0
     * Added jQuery plugin via rake task
 * v1.2.2
