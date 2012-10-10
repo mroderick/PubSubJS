@@ -19,7 +19,7 @@ https://github.com/mroderick/PubSubJS
 		module.exports = definition(name, global);
 	} else if (typeof define === 'function' && typeof define.amd  === 'object'){
 		define(definition);	
-	} else {
+	} else {
 		global[name] = definition(name, global);	
 	} 
 }('PubSub', ( typeof window !== 'undefined' && window ) || this, function definition(name, global){
