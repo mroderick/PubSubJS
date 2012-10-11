@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>iframe demo frame 2</title>
+		<script src="pubsub-bridge.js"></script>
+		<script>
+			function init( PubSub ){
+				var btn = document.getElementById('publish-thing');
+
+				setPubSub( PubSub );
+				console.log( 'frame 2 init - ', window.PubSub );
+				
+				PubSub.subscribe( 'hello-world', function( topic, data ){
+					console.log('hello-world received at frame 2 - ', data );
+				});
+
+				btn.onclick = function(){					
+					PubSub.publish( 'hello-world', 'from button in frame 2' );
+				};				
+			}
+		</script>		
+	</head>
+	<body>
+		<p>frame2.html</p>
+		<button id="publish-thing">Test</button>
+	</body>
+</html>

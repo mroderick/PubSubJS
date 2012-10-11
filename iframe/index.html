@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>iframe demo</title>
+		<script src="../src/pubsub.js"></script>
+		<script>
+			console.log( 'PubSub: ', PubSub );
+		</script>
+	</head>
+	<body>
+		<h1>Cross iframe communication with PubSubJS</h1>
+		<p>
+			This is a small demonstration that shows that it is possible to use PubSubJS for communication across iframes.
+		</p>
+
+		<iframe id="frame-1" src="frame1.html"></iframe>
+		<iframe id="frame-2" src="frame2.html"></iframe>
+		<button id="publish-thing">Test</button>
+
+		<script>
+			window.onload = function(){
+				var f1w = document.getElementById('frame-1').contentWindow,
+					f2w = document.getElementById('frame-2').contentWindow,
+					btn = document.getElementById('publish-thing');
+
+
+				f1w.init( PubSub );
+				f2w.init( PubSub );
+
+				PubSub.subscribe( 'hello-world', function( topic, data ){
+					console.log('hello world received at parent - ', data );
+				});				
+
+				btn.onclick = function(){					
+					PubSub.publish( 'hello-world', 'from button in parent document' );
+				};
+			};
+		</script>
+	</body>
+</html>
