@@ -28,7 +28,7 @@ https://github.com/mroderick/PubSubJS
 	
 	var PubSub = {
 			name: 'PubSubJS',
-			version: '1.3.2-dev'
+			version: '1.3.2'
 		},
 		messages = {},
 		lastUid = -1;
@@ -43,7 +43,7 @@ https://github.com/mroderick/PubSubJS
 		};
 	}
 
-	function callSubscriber( subscriber, message, data ){
+	function callSubscriberWithDelayedExceptions( subscriber, message, data ){
 		try {
 			subscriber( message, data );
 		} catch( ex ){
@@ -51,8 +51,13 @@ https://github.com/mroderick/PubSubJS
 		}
 	}
 
-	function deliverMessage( originalMessage, matchedMessage, data ){
+	function callSubscriberWithImmediateExceptions( subscriber, message, data ){
+		subscriber( message, data );
+	}
+
+	function deliverMessage( originalMessage, matchedMessage, data, immediateExceptions ){
 		var subscribers = messages[matchedMessage],
+			callSubscriber = immediateExceptions ? callSubscriberWithImmediateExceptions : callSubscriberWithDelayedExceptions,
 			i, j; 
 
 		if ( !messages.hasOwnProperty( matchedMessage ) ) {
@@ -64,13 +69,13 @@ https://github.com/mroderick/PubSubJS
 		}
 	}
 
-	function createDeliveryFunction( message, data ){
+	function createDeliveryFunction( message, data, immediateExceptions ){
 		return function deliverNamespaced(){
 			var topic = String( message ),
 				position = topic.lastIndexOf( '.' );
 
 			// deliver the message as it is now
-			deliverMessage(message, message, data);
+			deliverMessage(message, message, data, immediateExceptions);
 
 			// trim the hierarchy and deliver message to each level
 			while( position !== -1 ){
@@ -95,8 +100,8 @@ https://github.com/mroderick/PubSubJS
 		return found;
 	}
 
-	function publish( message, data, sync ){
-		var deliver = createDeliveryFunction( message, data ),
+	function publish( message, data, sync, immediateExceptions ){
+		var deliver = createDeliveryFunction( message, data, immediateExceptions ),
 			hasSubscribers = messageHasSubscribers( message );
 
 		if ( !hasSubscribers ){
@@ -118,7 +123,7 @@ https://github.com/mroderick/PubSubJS
 	 *	Publishes the the message, passing the data to it's subscribers
 	**/
 	PubSub.publish = function( message, data ){
-		return publish( message, data, false );
+		return publish( message, data, false, PubSub.immediateExceptions );
 	};
 
 	/**
@@ -128,7 +133,7 @@ https://github.com/mroderick/PubSubJS
 	 *	Publishes the the message synchronously, passing the data to it's subscribers
 	**/
 	PubSub.publishSync = function( message, data ){
-		return publish( message, data, true );
+		return publish( message, data, true, PubSub.immediateExceptions );
 	};
 
 	/**

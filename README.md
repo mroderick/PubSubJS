@@ -139,6 +139,18 @@ PubSub.subscribe(MY_TOPIC, function( msg, data ){
 PubSub.publish(MY_TOPIC, "world");
 ```
 
+### Immediate Exceptions for stack traces in developer tools
+
+As of versions 1.3.2, you can force immediate exceptions (instead of delayed execeptions), which has the benefit of maintaining the stack trace when viewed in dev tools.
+
+This should be considered a development only option, as PubSubJS was designed to try to deliver your topics to all subscribers, even when some fail.
+
+Setting immediate exceptions in development is easy, just tell PubSubJS about it after it's been loaded.
+
+```javascript
+PubSub.immediateExceptions = true;
+```
+
 ## Plugin for jQuery
 
 By default PubSubJS can be used in any browser or CommonJS environment, including [node](http://nodejs.org). Additionally, PubSubJS can be built specifically for jQuery.
@@ -192,6 +204,8 @@ The tests are implemented using [BusterJS](http://busterjs.org) and the excellen
 PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioning.
 
 ## Changelog
+* v1.3.2
+    * Adding immediateExceptions configuration option to allow for development time debugging without loosing stack traces in Chrome dev tools
 * v1.3.1
     * Fixing issue-13, where CommonJS detection mistook QUnit for CommonJS environment.
 * v1.3.0

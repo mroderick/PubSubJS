@@ -130,7 +130,32 @@
 
 			done();
 			clock.restore();
-		}		
+		},
+
+		"publish method should fail immediately on exceptions when immediateExceptions is true" : function(){
+			var message = TestHelper.getUniqueString(),
+				func1 = function(){
+					throw('some error');
+				},
+				spy1 = this.spy(),
+				spy2 = this.spy();
+
+
+			PubSub.subscribe( message, func1 );
+			PubSub.subscribe( message, spy1 );
+
+			PubSub.immediateExceptions = true;
+
+			assert.exception( function(){
+				PubSub.publishSync( message, 'some data' );
+			});
+
+			refute( spy1.called );		  
+			refute( spy2.called );		  
+
+			// make sure we restore PubSub to it's original state
+			delete PubSub.immediateExceptions;
+		}
 	});
 
 }(this));
