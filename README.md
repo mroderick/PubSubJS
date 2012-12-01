@@ -183,11 +183,29 @@ $.pubsub('publish', topic, data);
 $.pubsub('publishSync', topic, data);
 ```
 
-## Testing
-The tests are implemented using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). 
+## Development
+
+There are grunt tasks for helping with linting and testing the codebase.
+
+### Test setup
+
+The tests are implemented using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). You will need to install BusterJS in order to run the tests.
 
 **Note:** Before running the tests, you should [download jQuery 1.7.2](http://code.jquery.com/jquery-1.7.2.js) and put it in the lib folder.
 
+### Linting
+
+```bash
+$ grunt lint
+```
+
+### Testing with PhantomJS
+
+If you have PhantomJS installed on your system, you can run the Buster tests by running
+
+```bash
+$ grunt test
+```
 ## Future of PubSubJS
 
 * Build script to create the following wrappers
@@ -204,6 +222,13 @@ The tests are implemented using [BusterJS](http://busterjs.org) and the excellen
 PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioning.
 
 ## Changelog
+* v1.3.3
+    * Adding grunt.js for development tasks
+    * Adding package.json for distribution via npm
+    * Linting all source and test files with recent release of JSLint
+
+    This version should from an API perspective be exactly the same as v1.3.2. Changes were only made to make PubSubJS more suitable for distribution via npm.
+
 * v1.3.2
     * Adding immediateExceptions configuration option to allow for development time debugging without loosing stack traces in Chrome dev tools
 * v1.3.1

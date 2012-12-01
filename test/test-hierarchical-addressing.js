@@ -1,3 +1,4 @@
+/*jslint white:true*/
 /*global
 	PubSub,
 	buster,
@@ -158,13 +159,15 @@
 			var messages = ['library', 'library.music', 'library.music.jazz'],
 				spy = this.spy(),
 				data = TestHelper.getUniqueString(),
+				token;
 			
 			
-				token1 = PubSub.subscribe( messages[0], spy ), //This should be called
-				token2 = PubSub.subscribe( messages[1], spy ),
-				token3 = PubSub.subscribe( messages[2], spy ); //This should be called
+			PubSub.subscribe( messages[0], spy ); //This should be called
+			PubSub.subscribe( messages[2], spy ); //This should be called
+
+			token = PubSub.subscribe( messages[1], spy );
 			
-			PubSub.unsubscribe( token2 ); //Take out middle child
+			PubSub.unsubscribe( token ); //Take out middle child
 			
 			PubSub.publish( messages[2], data );
 
@@ -188,14 +191,16 @@
 		},
 		
 		"unsubscribe method should unsubscribe parent without affecting orphans" : function( done ){
-			var func = function(){},
-				data = TestHelper.getUniqueString(),
+			var data = TestHelper.getUniqueString(),
 				spy = this.spy(),
 				messages = ['playlist', 'playlist.music', 'playlist.music.jazz'],
-				token1 = PubSub.subscribe( messages[0], spy ), //Gets unsubscribed
-				token2 = PubSub.subscribe( messages[1], spy ), //This should be called
-				token3 = PubSub.subscribe( messages[2], spy ), //This should be called
-				result1 = PubSub.unsubscribe( token1 );
+				token, result;
+
+			token = PubSub.subscribe( messages[0], spy ); //Gets unsubscribed
+			PubSub.subscribe( messages[1], spy ); //This should be called
+			PubSub.subscribe( messages[2], spy ); //This should be called
+			
+			result = PubSub.unsubscribe( token );
 			
 			PubSub.publish( messages[2], data );
 			

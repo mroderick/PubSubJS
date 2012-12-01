@@ -1,31 +1,32 @@
+/*jslint white:true*/
 /*global
 	module
 */
 var config = module.exports;
 config["PubSubJS browser"] = {
 	rootPath: "../",
-    environment: "browser",
-    sources: [
-        "src/pubsub.js"
-    ],
-    tests: [
-        "test/helper.js",
-        "test/test-*.js"
-    ]
+	environment: "browser",
+	sources: [
+		"src/pubsub.js"
+	],
+	tests: [
+		"test/helper.js",
+		"test/test-*.js"
+	]
 };
 
 config["PubSubJS - jQuery 1.7.2"] = {
 	rootPath: "../",
-    environment: "browser",
+	environment: "browser",
 
-    libs: [
+	libs: [
 		"lib/jquery-1.7.2.js"
-    ],
+	],
 
-    resources: [
+	resources: [
 		"src/pubsub.js",
 		"wrappers/jquery/*",
-        { 
+		{
 			path: "/jquery.pubsub.js",
 			combine: [
 				"wrappers/jquery/pubsub.js.pre.txt",
@@ -35,12 +36,12 @@ config["PubSubJS - jQuery 1.7.2"] = {
 		}
 	],
 
-    sources: ["/jquery.pubsub.js"],
+	sources: ["/jquery.pubsub.js"],
 
-    tests: [
-        "test/helper.js",
-        "test/test-*.js"
-    ]
+	tests: [
+		"test/helper.js",
+		"test/test-*.js"
+	]
 };
 
 config["PubSubJS node"] = {

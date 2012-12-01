@@ -4,31 +4,37 @@ License: MIT - http://mrgnrdrck.mit-license.org
 
 https://github.com/mroderick/PubSubJS
 */
+/*jslint white:true, plusplus:true, stupid:true*/
 /*global
 	setTimeout,
 	module,
 	exports,
 	define,
+	require,
 	window
 */
-(function (name, global, definition){
-	"use strict";
-	var commonJSModule = typeof module == "object" && typeof require == "function";
 
-	if ( commonJSModule ){
-		module.exports = definition(name, global);
-	} else if (typeof define === 'function' && typeof define.amd  === 'object'){
-		define(definition);	
+(function(root, factory){
+	'use strict';
+
+	// CommonJS
+	if (typeof exports === 'object'){
+		module.exports = factory();
+
+	// AMD
+	} else if (typeof define === 'function' && define.amd){
+		define(factory);
+	// Browser
 	} else {
-		global[name] = definition(name, global);	
-	} 
-}('PubSub', ( typeof window !== 'undefined' && window ) || this, function definition(name, global){
+		root.PubSub = factory();
+	}
+}( ( typeof window === 'object' && window ) || this, function(){
 
-	"use strict";
+	'use strict';
 	
 	var PubSub = {
 			name: 'PubSubJS',
-			version: '1.3.2'
+			version: '1.3.3'
 		},
 		messages = {},
 		lastUid = -1;
@@ -170,7 +176,7 @@ https://github.com/mroderick/PubSubJS
 			succesfulReturnValue = isToken ? tokenOrFunction : true,
 
 			result = false,
-			m, i, j;
+			m, i;
 		
 		for ( m in messages ){
 			if ( messages.hasOwnProperty( m ) ){
