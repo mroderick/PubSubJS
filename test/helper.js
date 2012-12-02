@@ -1,28 +1,30 @@
+/*jslint white:true, plusplus:true*/
 /*global
 	exports,
 	module,
 	assert,
-	define
+	define,
+	window
 */
-(function(root){
-	"use strict";
+(function(root, factory){
+	'use strict';
+
+	// CommonJS
+	if (typeof exports === 'object'){
+		module.exports = factory();
+
+	// AMD
+	} else if (typeof define === 'function' && define.amd){
+		define(factory);
+	// Browser
+	} else {
+		root.TestHelper = factory();
+	}
+}( ( typeof window === 'object' && window ) || this, function(){
+
+	'use strict';
 
 	var TestHelper = {};
-
-	// Export the PubSub object for **Node.js** and **"CommonJS"**, with
-	// backwards-compatibility for the old `require()` API. If we're not in
-	// CommonJS, add `PubSub` to the global object via a string identifier for
-	// the Closure Compiler "advanced" mode. Registration as an AMD module
-	// via define() happens at the end of this file.
-	if (typeof exports !== 'undefined') {
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = TestHelper;
-		}
-		exports.PubSub = TestHelper;
-	} else {
-		root.TestHelper = TestHelper;
-	}
-
 
 	// helps us make sure that the order of the tests have no impact on their succes
 	function getUniqueString(){
@@ -53,13 +55,6 @@
 
 	TestHelper.getUniqueString = getUniqueString;
 	TestHelper.assertAllTokensDifferent = assertAllTokensDifferent;
-	
-	// AMD define happens at the end for compatibility with AMD loaders
-	// that don't enforce next-turn semantics on modules.
-	if (typeof define === 'function' && define.amd) {
-		define(function(){
-			return TestHelper;
-		});
-	}
 
-}(this));
+	return TestHelper;
+}));

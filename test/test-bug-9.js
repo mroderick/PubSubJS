@@ -1,3 +1,4 @@
+/*jslint white:true*/
 /*global
 	PubSub,
 	buster,
@@ -9,8 +10,7 @@
 (function( global ){
 	"use strict";
 
-	var PubSub = global.PubSub || require("../src/pubsub"),
-		TestHelper = global.TestHelper || require("../test/helper");
+	var PubSub = global.PubSub || require("../src/pubsub");
 
 	/**
 	 *	This is a test proving that bug 9 has been fixed.

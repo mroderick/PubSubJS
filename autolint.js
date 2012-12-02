@@ -11,7 +11,7 @@ module.exports = {
 
 	// see default-configuration.js for a list of all options				
   	linterOptions: {
-  		maxlen		: 120,
+  		maxlen		: 240,
   		plusplus	: true,
   		white		: true,
 
