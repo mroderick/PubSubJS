@@ -1,3 +1,4 @@
+/*jslint white:true*/
 /*global
 	PubSub,
 	buster,
@@ -41,8 +42,10 @@
 		"with function argument should return true when succesful" : function(){
 			var func = function(){},
 				message = TestHelper.getUniqueString(),
-				token = PubSub.subscribe( message, func),
-				result = PubSub.unsubscribe( func );
+				result;
+
+			PubSub.subscribe( message, func);
+			result = PubSub.unsubscribe( func );
 
 			assert.equals( result, true );        
 		},

@@ -1,8 +1,9 @@
-/*jslint white:true, plusplus:true */
+/*jslint white:true, stupid:true*/
 /*global
 	PubSub,
 	buster,
 	assert,
+	refute,
 	require,
 	sinon
 */

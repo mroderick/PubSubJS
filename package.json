@@ -1,0 +1,40 @@
+{
+	"name" : "pubsubjs",
+	"version" : "1.3.3",
+	"description" : "Dependency free publish/subscribe library",
+	"directories" : {
+		"lib" : "src",
+		"test" : "test"
+	},
+
+	"scripts" : {
+        "pretest" : "npm install",
+        "test" : "grunt test",
+        "prepublish" : "npm test"
+    },
+
+	"repository" : {
+		"type" : "git",
+		"url" : "git://github.com/mroderick/PubSubJS.git"
+	},
+
+	"keywords" : [
+		"pub/sub",
+		"publish/subscribe",
+		"publish",
+		"subscribe"
+	],
+
+	"author" : {
+		"name" : "Morgan Roderick",
+		"email" : "morgan@roderick.dk",
+		"url" : "http://roderick.dk"
+	},
+	
+	"license" : "MIT",
+
+	"devDependencies": {
+		"grunt-buster"            : "0.1.2",
+		"grunt-jslint"            : "0.2.x"
+	}
+}
