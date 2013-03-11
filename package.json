@@ -32,6 +32,7 @@
 	"license": "MIT",
 
 	"devDependencies": {
+		"buster": "0.6.x",
 		"grunt": "0.4.0",
 		"grunt-jslint": "0.2.5",
 		"grunt-buster": "0.1.2"
