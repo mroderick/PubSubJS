@@ -8,9 +8,9 @@
 	},
 
 	"scripts": {
-		"pretest": "npm install",
+		// "pretest": "npm install",
 		"test": "grunt test",
-		"prepublish": "npm test"
+		// "prepublish": "npm test"
 	},
 
 	"repository": {
