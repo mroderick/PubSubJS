@@ -3,11 +3,11 @@
 PubSubJS is a dependency free library for doing [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe)
 messaging in [JavaScript](https://developer.mozilla.org/en/JavaScript).
 
-In order to not have surprising behaviour where the execution chain generates more than one message, 
-publication of messages with PubSub are done asyncronously (this also helps keep your code responsive, by 
+In order to not have surprising behaviour where the execution chain generates more than one message,
+publication of messages with PubSub are done asyncronously (this also helps keep your code responsive, by
 dividing work into smaller chunks, allowing the event loop to do it's business).
 
-If you're feeling adventurous, you can also use syncronous message publication (speedup in browsers), which can lead 
+If you're feeling adventurous, you can also use syncronous message publication (speedup in browsers), which can lead
 to some very confusing conditions, when one message triggers publication of another message in the same execution chain.
 Don't say I didn't warn you.
 
@@ -33,7 +33,7 @@ var mySubscriber = function( msg, data ){
 };
 
 // add the function to the list of subscribers to a particular message
-// we're keeping the returned token, in order to be able to unsubscribe 
+// we're keeping the returned token, in order to be able to unsubscribe
 // from the message later on
 var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
 
@@ -41,11 +41,11 @@ var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
 PubSub.publish( 'MY MESSAGE', 'hello world!' );
 
 // publish a message syncronously, which is faster by orders of magnitude,
-// but will get confusing when one message triggers new messages in the 
+// but will get confusing when one message triggers new messages in the
 // same execution chain
 // USE WITH CAUTION, HERE BE DRAGONS!!!
 PubSub.publishSync( 'MY MESSAGE', 'hello world!' );
-```    
+```
 
 ### Cancel specific subscripiton
 
@@ -56,7 +56,7 @@ var mySubscriber = function( msg, data ){
 };
 
 // add the function to the list of subscribers to a particular message
-// we're keeping the returned token, in order to be able to unsubscribe 
+// we're keeping the returned token, in order to be able to unsubscribe
 // from the message later on
 var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
 
@@ -73,7 +73,7 @@ var mySubscriber = function( msg, data ){
 };
 
 // add the function to the list of subscribers to a particular message
-// we're keeping the returned token, in order to be able to unsubscribe 
+// we're keeping the returned token, in order to be able to unsubscribe
 // from the message later on
 var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
 
@@ -107,7 +107,7 @@ PubSub.publish( 'car.purchase', { name : 'my new car' } );
 PubSub.publish( 'car.drive', { speed : '14' } );
 PubSub.publish( 'car.sell', { newOwner : 'someone else' } );
 
-// In this scenario, myToplevelSubscriber will be called for all 
+// In this scenario, myToplevelSubscriber will be called for all
 // topics, three times in total
 // But, mySpecificSubscriber will only be called once, as it only
 // subscribes to the 'car.drive' topic
@@ -116,7 +116,7 @@ PubSub.publish( 'car.sell', { newOwner : 'someone else' } );
 
 ## Tips
 
-Use "constants" for topics and not string literals. PubSubJS uses strings as topics, and will happily try to deliver 
+Use "constants" for topics and not string literals. PubSubJS uses strings as topics, and will happily try to deliver
 your messages with ANY topic. So, save yourself from frustrating debugging by letting the JavaScript engine complain
 when you make typos.
 
@@ -124,16 +124,16 @@ when you make typos.
 
 ```javascript
 // BAD
-PubSub.subscribe("hello", function( msg, data ){ 
-	console.log( data ) 
+PubSub.subscribe("hello", function( msg, data ){
+	console.log( data )
 });
 
 PubSub.publish("helo", "world");
 
 // BETTER
 var MY_TOPIC = "hello";
-PubSub.subscribe(MY_TOPIC, function( msg, data ){ 
-	console.log( data ) 
+PubSub.subscribe(MY_TOPIC, function( msg, data ){
+	console.log( data )
 });
 
 PubSub.publish(MY_TOPIC, "world");
@@ -222,6 +222,10 @@ $ grunt test
 PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioning.
 
 ## Changelog
+* v1.3.4
+    * Updating grunt to 0.4.0
+    * Tweaks for publication to npm.
+
 * v1.3.3
     * Adding grunt.js for development tasks
     * Adding package.json for distribution via npm
@@ -243,7 +247,7 @@ PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioni
     * Hierarchical addressing of topics ("namespacing") (@jgauffin, @fideloper)
 * v1.0.3
 	* AMD / CommonJS module support (@fernandogmar)
-	
+
 ## License
 
 MIT: http://mrgnrdrck.mit-license.org
