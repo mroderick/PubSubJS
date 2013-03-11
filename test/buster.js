@@ -44,6 +44,7 @@ config["PubSubJS - jQuery 1.7.2"] = {
 	]
 };
 
+/*
 config["PubSubJS node"] = {
 	rootPath: "../",
 	environment: "node",
@@ -55,3 +56,4 @@ config["PubSubJS node"] = {
 		"test/test-*.js"
 	]
 };
+*/
