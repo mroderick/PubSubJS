@@ -1,13 +1,10 @@
 /*jslint white:true*/
-/*global 
+/*global
 	module
 */
 module.exports = function(grunt) {
 
 	'use strict';
-
-	grunt.loadNpmTasks('grunt-buster');
-	grunt.loadNpmTasks('grunt-jslint');
 
 	// Project configuration.
 	grunt.initConfig({
@@ -37,10 +34,13 @@ module.exports = function(grunt) {
 		}
 	});
 
+	grunt.loadNpmTasks('grunt-buster');
+	grunt.loadNpmTasks('grunt-jslint');
+
 	// override the built-in lint task with jslint
 	grunt.registerTask('lint', 'jslint');
 
-	grunt.registerTask('test', 'lint buster');
+	grunt.registerTask('test', ['lint', 'buster']);
 
 	// Default task.
 	grunt.registerTask('default', 'test');

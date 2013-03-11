@@ -31,10 +31,10 @@ https://github.com/mroderick/PubSubJS
 }( ( typeof window === 'object' && window ) || this, function(){
 
 	'use strict';
-	
+
 	var PubSub = {
 			name: 'PubSubJS',
-			version: '1.3.3'
+			version: '1.3.4-dev'
 		},
 		messages = {},
 		lastUid = -1;
@@ -64,7 +64,7 @@ https://github.com/mroderick/PubSubJS
 	function deliverMessage( originalMessage, matchedMessage, data, immediateExceptions ){
 		var subscribers = messages[matchedMessage],
 			callSubscriber = immediateExceptions ? callSubscriberWithImmediateExceptions : callSubscriberWithDelayedExceptions,
-			i, j; 
+			i, j;
 
 		if ( !messages.hasOwnProperty( matchedMessage ) ) {
 			return;
@@ -146,7 +146,7 @@ https://github.com/mroderick/PubSubJS
 	 *	PubSub.subscribe( message, func ) -> String
 	 *	- message (String): The message to subscribe to
 	 *	- func (Function): The function to call when a new message is published
-	 *	Subscribes the passed function to the passed message. Every returned token is unique and should be stored if 
+	 *	Subscribes the passed function to the passed message. Every returned token is unique and should be stored if
 	 *	you need to unsubscribe
 	**/
 	PubSub.subscribe = function( message, func ){
@@ -167,8 +167,8 @@ https://github.com/mroderick/PubSubJS
 	/**
 	 *	PubSub.unsubscribe( tokenOrFunction ) -> String | Boolean
 	 *  - tokenOrFunction (String|Function): The token of the function to unsubscribe or func passed in on subscribe
-	 *  Unsubscribes a specific subscriber from a specific message using the unique token 
-	 *  or if using Function as argument, it will remove all subscriptions with that function	
+	 *  Unsubscribes a specific subscriber from a specific message using the unique token
+	 *  or if using Function as argument, it will remove all subscriptions with that function
 	**/
 	PubSub.unsubscribe = function( tokenOrFunction ){
 		var isToken = typeof tokenOrFunction === 'string',
@@ -177,7 +177,7 @@ https://github.com/mroderick/PubSubJS
 
 			result = false,
 			m, i;
-		
+
 		for ( m in messages ){
 			if ( messages.hasOwnProperty( m ) ){
 				for ( i = messages[m].length-1 ; i >= 0; i-- ){
@@ -196,6 +196,6 @@ https://github.com/mroderick/PubSubJS
 
 		return result;
 	};
-	
+
 	return PubSub;
 }));
