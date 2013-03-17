@@ -1,4 +1,4 @@
-# PubSubJS
+# PubSubJS [![Build Status](https://travis-ci.org/mroderick/PubSubJS.png)](https://travis-ci.org/mroderick/PubSubJS)
 
 PubSubJS is a dependency free library for doing [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe)
 messaging in [JavaScript](https://developer.mozilla.org/en/JavaScript).
