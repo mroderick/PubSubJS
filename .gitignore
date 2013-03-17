@@ -3,7 +3,6 @@
 .project
 .settings/
 .tmp*
-lib/jquery*.js
 jquery.pubsub.js
 /node_modules/
 /out/
