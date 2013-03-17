@@ -183,6 +183,8 @@ $.pubsub('publish', topic, data);
 $.pubsub('publishSync', topic, data);
 ```
 
+There is also an article about [Using PubSubJS with jQuery](http://roderick.dk/resources/using-pubsubjs-with-jquery/)
+
 ## Development
 
 There are grunt tasks for helping with linting and testing the codebase.
