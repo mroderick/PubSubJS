@@ -1,38 +1,34 @@
 # PubSubJS [![Build Status](https://travis-ci.org/mroderick/PubSubJS.png)](https://travis-ci.org/mroderick/PubSubJS)
 
-PubSubJS is a dependency free library for doing [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe)
-messaging in [JavaScript](https://developer.mozilla.org/en/JavaScript).
+PubSubJS is a dependency free [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe) library for [JavaScript](https://developer.mozilla.org/en/JavaScript).
 
-In order to not have surprising behaviour where the execution chain generates more than one message,
-publication of messages with PubSub are done asyncronously (this also helps keep your code responsive, by
-dividing work into smaller chunks, allowing the event loop to do it's business).
+PubSubJS has synchroniation decoubling, so messages are delivered asynchronously. This helps keep your program predictable as the originator of messages will not be blocked while consumers process messages.
 
-If you're feeling adventurous, you can also use syncronous message publication (speedup in browsers), which can lead
-to some very confusing conditions, when one message triggers publication of another message in the same execution chain.
-Don't say I didn't warn you.
+For the adventurous, PubSubJS also supports synchronous message publication. This can give a speedup in some environments (browsers, not all), but can also lead to some very difficult to reason about programs, when one message triggers publication of another message in the same execution chain.
 
-## Goals
+For benchmarks, see [A Comparison of JS Publish/Subscribe Approaches](http://jsperf.com/pubsubjs-vs-jquery-custom-events/51)
 
-* No dependencies
+## Key features
+
+* Dependency free
+* Synchronization decoupling
+* ES3 compatible. PubSubJS should be able to run everywhere that can execute JavaScript. Browsers, servers, ebook readers, old phones, game consoles.
+* AMD / CommonJS module support
 * No modification of subscribers (jQuery custom events modify subscribers)
-* No use of DOM for exchanging messages
-* No reliance of running in a browser
-* Easy to understand (messages are async by default)
-* Small(ish)
-* Compatible! ES3 compatible, should be able to run everywhere that can execute JavaScript
-* AMD / CommonJS module
+* Easy to understand and use (thanks to synchronization decoupling)
+* Small(ish), less than 1kb minified and gzipped
 
 ## Examples
 
 ### Basic example
 
 ```javascript
-// create a function to receive the message
+// create a function to receive messages
 var mySubscriber = function( msg, data ){
     console.log( msg, data );
 };
 
-// add the function to the list of subscribers to a particular message
+// add the function to the list of subscribers for a particular message
 // we're keeping the returned token, in order to be able to unsubscribe
 // from the message later on
 var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
@@ -40,7 +36,7 @@ var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
 // publish a message asyncronously
 PubSub.publish( 'MY MESSAGE', 'hello world!' );
 
-// publish a message syncronously, which is faster by orders of magnitude,
+// publish a message syncronously, which is faster in some environments,
 // but will get confusing when one message triggers new messages in the
 // same execution chain
 // USE WITH CAUTION, HERE BE DRAGONS!!!
@@ -92,7 +88,6 @@ var myToplevelSubscriber = function( msg, data ){
 // subscribe to all topics in the 'car' hierarchy
 PubSub.subscribe( 'car', myToplevelSubscriber );
 
-
 // create a subscriber to receive only leaf message from hierarchy op topics
 var mySpecificSubscriber = function( msg, data ){
     console.log('specific: ', msg, data );
@@ -100,7 +95,6 @@ var mySpecificSubscriber = function( msg, data ){
 
 // subscribe only to 'car.drive' topics
 PubSub.subscribe( 'car.drive', mySpecificSubscriber );
-
 
 // Publish some topics
 PubSub.publish( 'car.purchase', { name : 'my new car' } );
@@ -112,7 +106,6 @@ PubSub.publish( 'car.sell', { newOwner : 'someone else' } );
 // But, mySpecificSubscriber will only be called once, as it only
 // subscribes to the 'car.drive' topic
 ```
-
 
 ## Tips
 
@@ -161,7 +154,6 @@ Produces jquery.pubsub.js
 
 ### Use with jQuery
 
-
 ```javascript
 var topic = 'greeting',
     data = 'world'
@@ -183,6 +175,8 @@ $.pubsub('publish', topic, data);
 $.pubsub('publishSync', topic, data);
 ```
 
+In the jQuery build, the global ```PubSub``` global is still available, so you can mix and match both ```Pubsub``` and ```$.pubsub``` as needed.
+
 There is also an article about [Using PubSubJS with jQuery](http://roderick.dk/resources/using-pubsubjs-with-jquery/)
 
 ## Development
@@ -192,8 +186,6 @@ There are grunt tasks for helping with linting and testing the codebase.
 ### Test setup
 
 The tests are implemented using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). You will need to install BusterJS in order to run the tests.
-
-**Note:** Before running the tests, you should [download jQuery 1.7.2](http://code.jquery.com/jquery-1.7.2.js) and put it in the lib folder.
 
 ### Linting
 
@@ -208,6 +200,12 @@ If you have PhantomJS installed on your system, you can run the Buster tests by 
 ```bash
 $ grunt test
 ```
+
+or by running
+```bash
+$ npm test
+```
+
 ## Future of PubSubJS
 
 * Build script to create the following wrappers
@@ -218,6 +216,7 @@ $ grunt test
 
 * [The Many Faces of Publish/Subscribe](http://www.cs.ru.nl/~pieter/oss/manyfaces.pdf) (PDF)
 * [Addy Osmani's mini book on Patterns](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#observerpatternjavascript)
+* [Publish / Subscribe Systems, A summary of 'The Many Faces of Publish / Subscribe'](http://downloads.ohohlfeld.com/talks/hohlfeld_schroeder-publish_subscribe_systems-dsmware_eurecom2007.pdf)
 
 ## Versioning
 
@@ -261,3 +260,4 @@ These are a few alternative projects that also implement topic based publish sub
 * http://www.joezimjs.com/projects/publish-subscribe-jquery-plugin/
 * http://amplifyjs.com/api/pubsub/
 * http://radio.uxder.com/ — oriented towards 'channels', free of dependencies
+* https://github.com/pmelander/Subtopic - supports vanilla, underscore, jQuery and is even available in NuGet
