@@ -1,4 +1,6 @@
-# PubSubJS [![Build Status](https://travis-ci.org/mroderick/PubSubJS.png)](https://travis-ci.org/mroderick/PubSubJS)
+# PubSubJS
+
+[![Build Status](https://travis-ci.org/mroderick/PubSubJS.png)](https://travis-ci.org/mroderick/PubSubJS) [![NPM version](https://badge.fury.io/js/pubsub-js.png)](http://badge.fury.io/js/pubsub-js)
 
 PubSubJS is a dependency free [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe) library for [JavaScript](https://developer.mozilla.org/en/JavaScript).
 
