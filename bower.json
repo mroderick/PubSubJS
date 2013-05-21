@@ -1,0 +1,17 @@
+{
+  "name": "PubSubJS",
+  "version": "1.3.6",
+  "main": "src/pubsub.js",
+  "ignore": [
+    "**/.*",
+    "iframe",
+    "lib",
+    "test",
+    "wrappers",
+    "autolint.js",
+    "Gruntfile.js",
+    "jquery-integration.html",
+    "package.json",
+    "Rakefile"
+  ]
+}

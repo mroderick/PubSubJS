@@ -20,6 +20,14 @@ For benchmarks, see [A Comparison of JS Publish/Subscribe Approaches](http://jsp
 * Easy to understand and use (thanks to synchronization decoupling)
 * Small(ish), less than 1kb minified and gzipped
 
+## Getting PubSubJS
+
+There are several ways of getting PubSubJS
+
+* [Download a tagged version](https://github.com/mroderick/PubSubJS/tags) from GitHub
+* Install via npm (`npm install pubsub-js`)
+* Intall via bower (`bower install pubsub-js`)
+
 ## Examples
 
 ### Basic example
@@ -225,6 +233,12 @@ $ npm test
 PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioning.
 
 ## Changelog
+* v1.3.6
+    * Add [bower](http://bower.io) support
+
+* v1.3.5
+    * Fix package.json, add a "main" option, for easier use with node
+
 * v1.3.4
     * Updating grunt to 0.4.0
     * Tweaks for publication to npm.

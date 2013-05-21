@@ -10,7 +10,7 @@
 	"use strict";
 
 	var PubSub = global.PubSub || require("../src/pubsub"),
-		EXPECTED_VERSION = "1.3.5";
+		EXPECTED_VERSION = "1.3.6";
 
 	buster.testCase( "PubSub module", {
 		"should report version correctly" : function(){
