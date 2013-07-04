@@ -233,6 +233,8 @@ $ npm test
 PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioning.
 
 ## Changelog
+* v1.3.7
+    * Fix issue #18 - Make publish method return false when all subscribers have been removed
 * v1.3.6
     * Add [bower](http://bower.io) support
 
