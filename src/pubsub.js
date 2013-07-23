@@ -70,7 +70,10 @@ https://github.com/mroderick/PubSubJS
 			return;
 		}
 
-		for ( i = 0, j = subscribers.length; i < j; i++ ){
+		// do not cache the length of the subscribers array, as it might change if there are unsubscribtions
+		// by subscribers during delivery of a topic
+		// see https://github.com/mroderick/PubSubJS/issues/26
+		for ( i = 0; i < subscribers.length; i++ ){
 			callSubscriber( subscribers[i].func, originalMessage, data );
 		}
 	}
