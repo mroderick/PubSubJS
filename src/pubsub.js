@@ -34,7 +34,7 @@ https://github.com/mroderick/PubSubJS
 
 	var PubSub = {
 			name: 'PubSubJS',
-			version: '1.3.7'
+			version: '1.3.9'
 		},
 		messages = {},
 		lastUid = -1;
