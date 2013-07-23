@@ -172,7 +172,7 @@ var topic = 'greeting',
     };
 
 // add a subscription
-var token = $.pubsub('subscribe', topic, sayHello );
+var token = $.pubsub('subscribe', topic, subscriber );
 
 // unsubscribing
 $.pubsub('unsubscribe', token)          // remove a specific subscription
