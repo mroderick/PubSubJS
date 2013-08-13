@@ -3,6 +3,7 @@
 	PubSub,
 	buster,
 	assert,
+	refute,
 	require,
 	sinon
 */
@@ -69,7 +70,33 @@
 			}
 
 			// make sure all tokens are different
-			TestHelper.assertAllTokensDifferent( tokens );		   
+			TestHelper.assertAllTokensDifferent( tokens );
+		},
+
+		'should return false when subscriber argument is not a function' : function(){
+			var invalidSubscribers = [undefined, null, 'a string', 123, [], {}, new Date()],
+				topic = TestHelper.getUniqueString(),
+				i;
+
+			for ( i = 0; i < invalidSubscribers.length; i++ ){
+				assert.equals(PubSub.subscribe(topic, invalidSubscribers[i]), false);
+			}
+
+			assert.equals(i, invalidSubscribers.length);
+		},
+
+		'must not throw errors when publishing with invalid subscribers' : function(){
+			var invalidSubscribers = [undefined, null, 'a string', 123, [], {}, new Date()],
+				topic = TestHelper.getUniqueString(),
+				i;
+
+			for (i = 0; i < invalidSubscribers.length; i++){
+				PubSub.subscribe(topic, invalidSubscribers[i]);
+			}
+
+			refute.exception(function(){
+				PubSub.publish(topic, TestHelper.getUniqueString());
+			});
 		}
 	});
 
