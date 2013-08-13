@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+var newVersion = process.argv[2],
+    fs = require('fs'),
+    child_process = require('child_process'),
+    packageJson = require('./package.json'),
+    bowerJson = require('./bower.json');
+
+if(!/^[0-9]+\.[0-9]+\.[0-9]+$/.test(newVersion)){
+    console.error('Invalid version', newVersion);
+    return process.exit(1);
+}
+
+console.log('tagging version', newVersion);
+
+packageJson.version = bowerJson.version = newVersion;
+
+fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2));
+fs.writeFileSync('./bower.json', JSON.stringify(bowerJson, null, 2));
+
+child_process.exec('git commit -am "v' + newVersion + '"', function(code){
+    if(code > 0){
+        console.error('Could not commit new version');
+        return process.exit(1);
+    }
+    child_process.spawn('git', ['tag', 'v' + newVersion], {stdio: 'inherit'});
+});
