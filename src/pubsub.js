@@ -18,7 +18,7 @@ https://github.com/mroderick/PubSubJS
 	'use strict';
 
 	// CommonJS
-	if (typeof exports === 'object'){
+	if (typeof exports === 'object' && module){
 		module.exports = factory();
 
 	// AMD
