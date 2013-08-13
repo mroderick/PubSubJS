@@ -153,6 +153,10 @@ https://github.com/mroderick/PubSubJS
 	 *	you need to unsubscribe
 	**/
 	PubSub.subscribe = function( message, func ){
+		if ( typeof func !== 'function'){
+			return false;
+		}
+
 		// message is not registered yet
 		if ( !messages.hasOwnProperty( message ) ){
 			messages[message] = [];
