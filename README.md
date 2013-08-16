@@ -233,43 +233,8 @@ $ npm test
 PubSubJS uses [Semantic Versioning](http://semver.org/) for predictable versioning.
 
 ## Changelog
-* v1.3.9
-    * Add release number to bower.json, package.json, tests, readme
-* v1.3.8
-    * Fix issue 26
-* v1.3.7
-    * Fix issue #18 - Make publish method return false when all subscribers have been removed
-* v1.3.6
-    * Add [bower](http://bower.io) support
 
-* v1.3.5
-    * Fix package.json, add a "main" option, for easier use with node
-
-* v1.3.4
-    * Updating grunt to 0.4.0
-    * Tweaks for publication to npm.
-
-* v1.3.3
-    * Adding grunt.js for development tasks
-    * Adding package.json for distribution via npm
-    * Linting all source and test files with recent release of JSLint
-
-    This version should from an API perspective be exactly the same as v1.3.2. Changes were only made to make PubSubJS more suitable for distribution via npm.
-
-* v1.3.2
-    * Adding immediateExceptions configuration option to allow for development time debugging without loosing stack traces in Chrome dev tools
-* v1.3.1
-    * Fixing issue-13, where CommonJS detection mistook QUnit for CommonJS environment.
-* v1.3.0
-    * Added jQuery plugin via rake task
-* v1.2.2
-    * Fix issue 9, where a subscriber would not get notified, if there were no subscribers above it in hierarchy.
-* v1.2.0
-    * Remove all subscriptions for a function (@mrgnrdrck)
-* v1.1.0
-    * Hierarchical addressing of topics ("namespacing") (@jgauffin, @fideloper)
-* v1.0.3
-	* AMD / CommonJS module support (@fernandogmar)
+Please see [https://github.com/mroderick/PubSubJS/releases](https://github.com/mroderick/PubSubJS/releases)
 
 ## License
 
