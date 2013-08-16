@@ -13,7 +13,6 @@ https://github.com/mroderick/PubSubJS
 	require,
 	window
 */
-
 (function(root, factory){
 	'use strict';
 
@@ -32,10 +31,7 @@ https://github.com/mroderick/PubSubJS
 
 	'use strict';
 
-	var PubSub = {
-			name: 'PubSubJS',
-			version: '1.3.9'
-		},
+	var PubSub = {},
 		messages = {},
 		lastUid = -1;
 
