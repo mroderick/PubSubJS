@@ -121,6 +121,56 @@ https://github.com/mroderick/PubSubJS
 		return true;
 	}
 
+    function unsubscribeByToken(tokenOrFunction) {
+        var isToken = typeof tokenOrFunction === 'string',
+            key = isToken ? 'token' : 'func',
+            succesfulReturnValue = isToken ? tokenOrFunction : true,
+
+            result = false,
+            m, i;
+
+        for ( m in messages ){
+            if ( messages.hasOwnProperty( m ) ){
+                for ( i = messages[m].length-1 ; i >= 0; i-- ){
+                    if ( messages[m][i][key] === tokenOrFunction ){
+                        messages[m].splice( i, 1 );
+                        result = succesfulReturnValue;
+
+                        // tokens are unique, so we can just return here
+                        if ( isToken ){
+                            return result;
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    function unsubscribeByEvent(message, tokenOrFunction) {
+        var isToken = typeof tokenOrFunction === 'string',
+            key = isToken ? 'token' : 'func',
+            succesfulReturnValue = isToken ? tokenOrFunction : true,
+
+            result = false,
+            i;
+
+        for ( i = messages[message].length-1 ; i >= 0; i-- ){
+            if ( messages[message][i][key] === tokenOrFunction ){
+                messages[message].splice( i, 1 );
+                result = succesfulReturnValue;
+
+                // tokens are unique, so we can just return here
+                if ( isToken ){
+                    return result;
+                }
+            }
+        }
+
+        return result;
+    }
+
 	/**
 	 *	PubSub.publish( message[, data] ) -> Boolean
 	 *	- message (String): The message to publish
@@ -175,62 +225,16 @@ https://github.com/mroderick/PubSubJS
 	 *  or if using Function as argument without a message as the first argument, it will remove all subscriptions with that function
 	**/
 	PubSub.unsubscribe = function(message, tokenOrFunction ){
+        var result;
+
         if (tokenOrFunction === undefined) {
-            return _unsubscribeByToken(message);
+            result = unsubscribeByToken(message);
         } else {
-            return _unsubscribeByEvent(message, tokenOrFunction);
+            result = unsubscribeByEvent(message, tokenOrFunction);
         }
+
+        return result;
     };
-
-    function _unsubscribeByToken(tokenOrFunction) {
-        var isToken = typeof tokenOrFunction === 'string',
-            key = isToken ? 'token' : 'func',
-            succesfulReturnValue = isToken ? tokenOrFunction : true,
-
-            result = false,
-            m, i;
-
-        for ( m in messages ){
-            if ( messages.hasOwnProperty( m ) ){
-                for ( i = messages[m].length-1 ; i >= 0; i-- ){
-                    if ( messages[m][i][key] === tokenOrFunction ){
-                        messages[m].splice( i, 1 );
-                        result = succesfulReturnValue;
-
-                        // tokens are unique, so we can just return here
-                        if ( isToken ){
-                            return result;
-                        }
-                    }
-                }
-            }
-        }
-
-        return result;
-    }
-
-    function _unsubscribeByEvent(message, tokenOrFunction) {
-        var isToken = typeof tokenOrFunction === 'string',
-            key = isToken ? 'token' : 'func',
-            succesfulReturnValue = isToken ? tokenOrFunction : true,
-
-            result = false,
-            i;
-
-        for ( i = messages[message].length-1 ; i >= 0; i-- ){
-            if ( messages[message][i][key] === tokenOrFunction ){
-                messages[message].splice( i, 1 );
-                result = succesfulReturnValue;
-
-                // tokens are unique, so we can just return here
-                if ( isToken ){
-                    return result;
-                }
-            }
-        }
-
-        return result;
-    }
 
 	return PubSub;
 }));
