@@ -156,14 +156,16 @@ https://github.com/mroderick/PubSubJS
             result = false,
             i;
 
-        for ( i = messages[message].length-1 ; i >= 0; i-- ){
-            if ( messages[message][i][key] === tokenOrFunction ){
-                messages[message].splice( i, 1 );
-                result = succesfulReturnValue;
+        if (messages[message]) {
+            for ( i = messages[message].length-1 ; i >= 0; i-- ){
+                if ( messages[message][i][key] === tokenOrFunction ){
+                    messages[message].splice( i, 1 );
+                    result = succesfulReturnValue;
 
-                // tokens are unique, so we can just return here
-                if ( isToken ){
-                    return result;
+                    // tokens are unique, so we can just return here
+                    if ( isToken ){
+                        return result;
+                    }
                 }
             }
         }

@@ -73,6 +73,39 @@
 			assert.equals( PubSub.unsubscribe( func ), false );
 		},
 
+		"with message and function arguments should return true when succesful" : function(){
+			var func = function(){},
+				message = TestHelper.getUniqueString(),
+				result;
+
+			PubSub.subscribe( message, func);
+			result = PubSub.unsubscribe( message, func );
+
+			assert.equals( result, true );
+		},
+
+		"with message and function arguments should return false when unsuccesful" : function(){
+			var func = function(){},
+				message = TestHelper.getUniqueString(),
+				unknownToken = 'my unknown token',
+				result = PubSub.unsubscribe( message, unknownToken );
+
+			// first, let's try a completely unknown token
+
+			assert.equals( result, false );
+
+			// now let's try unsubscribing the same method twice
+			PubSub.subscribe( message, func );
+			PubSub.subscribe( message, func );
+			PubSub.subscribe( message, func );
+
+			// unsubscribe once, this should remove all subscriptions for message
+			PubSub.unsubscribe( message, func );
+
+			// unsubscribe again
+			assert.equals( PubSub.unsubscribe( message, func ), false );
+		},
+
 		'must not throw exception when unsubscribing as part of publishing' : function(){
 			refute.exception(function(){
 				var topic = TestHelper.getUniqueString(),
