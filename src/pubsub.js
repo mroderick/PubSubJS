@@ -68,7 +68,7 @@ https://github.com/mroderick/PubSubJS
 
         // Ensure that all subscribers to the event get the message
         // even if one is unsubscribed when responding to the message
-        subscribers = subscribers.splice(0);
+        subscribers = subscribers.slice(0);
 
 		for ( i = 0; i < subscribers.length; i++ ){
 			callSubscriber( subscribers[i].func, originalMessage, data );
