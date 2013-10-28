@@ -66,9 +66,10 @@ https://github.com/mroderick/PubSubJS
 			return;
 		}
 
-		// do not cache the length of the subscribers array, as it might change if there are unsubscribtions
-		// by subscribers during delivery of a topic
-		// see https://github.com/mroderick/PubSubJS/issues/26
+        // Ensure that all subscribers to the event get the message
+        // even if one is unsubscribed when responding to the message
+        subscribers = subscribers.splice(0);
+
 		for ( i = 0; i < subscribers.length; i++ ){
 			callSubscriber( subscribers[i].func, originalMessage, data );
 		}
