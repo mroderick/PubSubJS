@@ -131,7 +131,7 @@ PubSub.subscribe("hello", function( msg, data ){
 	console.log( data )
 });
 
-PubSub.publish("helo", "world");
+PubSub.publish("hello", "world");
 
 // BETTER
 var MY_TOPIC = "hello";
