@@ -94,17 +94,17 @@ https://github.com/mroderick/PubSubJS
 	function messageHasSubscribers( message ){
         var topic = String( message ),
             found = messages.hasOwnProperty( topic ) && messages[topic].length,
-            position = topic.lastIndexOf( PubSub.delimeter );
+            position = topic.lastIndexOf( '.' );
 
         while ( !found && position !== -1 ){
             topic = topic.substr( 0, position );
-            position = topic.lastIndexOf(PubSub.delimeter);
+            position = topic.lastIndexOf( '.' );
             found = messages.hasOwnProperty( topic ) && messages[topic].length;
         }
 
         return found;
     }
-        
+
 	function publish( message, data, sync, immediateExceptions ){
 		var deliver = createDeliveryFunction( message, data, immediateExceptions ),
 			hasSubscribers = messageHasSubscribers( message );
