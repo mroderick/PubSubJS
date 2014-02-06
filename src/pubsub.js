@@ -201,7 +201,7 @@ https://github.com/mroderick/PubSubJS
 	};
 
     /**
-     * PubSub.unsubscribeAll() -> Boolean
+     * PubSub.unsubscribeAll()
      * Unsubscribes all subscribers for all messages.
     **/
     PubSub.unsubscribeAll = function(){
