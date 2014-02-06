@@ -200,5 +200,20 @@ https://github.com/mroderick/PubSubJS
 		return result;
 	};
 
+    /**
+     * PubSub.unsubscribeAll() -> Boolean
+     * Unsubscribes all subscribers for all messages.
+    **/
+    PubSub.unsubscribeAll = function(){
+        var m;
+
+		for ( m in messages ){
+			if ( messages.hasOwnProperty( m ) ){
+                delete messages[m];
+            }
+        }
+
+    };
+
 	return PubSub;
 }));

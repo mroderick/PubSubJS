@@ -89,4 +89,18 @@
 		}
 	});
 
+	buster.testCase( "unsubscribeAll method", {
+
+        'should unsubscribe all subscribers to all messages': function(){
+            var spy = new sinon.spy(),
+                message = TestHelper.getUniqueString();
+            PubSub.subscribe(message, spy);
+    
+            PubSub.unsubscribeAll();
+
+            PubSub.publish(message);
+            assert(spy.notCalled);
+        }
+    });
+
 }(this));
