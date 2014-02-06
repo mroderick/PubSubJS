@@ -2,7 +2,7 @@
 /*global
 	exports,
 	module,
-	assert,
+    buster,
 	define,
 	window
 */
@@ -24,7 +24,8 @@
 
 	'use strict';
 
-	var TestHelper = {};
+	var TestHelper = {},
+        assert = buster.assert;
 
 	// helps us make sure that the order of the tests have no impact on their succes
 	function getUniqueString(){
