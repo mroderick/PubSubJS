@@ -189,32 +189,9 @@ In the jQuery build, the global ```PubSub``` global is still available, so you c
 
 There is also an article about [Using PubSubJS with jQuery](http://roderick.dk/resources/using-pubsubjs-with-jquery/)
 
-## Development
+## Contributing to PubSubJS
 
-There are grunt tasks for helping with linting and testing the codebase.
-
-### Test setup
-
-The tests are implemented using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). You will need to install BusterJS in order to run the tests.
-
-### Linting
-
-```bash
-$ grunt lint
-```
-
-### Testing with PhantomJS
-
-If you have PhantomJS installed on your system, you can run the Buster tests by running
-
-```bash
-$ grunt test
-```
-
-or by running
-```bash
-$ npm test
-```
+Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Future of PubSubJS
 
