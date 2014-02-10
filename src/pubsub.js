@@ -121,6 +121,58 @@ https://github.com/mroderick/PubSubJS
 		return true;
 	}
 
+    function unsubscribeByToken(tokenOrFunction) {
+        var isToken = typeof tokenOrFunction === 'string',
+            key = isToken ? 'token' : 'func',
+            succesfulReturnValue = isToken ? tokenOrFunction : true,
+
+            result = false,
+            m, i;
+
+        for ( m in messages ){
+            if ( messages.hasOwnProperty( m ) ){
+                for ( i = messages[m].length-1 ; i >= 0; i-- ){
+                    if ( messages[m][i][key] === tokenOrFunction ){
+                        messages[m].splice( i, 1 );
+                        result = succesfulReturnValue;
+
+                        // tokens are unique, so we can just return here
+                        if ( isToken ){
+                            return result;
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
+    function unsubscribeByEvent(message, tokenOrFunction) {
+        var isToken = typeof tokenOrFunction === 'string',
+            key = isToken ? 'token' : 'func',
+            succesfulReturnValue = isToken ? tokenOrFunction : true,
+
+            result = false,
+            i;
+
+        if (messages[message]) {
+            for ( i = messages[message].length-1 ; i >= 0; i-- ){
+                if ( messages[message][i][key] === tokenOrFunction ){
+                    messages[message].splice( i, 1 );
+                    result = succesfulReturnValue;
+
+                    // tokens are unique, so we can just return here
+                    if ( isToken ){
+                        return result;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
 	/**
 	 *	PubSub.publish( message[, data] ) -> Boolean
 	 *	- message (String): The message to publish
@@ -168,37 +220,23 @@ https://github.com/mroderick/PubSubJS
 	};
 
 	/**
-	 *	PubSub.unsubscribe( tokenOrFunction ) -> String | Boolean
+	 *	PubSub.unsubscribe( message, tokenOrFunction ) -> String | Boolean
+	 *	- message (String): The message to unsubscribe from
 	 *  - tokenOrFunction (String|Function): The token of the function to unsubscribe or func passed in on subscribe
 	 *  Unsubscribes a specific subscriber from a specific message using the unique token
-	 *  or if using Function as argument, it will remove all subscriptions with that function
+	 *  or if using Function as argument without a message as the first argument, it will remove all subscriptions with that function
 	**/
-	PubSub.unsubscribe = function( tokenOrFunction ){
-		var isToken = typeof tokenOrFunction === 'string',
-			key = isToken ? 'token' : 'func',
-			succesfulReturnValue = isToken ? tokenOrFunction : true,
+	PubSub.unsubscribe = function(message, tokenOrFunction ){
+        var result;
 
-			result = false,
-			m, i;
+        if (tokenOrFunction === undefined) {
+            result = unsubscribeByToken(message);
+        } else {
+            result = unsubscribeByEvent(message, tokenOrFunction);
+        }
 
-		for ( m in messages ){
-			if ( messages.hasOwnProperty( m ) ){
-				for ( i = messages[m].length-1 ; i >= 0; i-- ){
-					if ( messages[m][i][key] === tokenOrFunction ){
-						messages[m].splice( i, 1 );
-						result = succesfulReturnValue;
-
-						// tokens are unique, so we can just return here
-						if ( isToken ){
-							return result;
-						}
-					}
-				}
-			}
-		}
-
-		return result;
-	};
+        return result;
+    };
 
 	return PubSub;
 }));
