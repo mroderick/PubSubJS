@@ -2,7 +2,6 @@
 /*global
 	PubSub,
 	buster,
-	assert,
 	require,
 	sinon
 */
@@ -11,7 +10,8 @@
 	
 	var $ = global.jQuery,
 		PubSub = global.PubSub || require("../src/pubsub"),
-		TestHelper = global.TestHelper || require("../test/helper");
+		TestHelper = global.TestHelper || require("../test/helper"),
+        assert = buster.assert;
 
 	buster.testCase( "jQuery integration", {
 

@@ -2,7 +2,6 @@
 /*global
 	PubSub,
 	buster,
-	assert,
 	require,
 	sinon
 */
@@ -10,7 +9,8 @@
 	"use strict";
 	
 	var PubSub = global.PubSub || require("../src/pubsub"),
-		TestHelper = global.TestHelper || require("../test/helper");
+		TestHelper = global.TestHelper || require("../test/helper"),
+        assert = buster.assert;
 
 	buster.testCase( "Hierarchical addressing", {
 

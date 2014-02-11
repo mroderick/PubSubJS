@@ -2,7 +2,6 @@
 /*global
 	PubSub,
 	buster,
-	assert,
 	require,
 	sinon,
 	done
@@ -10,7 +9,8 @@
 (function( global ){
 	"use strict";
 
-	var PubSub = global.PubSub || require("../src/pubsub");
+	var PubSub = global.PubSub || require("../src/pubsub"),
+        assert = buster.assert;
 
 	/**
 	 *	This is a test proving that bug 9 has been fixed.

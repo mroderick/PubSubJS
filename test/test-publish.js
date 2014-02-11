@@ -2,8 +2,6 @@
 /*global
 	PubSub,
 	buster,
-	assert,
-	refute,
 	require,
 	sinon
 */
@@ -11,7 +9,9 @@
 	"use strict";
 
 	var PubSub = global.PubSub || require("../src/pubsub"),
-		TestHelper = global.TestHelper || require("../test/helper");
+		TestHelper = global.TestHelper || require("../test/helper"),
+        assert = buster.assert,
+        refute = buster.refute;
 
 	buster.testCase( "publish method", {
 
