@@ -7,7 +7,7 @@
 */
 (function( global ){
 	"use strict";
-	
+
 	var PubSub = global.PubSub || require("../src/pubsub"),
 		TestHelper = global.TestHelper || require("../test/helper"),
         assert = buster.assert,
@@ -22,7 +22,7 @@
 
 			assert.isString( token );
 		},
-		
+
 		"should return new token for several subscriptions with same function" : function(){
 			var func = function(){},
 				tokens = [],
@@ -37,7 +37,7 @@
 			// make sure all tokens are different
 			TestHelper.assertAllTokensDifferent( tokens );
 		},
-		
+
 		"should return unique tokens for each namespaced subscription" : function(){
 			var func = function(){},
 				tokens = [],
@@ -51,13 +51,13 @@
 			// make sure all tokens are different
 			TestHelper.assertAllTokensDifferent( tokens );
 		},
-		
+
 		"should return unique token for unique functions" : function(){
 			var tokens = [],
 				iterations = 10,
 				message = TestHelper.getUniqueString(),
 				i;
-			
+
 			function bakeFunc( value ){
 				return function(){
 					return value;

@@ -165,7 +165,35 @@
 
 			// make sure we restore PubSub to it's original state
 			delete PubSub.immediateExceptions;
+		},
+
+		"publish should call all subscribers, even when there are unsubscriptions within" : function(done){
+			var topic = TestHelper.getUniqueString(),
+				spy1 = this.spy(),
+				func1 = function func1(){
+					PubSub.unsubscribe(func1);
+					spy1();
+				},
+
+				spy2 = this.spy(),
+				func2 = function func2(){
+					PubSub.unsubscribe(func2);
+					spy2();
+				},
+
+				clock = this.useFakeTimers();
+
+			PubSub.subscribe(topic, func1);
+			PubSub.subscribe(topic, func2);
+
+			PubSub.publish(topic, 'some data');
+			clock.tick(1);
+
+			assert(spy1.called, 'expected spy1 to be called');
+			assert(spy2.called, 'expected spy2 to be called');
+
+			clock.restore();
+			done();
 		}
 	});
-
 }(this));
