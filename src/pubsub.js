@@ -185,9 +185,6 @@ https://github.com/mroderick/PubSubJS
 	**/
 	PubSub.unsubscribe = function( tokenOrFunction ){
 		var isToken = typeof tokenOrFunction === 'string',
-			key = isToken ? 'token' : 'func',
-			succesfulReturnValue = isToken ? tokenOrFunction : true,
-
 			result = false,
 			m, message, t, token;
 
@@ -197,13 +194,14 @@ https://github.com/mroderick/PubSubJS
 
 				if ( isToken && message[tokenOrFunction] ){
 					delete message[tokenOrFunction];
-					// tokens are unique, so we can just return here
-					return tokenOrFunction;
+					result = tokenOrFunction;
+					// tokens are unique, so we can just stop here
+					break;
 				} else if (!isToken) {
 					for ( t in message ){
 						if (message.hasOwnProperty(t) && message[t] === tokenOrFunction){
 							delete message[t];
-							result = succesfulReturnValue;
+							result = true;
 						}
 					}
 				}
