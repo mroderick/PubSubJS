@@ -2,13 +2,17 @@
 
 [![Build Status](https://travis-ci.org/mroderick/PubSubJS.png)](https://travis-ci.org/mroderick/PubSubJS) [![NPM version](https://badge.fury.io/js/pubsub-js.png)](http://badge.fury.io/js/pubsub-js)
 
-PubSubJS is a dependency free [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe) library for [JavaScript](https://developer.mozilla.org/en/JavaScript).
+PubSubJS is a [topic-based](http://en.wikipedia.org/wiki/Publish–subscribe_pattern#Message_filtering) [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe) library written in JavaScript.
 
-PubSubJS has synchronisation decoupling, so messages are delivered asynchronously. This helps keep your program predictable as the originator of messages will not be blocked while consumers process messages.
+PubSubJS has synchronisation decoupling, so topics are published asynchronously. This helps keep your program predictable as the originator of topics will not be blocked while consumers process them.
 
-For the adventurous, PubSubJS also supports synchronous message publication. This can give a speedup in some environments (browsers, not all), but can also lead to some very difficult to reason about programs, when one message triggers publication of another message in the same execution chain.
+For the adventurous, PubSubJS also supports synchronous topic publication. This can give a speedup in some environments (browsers, not all), but can also lead to some very difficult to reason about programs, where one topic triggers publication of another topic in the same execution chain.
 
 For benchmarks, see [A Comparison of JS Publish/Subscribe Approaches](http://jsperf.com/pubsubjs-vs-jquery-custom-events/51)
+
+#### Single process
+
+PubSubJS is designed to be used within a **single process**, and is not a good candidate for multi-process applications (like [Node.js – Cluster](http://nodejs.org/api/cluster.html) with many sub-processes). If your Node.js app is a single process app, you're good. If it is (or is going to be) a multi-process app, you're probably better off using [redis Pub/Sub](http://redis.io/topics/pubsub) or similar
 
 ## Key features
 
@@ -33,64 +37,64 @@ There are several ways of getting PubSubJS
 ### Basic example
 
 ```javascript
-// create a function to receive messages
+// create a function to subscribe to topics
 var mySubscriber = function( msg, data ){
     console.log( msg, data );
 };
 
-// add the function to the list of subscribers for a particular message
+// add the function to the list of subscribers for a particular topic
 // we're keeping the returned token, in order to be able to unsubscribe
-// from the message later on
-var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
+// from the topic later on
+var token = PubSub.subscribe( 'MY TOPIC', mySubscriber );
 
-// publish a message asyncronously
-PubSub.publish( 'MY MESSAGE', 'hello world!' );
+// publish a topic asyncronously
+PubSub.publish( 'MY TOPIC', 'hello world!' );
 
-// publish a message syncronously, which is faster in some environments,
-// but will get confusing when one message triggers new messages in the
+// publish a topic syncronously, which is faster in some environments,
+// but will get confusing when one topic triggers new topics in the
 // same execution chain
 // USE WITH CAUTION, HERE BE DRAGONS!!!
-PubSub.publishSync( 'MY MESSAGE', 'hello world!' );
+PubSub.publishSync( 'MY TOPIC', 'hello world!' );
 ```
 
 ### Cancel specific subscripiton
 
 ```javascript
-// create a function to receive the message
+// create a function to receive the topic
 var mySubscriber = function( msg, data ){
     console.log( msg, data );
 };
 
-// add the function to the list of subscribers to a particular message
+// add the function to the list of subscribers to a particular topic
 // we're keeping the returned token, in order to be able to unsubscribe
-// from the message later on
-var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
+// from the topic later on
+var token = PubSub.subscribe( 'MY TOPIC', mySubscriber );
 
-// unsubscribe from further messages
+// unsubscribe this subscriber from this topic
 PubSub.unsubscribe( token );
 ```
 
 ### Cancel all subscriptions for a function
 
 ```javascript
-// create a function to receive the message
+// create a function to receive the topic
 var mySubscriber = function( msg, data ){
     console.log( msg, data );
 };
 
-// add the function to the list of subscribers to a particular message
+// add the function to the list of subscribers to a particular topic
 // we're keeping the returned token, in order to be able to unsubscribe
-// from the message later on
-var token = PubSub.subscribe( 'MY MESSAGE', mySubscriber );
+// from the topic later on
+var token = PubSub.subscribe( 'MY TOPIC', mySubscriber );
 
-// unsubscribe mySubscriber from ALL further messages
+// unsubscribe mySubscriber from ALL topics
 PubSub.unsubscribe( mySubscriber );
 ```
 
 ### Hierarchical addressing
 
 ```javascript
-// create a subscriber to receive all messages from a hierarchy of topics
+// create a subscriber to receive all topics from a hierarchy of topics
 var myToplevelSubscriber = function( msg, data ){
     console.log( 'top level: ', msg, data );
 }
@@ -98,7 +102,7 @@ var myToplevelSubscriber = function( msg, data ){
 // subscribe to all topics in the 'car' hierarchy
 PubSub.subscribe( 'car', myToplevelSubscriber );
 
-// create a subscriber to receive only leaf message from hierarchy op topics
+// create a subscriber to receive only leaf topic from hierarchy op topics
 var mySpecificSubscriber = function( msg, data ){
     console.log('specific: ', msg, data );
 }
@@ -119,8 +123,7 @@ PubSub.publish( 'car.sell', { newOwner : 'someone else' } );
 
 ## Tips
 
-Use "constants" for topics and not string literals. PubSubJS uses strings as topics, and will happily try to deliver
-your messages with ANY topic. So, save yourself from frustrating debugging by letting the JavaScript engine complain
+Use "constants" for topics and not string literals. PubSubJS uses strings as topics, and will happily try to deliver your topics with ANY topic. So, save yourself from frustrating debugging by letting the JavaScript engine complain
 when you make typos.
 
 ### Example of use of "constants"
@@ -195,9 +198,8 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Future of PubSubJS
 
-* Build script to create the following wrappers
-	* Ender.js wrapper
 * Better and more extensive usage examples
+
 
 ## More about Publish/Subscribe
 
