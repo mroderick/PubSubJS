@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "$(npm bin)/grunt test"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "grunt-jslint": "0.2.5",
     "grunt-buster": "0.1.2",
     "buster": "0.7.8",
-    "grunt": "0.4.2"
+    "grunt": "~0.4.4",
+    "grunt-cli": "~0.1.13"
   }
 }
