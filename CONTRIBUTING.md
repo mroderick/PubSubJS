@@ -25,14 +25,11 @@ day). We may suggest some changes or improvements or alternatives.
 * Update the documentation, the surrounding one, examples elsewhere, guides,
   whatever is affected by your contribution
 
-Syntax:
-
-* Tabs, not spaces
-* PubSubJS is linted with jslint, with these settings: `/*jslint white:true, plusplus:true, stupid:true*/`
-* No trailing whitespace. Blank lines should not have any space.
-* Follow the conventions you see used in the source already.
-
 And in case we didn't emphasize it enough: we love tests!
+
+## Syntax
+
+Install [Editor Config](http://editorconfig.org) for your text editor, this will ensure that the correct formatting is applied for each file type.
 
 ## Development
 
