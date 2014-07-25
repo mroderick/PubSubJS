@@ -53,6 +53,24 @@
 			refute(spy2.called);
 		},
 
+		'must only clear matched subscriptions': function(){
+			var topic1 = TestHelper.getUniqueString(),
+				topic2 = TestHelper.getUniqueString(),
+				spy1 = sinon.spy(),
+				spy2 = sinon.spy();
+
+			PubSub.subscribe(topic1, spy1);
+			PubSub.subscribe(topic2, spy2);
+
+			PubSub.clearSubscriptions(topic1);
+
+			PubSub.publishSync(topic1, TestHelper.getUniqueString());
+			PubSub.publishSync(topic2, TestHelper.getUniqueString());
+
+			refute(spy1.called);
+			assert(spy2.called);
+		},
+
 		'must clear all matched hierarchical subscriptions': function(){
 			var topic = TestHelper.getUniqueString(),
 				topicA = topic + '.a',
