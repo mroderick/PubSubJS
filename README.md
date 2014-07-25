@@ -93,7 +93,7 @@ PubSub.subscribe('a', myFunc1);
 PubSub.subscribe('a.b', myFunc2);
 PubSub.subscribe('a.b.c', myFunc3);
 
-PubSub.clearSubscriptions('a.b');
+PubSub.unsubscribe('a.b');
 // no further notications for 'a.b' and 'a.b.c' topics
 // notifications for 'a' will still get published
 ```
@@ -101,7 +101,7 @@ PubSub.clearSubscriptions('a.b');
 ### Clear all subscriptions
 
 ```javascript
-PubSub.clearSubscriptions('*');
+PubSub.clearAllSubscriptions();
 // all subscriptions are removed
 ```
 
