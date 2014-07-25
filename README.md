@@ -82,11 +82,6 @@ var mySubscriber = function( msg, data ){
     console.log( msg, data );
 };
 
-// add the function to the list of subscribers to a particular topic
-// we're keeping the returned token, in order to be able to unsubscribe
-// from the topic later on
-var token = PubSub.subscribe( 'MY TOPIC', mySubscriber );
-
 // unsubscribe mySubscriber from ALL topics
 PubSub.unsubscribe( mySubscriber );
 ```
