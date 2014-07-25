@@ -177,6 +177,35 @@ https://github.com/mroderick/PubSubJS
 		return token;
 	};
 
+	/* Public: Clear subscriptions for a topic
+	 *
+	 * topic - A topic to clear, including hierarchical topics. "*" clears all
+	 *
+	 * Examples
+	 *
+	 *		// Example 1 - Clear subscriptions for specific topic
+	 *		PubSub.subscribe('a', myFunc1);
+	 *		PubSub.subscribe('a.b', myFunc2);
+	 *		PubSub.subscribe('a.b.c', myFunc3);
+	 *
+	 *		PubSub.clearSubscriptions('a.b');
+	 *		// no further notications for 'a.b' and 'a.b.c' topics
+	 *		// notifications for 'a' will still get published
+	 *
+	 *
+	 *		// Example 2 - Clear subscriptions for all topics
+	 *		PubSub.clearSubscriptions('*');
+	 *		// all subscriptions are removed
+	 */
+	PubSub.clearSubscriptions = function clearSubscriptions(topic){
+		if (topic === '*'){
+			messages = {};
+			return;
+		}
+
+		delete messages[topic];
+	};
+
 	/**
 	 *	PubSub.unsubscribe( tokenOrFunction ) -> String | Boolean
 	 *  - tokenOrFunction (String|Function): The token of the function to unsubscribe or func passed in on subscribe
