@@ -13,26 +13,28 @@ https://github.com/mroderick/PubSubJS
 	require,
 	window
 */
-(function(root, factory){
+(function (root, factory){
 	'use strict';
 
-	// CommonJS
-	if (typeof exports === 'object' && module){
-		module.exports = factory();
+    if (typeof define === 'function' && define.amd){
+        // AMD. Register as an anonymous module.
+        define(['exports'], function (exports, b){
+            factory((root.PubSub = exports), b);
+        });
 
-	// AMD
-	} else if (typeof define === 'function' && define.amd){
-		define(factory);
-	// Browser
-	} else {
-		root.PubSub = factory();
-	}
-}( ( typeof window === 'object' && window ) || this, function(){
+    } else if (typeof exports === 'object'){
+        // CommonJS
+        factory(exports);
 
+    } else {
+        // Browser globals
+        factory((root.PubSub = {}));
+
+    }
+}(( typeof window === 'object' && window ) || this, function (PubSub){
 	'use strict';
 
-	var PubSub = {},
-		messages = {},
+	var messages = {},
 		lastUid = -1;
 
 	function hasKeys(obj){
@@ -210,6 +212,4 @@ https://github.com/mroderick/PubSubJS
 
 		return result;
 	};
-
-	return PubSub;
 }));
