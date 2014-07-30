@@ -86,6 +86,25 @@ var mySubscriber = function( msg, data ){
 PubSub.unsubscribe( mySubscriber );
 ```
 
+### Clear all subscriptions for a topic
+
+```javascript
+PubSub.subscribe('a', myFunc1);
+PubSub.subscribe('a.b', myFunc2);
+PubSub.subscribe('a.b.c', myFunc3);
+
+PubSub.unsubscribe('a.b');
+// no further notications for 'a.b' and 'a.b.c' topics
+// notifications for 'a' will still get published
+```
+
+### Clear all subscriptions
+
+```javascript
+PubSub.clearAllSubscriptions();
+// all subscriptions are removed
+```
+
 ### Hierarchical addressing
 
 ```javascript
