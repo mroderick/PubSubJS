@@ -173,9 +173,13 @@ PubSub.immediateExceptions = true;
 
 ## Plugin for jQuery
 
-By default PubSubJS can be used in any browser or CommonJS environment, including [node](http://nodejs.org). Additionally, PubSubJS can be built specifically for jQuery.
+By default PubSubJS can be used in any browser or CommonJS environment, including [node](http://nodejs.org). Additionally, PubSubJS can be built specifically for jQuery using Rake.
 
     $ rake jquery
+
+or using Grunt
+
+    $ grunt jquery
 
 Produces jquery.pubsub.js
 
