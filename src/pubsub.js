@@ -18,9 +18,7 @@ https://github.com/mroderick/PubSubJS
 
     if (typeof define === 'function' && define.amd){
         // AMD. Register as an anonymous module.
-        define(['exports'], function (exports, b){
-            factory((root.PubSub = exports), b);
-        });
+        define(['exports'], factory);
 
     } else if (typeof exports === 'object'){
         // CommonJS
