@@ -1,0 +1,22 @@
+{
+	"name": "mroderick/pubsubjs",
+	"description": "Dependency free publish/subscribe for JavaScript",
+	"keywords": [
+		"pubsub",
+		"events",
+		"publish",
+		"subscribe"
+	],
+	"homepage": "https://github.com/mroderick/PubSubJS",
+	"type": "library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Morgan Roderick",
+			"email": "morgan@roderick.dk",
+			"homepage": "http://roderick.dk",
+			"role": "Developer"
+		}
+	],
+	"require": {}
+}
