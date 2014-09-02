@@ -1,4 +1,4 @@
-/*jslint white:true, plusplus:true*/
+/*jslint white:true, plusplus:true, stupid:true*/
 /*global
 	exports,
 	module,
@@ -24,14 +24,13 @@
 
 	'use strict';
 
-	var TestHelper = {},
-        assert = buster.assert;
+	var assert = buster.assert;
 
 	// helps us make sure that the order of the tests have no impact on their succes
 	function getUniqueString(){
 		if ( getUniqueString.uid === undefined ){
 			getUniqueString.uid = 0;
-		}	 
+		}
 		getUniqueString.uid++;
 
 		return "my unique String number " + getUniqueString.uid.toString();
@@ -54,8 +53,39 @@
 		assert.equals( k, length );
 	}
 
-	TestHelper.getUniqueString = getUniqueString;
-	TestHelper.assertAllTokensDifferent = assertAllTokensDifferent;
+	function verifyPubSubAPI(api){
+		var assert = buster.assert,
+			refute = buster.refute;
 
-	return TestHelper;
+		// This test case is not about testing individual methods, but only here
+		// to verify that the API is correctly assembled when loaded with in different
+		// contexts (Node, AMD, jQuery)
+		buster.testCase('PubSub API for AMD compatibility', {
+			'should have a "subscribe" method': function() {
+				assert.isFunction(api.subscribe);
+			},
+
+			'should have an "unsubscribe" method': function(){
+				assert.isFunction(api.unsubscribe);
+			},
+
+			'should have a "publish" method': function(){
+				assert.isFunction(api.publish);
+			},
+
+			'should have a "publisSync" method': function(){
+				assert.isFunction(api.publishSync);
+			},
+
+			'should have a "clearAllSubscriptions" method': function(){
+				assert.isFunction(api.clearAllSubscriptions);
+			}
+		});
+	}
+
+	return {
+		assertAllTokensDifferent : assertAllTokensDifferent,
+		getUniqueString : getUniqueString,
+		verifyPubSubAPI : verifyPubSubAPI
+	};
 }));
