@@ -24,7 +24,8 @@
 
 	'use strict';
 
-	var assert = buster.assert;
+	var assert = buster.assert,
+		refute = buster.refute;
 
 	// helps us make sure that the order of the tests have no impact on their succes
 	function getUniqueString(){
@@ -54,9 +55,6 @@
 	}
 
 	function verifyPubSubAPI(api){
-		var assert = buster.assert,
-			refute = buster.refute;
-
 		// This test case is not about testing individual methods, but only here
 		// to verify that the API is correctly assembled when loaded with in different
 		// contexts (Node, AMD, jQuery)
