@@ -9,10 +9,10 @@ define([
 ], function(
 	jquery,
 	pubsub,
-	helper
+	TestHelper
 ){
 
 	'use strict';
 
-	helper.verifyPubSubAPI(pubsub);
+	TestHelper.verifyPubSubAPI(pubsub);
 });

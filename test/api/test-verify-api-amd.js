@@ -2,9 +2,9 @@
 /*global
 	define
 */
-define(['../../src/pubsub', '../helper'], function(pubsub, helper){
+define(['../../src/pubsub', '../helper'], function(pubsub, TestHelper){
 
 	'use strict';
 
-	helper.verifyPubSubAPI(pubsub);
+	TestHelper.verifyPubSubAPI(pubsub);
 });
