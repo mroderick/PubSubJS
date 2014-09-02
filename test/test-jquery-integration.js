@@ -17,10 +17,6 @@
 
 		requiresSupportFor: { "jQuery": global.jQuery !== undefined },
 
-		"should expose version string comprised of name and version of PubSub" : function(){
-			assert.equals( PubSub.name + ' ' + PubSub.version, $.pubsub.version );
-		},
-
 		"$.pubsub('subscribe') should call subscribe" : function(){
 			var topic = TestHelper.getUniqueString(),
 				spy = this.spy(),
