@@ -1,9 +1,6 @@
 /*jslint white:true*/
 /*global
-	PubSub,
-	buster,
-	define,
-	sinon
+	define
 */
 define(['../../src/pubsub', '../helper'], function(pubsub, helper){
 
