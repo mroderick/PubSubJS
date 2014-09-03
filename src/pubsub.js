@@ -16,19 +16,23 @@ https://github.com/mroderick/PubSubJS
 (function (root, factory){
 	'use strict';
 
+	var PubSub;
+
     if (typeof define === 'function' && define.amd){
         // AMD. Register as an anonymous module.
-        define(['exports'], factory);
+        PubSub = define(['exports'], factory);
 
     } else if (typeof exports === 'object'){
         // CommonJS
-        factory(exports);
+        PubSub = factory(exports);
 
     } else {
         // Browser globals
-        factory((root.PubSub = {}));
-
+        PubSub = factory((root.PubSub = {}));
     }
+
+    return PubSub;
+
 }(( typeof window === 'object' && window ) || this, function (PubSub){
 	'use strict';
 
@@ -236,4 +240,6 @@ https://github.com/mroderick/PubSubJS
 
 		return result;
 	};
+
+	return PubSub;
 }));

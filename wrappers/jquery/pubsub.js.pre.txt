@@ -12,3 +12,4 @@ https://github.com/mroderick/PubSubJS
 ;(function($){
 	"use strict";
 	var self = this;
+	var PubSub =

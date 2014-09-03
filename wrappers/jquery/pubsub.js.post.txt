@@ -1,4 +1,7 @@
 
+
+	var self = this;
+
 	if ( $.pubsub ){
 		$.error( 'pubsub is already defined on jQuery, skipping integration of PubSubJS' );
 		return false;

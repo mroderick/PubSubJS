@@ -64,7 +64,8 @@ config["Verify API (AMD)"] = {
 	environment: "browser",
 
 	libs: [
-		"node_modules/requirejs/require.js"
+		"node_modules/requirejs/require.js",
+		"lib/jquery-1.7.2.js"
 	],
 
 	resources: [
