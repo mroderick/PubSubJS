@@ -187,7 +187,7 @@ Produces jquery.pubsub.js
 
 ```javascript
 var topic = 'greeting',
-    data = 'world'
+    data = 'world',
     subscriber = function sayHello( data ){
         console.log( 'hello ' + data );
     };
@@ -196,7 +196,7 @@ var topic = 'greeting',
 var token = $.pubsub('subscribe', topic, subscriber );
 
 // unsubscribing
-$.pubsub('unsubscribe', token)          // remove a specific subscription
+$.pubsub('unsubscribe', token);         // remove a specific subscription
 $.pubsub('unsubscribe', subscriber);    // remove all subscriptions for subscriber
 
 // publishing a topic
