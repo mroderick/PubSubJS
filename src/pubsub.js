@@ -207,7 +207,7 @@ https://github.com/mroderick/PubSubJS
 			isToken    = !isTopic && typeof value === 'string',
 			isFunction = typeof value === 'function',
 			result = false,
-			m, message, t, token;
+			m, message, t;
 
 		if (isTopic){
 			delete messages[value];
