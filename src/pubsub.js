@@ -184,10 +184,9 @@ https://github.com/mroderick/PubSubJS
 	};
 
 	PubSub.clearSubscriptions = function clearSubscriptions(topic){
-		for (var m in messages){
-			if (m.indexOf(topic) === 0){
-				delete messages[m];
-			}
+		var m; 
+		for (m in messages){
+			if (messages.hasOwnProperty(m) && m.indexOf(topic) === 0){ delete messages[m];}
 		}
 	};
 
