@@ -6,3 +6,5 @@
 jquery.pubsub.js
 /node_modules/
 /out/
+*.sublime-project
+*.sublime-workspace
