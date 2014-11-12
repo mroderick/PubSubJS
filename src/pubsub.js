@@ -179,8 +179,16 @@ https://github.com/mroderick/PubSubJS
 
 	/* Public: Clears all subscriptions
 	 */
-	PubSub.clearAllSubscriptions = function clearSubscriptions(){
+	PubSub.clearAllSubscriptions = function clearAllSubscriptions(){
 		messages = {};
+	};
+
+	PubSub.clearSubscriptions = function clearSubscriptions(topic){
+		for (var m in messages){
+			if (m.indexOf(topic) === 0){
+				delete messages[m];
+			}
+		}
 	};
 
 	/* Public: removes subscriptions.
