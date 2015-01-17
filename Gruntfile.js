@@ -27,9 +27,6 @@ module.exports = function(grunt) {
 		buster: {
 			test: {
 				config: 'test/buster.js'
-			},
-			server: {
-				port: 1111
 			}
 		},
 
