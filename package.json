@@ -29,9 +29,9 @@
   "license": "MIT",
   "devDependencies": {
     "buster": "0.7.18",
-    "grunt": "~0.4.4",
+    "grunt": "0.4.4",
     "grunt-buster": "0.1.2",
-    "grunt-cli": "~0.1.13",
+    "grunt-cli": "0.1.13",
     "grunt-contrib-concat": "0.5.0",
     "grunt-jslint": "0.2.5"
   }
