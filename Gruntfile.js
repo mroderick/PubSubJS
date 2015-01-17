@@ -43,13 +43,10 @@ module.exports = function(grunt) {
 	});
 
 	grunt.loadNpmTasks('grunt-buster');
-	grunt.loadNpmTasks('grunt-jslint');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 
-	// override the built-in lint task with jslint
-	grunt.registerTask('lint', 'jslint');
 
-	grunt.registerTask('test', ['lint', 'buster']);
+	grunt.registerTask('test', ['buster']);
 
 	// build jQuery version
 	grunt.registerTask('jquery', 'concat:jquery');

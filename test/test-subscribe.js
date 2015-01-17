@@ -1,10 +1,3 @@
-/*jslint white:true, plusplus:true */
-/*global
-	PubSub,
-	buster,
-	require,
-	sinon
-*/
 (function( global ){
 	"use strict";
 
@@ -16,7 +9,7 @@
 	buster.testCase( "subscribe method", {
 
 		"should return token as String" : function(){
-			var func = function(){},
+			var func = function(){ return undefined; },
 				message = TestHelper.getUniqueString(),
 				token = PubSub.subscribe( message , func );
 
@@ -24,7 +17,7 @@
 		},
 
 		"should return new token for several subscriptions with same function" : function(){
-			var func = function(){},
+			var func = function(){ return undefined; },
 				tokens = [],
 				iterations = 10,
 				message = TestHelper.getUniqueString(),
@@ -39,7 +32,7 @@
 		},
 
 		"should return unique tokens for each namespaced subscription" : function(){
-			var func = function(){},
+			var func = function(){ return undefined; },
 				tokens = [],
 				messages = ['library', 'library.music', 'library.music.jazz'],
 				i;

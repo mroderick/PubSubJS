@@ -4,15 +4,6 @@ License: MIT - http://mrgnrdrck.mit-license.org
 
 https://github.com/mroderick/PubSubJS
 */
-/*jslint white:true, plusplus:true, stupid:true*/
-/*global
-	setTimeout,
-	module,
-	exports,
-	define,
-	require,
-	window
-*/
 (function (root, factory){
 	'use strict';
 
@@ -26,8 +17,9 @@ https://github.com/mroderick/PubSubJS
 
     } else {
         // Browser globals
-        factory((root.PubSub = {}));
-
+        var PubSub = {};
+        root.PubSub = PubSub;
+        factory(PubSub);
     }
 }(( typeof window === 'object' && window ) || this, function (PubSub){
 	'use strict';
@@ -223,7 +215,9 @@ https://github.com/mroderick/PubSubJS
 					result = value;
 					// tokens are unique, so we can just stop here
 					break;
-				} else if (isFunction) {
+				}
+
+				if (isFunction) {
 					for ( t in message ){
 						if (message.hasOwnProperty(t) && message[t] === value){
 							delete message[t];
