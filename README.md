@@ -1,6 +1,6 @@
 # PubSubJS
 
-[![Build Status](https://travis-ci.org/mroderick/PubSubJS.png)](https://travis-ci.org/mroderick/PubSubJS) [![NPM version](https://badge.fury.io/js/pubsub-js.png)](http://badge.fury.io/js/pubsub-js)
+[![Build Status](https://travis-ci.org/mroderick/PubSubJS.png)](https://travis-ci.org/mroderick/PubSubJS) [![NPM version](https://badge.fury.io/js/pubsub-js.png)](http://badge.fury.io/js/pubsub-js) [![Dependencies](https://david-dm.org/mroderick/PubSubJS.svg)](https://david-dm.org/mroderick/PubSubJS) [![Dependency status](https://david-dm.org/mroderick/PubSubJS/dev-status.png)](https://david-dm.org/mroderick/PubSubJS#info=devDependencies&view=table)
 
 PubSubJS is a [topic-based](http://en.wikipedia.org/wiki/Publish–subscribe_pattern#Message_filtering) [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe) library written in JavaScript.
 
