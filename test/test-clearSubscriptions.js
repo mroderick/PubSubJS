@@ -1,19 +1,9 @@
-/*jslint white:true, stupid:true*/
-/*global
-	PubSub,
-	buster,
-	require,
-	sinon,
-	console
-*/
 (function( global ){
 	'use strict';
 
 	var PubSub = global.PubSub || require('../src/pubsub'),
 		TestHelper = global.TestHelper || require('../test/helper'),
-        assert = buster.assert,
-        refute = buster.refute,
-        NOOP = function(){};
+        refute = buster.refute;
 
 	buster.testCase( 'clearAllSubscriptions method', {
 		'must clear all subscriptions' : function(){

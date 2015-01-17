@@ -1,7 +1,3 @@
-/*jslint white:true*/
-/*global
-	module
-*/
 var config = module.exports;
 config["PubSubJS browser"] = {
 	rootPath: "../",

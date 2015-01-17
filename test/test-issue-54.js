@@ -1,11 +1,3 @@
-/*jslint white:true*/
-/*global
-	PubSub,
-	buster,
-	require,
-	sinon,
-	done
-*/
 (function( global ){
 	"use strict";
 

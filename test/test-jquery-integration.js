@@ -1,13 +1,6 @@
-/*jslint white:true*/
-/*global
-	PubSub,
-	buster,
-	require,
-	sinon
-*/
 (function( global ){
 	"use strict";
-	
+
 	var $ = global.jQuery,
 		PubSub = global.PubSub || require("../src/pubsub"),
 		TestHelper = global.TestHelper || require("../test/helper"),
@@ -34,7 +27,7 @@
 				mock = this.mock( PubSub );
 
 			mock.expects( 'unsubscribe' ).once().withArgs( subscriber );
-			
+
 			$.pubsub( 'unsubscribe', subscriber );
 
 			assert( mock.verify() );
@@ -49,7 +42,7 @@
 
 			$.pubsub( 'publish', topic, data );
 
-			assert( mock.verify() );	
+			assert( mock.verify() );
 		},
 
 		"$.pubsub('publishSync') should call publishSync" : function(){
@@ -61,7 +54,7 @@
 
 			$.pubsub( 'publishSync', topic, data );
 
-			assert( mock.verify() );	
+			assert( mock.verify() );
 		}
 	});
 }(this));

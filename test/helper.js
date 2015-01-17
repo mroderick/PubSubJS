@@ -1,11 +1,3 @@
-/*jslint white:true, plusplus:true*/
-/*global
-	exports,
-	module,
-    buster,
-	define,
-	window
-*/
 (function(root, factory){
 	'use strict';
 
@@ -31,7 +23,7 @@
 	function getUniqueString(){
 		if ( getUniqueString.uid === undefined ){
 			getUniqueString.uid = 0;
-		}	 
+		}
 		getUniqueString.uid++;
 
 		return "my unique String number " + getUniqueString.uid.toString();

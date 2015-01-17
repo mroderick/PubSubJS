@@ -1,10 +1,3 @@
-/*jslint white:true, stupid:true*/
-/*global
-	PubSub,
-	buster,
-	require,
-	sinon
-*/
 (function( global ){
 	"use strict";
 
@@ -22,7 +15,7 @@
 
 		"publish method should return true if there are subscribers to a message" : function(){
 			var message = TestHelper.getUniqueString(),
-				func = function(){};
+				func = function(){ return undefined; };
 
 			PubSub.subscribe( message, func );
 			assert( PubSub.publish( message ) );
@@ -30,7 +23,7 @@
 
 		"should return false, when there are no longer any subscribers to a message" : function(){
 			var message = TestHelper.getUniqueString(),
-				func = function(){},
+				func = function(){ return undefined; },
 				token = PubSub.subscribe(message, func);
 
 			PubSub.unsubscribe(token);

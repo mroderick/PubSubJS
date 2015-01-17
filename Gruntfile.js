@@ -27,9 +27,6 @@ module.exports = function(grunt) {
 		buster: {
 			test: {
 				config: 'test/buster.js'
-			},
-			server: {
-				port: 1111
 			}
 		},
 
@@ -38,21 +35,18 @@ module.exports = function(grunt) {
 				// overrides the default linefeed separator
 				separator: ''
 			},
-		    jquery: {
-		    	src: ['wrappers/jquery/pubsub.js.pre.txt', 'src/pubsub.js', 'wrappers/jquery/pubsub.js.post.txt'],
-		    	dest: 'jquery.pubsub.js'
-		    }
+			jquery: {
+				src: ['wrappers/jquery/pubsub.js.pre.txt', 'src/pubsub.js', 'wrappers/jquery/pubsub.js.post.txt'],
+				dest: 'jquery.pubsub.js'
+			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-buster');
-	grunt.loadNpmTasks('grunt-jslint');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 
-	// override the built-in lint task with jslint
-	grunt.registerTask('lint', 'jslint');
 
-	grunt.registerTask('test', ['lint', 'buster']);
+	grunt.registerTask('test', ['buster']);
 
 	// build jQuery version
 	grunt.registerTask('jquery', 'concat:jquery');

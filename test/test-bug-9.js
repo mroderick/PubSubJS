@@ -1,11 +1,3 @@
-/*jslint white:true*/
-/*global
-	PubSub,
-	buster,
-	require,
-	sinon,
-	done
-*/
 (function( global ){
 	"use strict";
 
@@ -32,9 +24,9 @@
 
 			clock.tick(1);
 
-			assert( subscriber1.calledOnce );			
-			assert( subscriber2.calledOnce );			
-			assert( subscriber3.calledOnce );			
+			assert( subscriber1.calledOnce );
+			assert( subscriber2.calledOnce );
+			assert( subscriber3.calledOnce );
 
 			done();
 			clock.restore();

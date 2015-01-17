@@ -1,10 +1,3 @@
-/*jslint white:true, stupid:true*/
-/*global
-	PubSub,
-	buster,
-	require,
-	sinon
-*/
 (function( global ){
 	"use strict";
 
@@ -16,7 +9,7 @@
 	buster.testCase( "unsubscribe method", {
 
 		"should return token when succesful" : function(){
-			var func = function(){},
+			var func = function(){ return undefined; },
 				message = TestHelper.getUniqueString(),
 				token = PubSub.subscribe( message, func),
 				result = PubSub.unsubscribe( token );
@@ -27,7 +20,7 @@
 		"should return false when unsuccesful" : function(){
 			var unknownToken = 'my unknown token',
 				result = PubSub.unsubscribe( unknownToken ),
-				func = function(){},
+				func = function(){ return undefined; },
 				message = TestHelper.getUniqueString(),
 				token = PubSub.subscribe( message, func );
 
@@ -41,7 +34,7 @@
 
 
 		"with function argument should return true when succesful" : function(){
-			var func = function(){},
+			var func = function(){ return undefined; },
 				message = TestHelper.getUniqueString(),
 				result;
 
@@ -52,7 +45,7 @@
 		},
 
 		"with function argument should return false when unsuccesful" : function(){
-			var func = function(){},
+			var func = function(){ return undefined; },
 				message = TestHelper.getUniqueString(),
 				unknownToken = 'my unknown token',
 				result = PubSub.unsubscribe( unknownToken );
@@ -135,7 +128,7 @@
 					sub1 = function(){
 						PubSub.unsubscribe(sub1);
 					},
-					sub2 = function(){};
+					sub2 = function(){ return undefined; };
 
 				PubSub.subscribe( topic, sub1 );
 				PubSub.subscribe( topic, sub2 );
