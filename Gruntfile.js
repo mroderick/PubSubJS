@@ -38,10 +38,10 @@ module.exports = function(grunt) {
 				// overrides the default linefeed separator
 				separator: ''
 			},
-		    jquery: {
-		    	src: ['wrappers/jquery/pubsub.js.pre.txt', 'src/pubsub.js', 'wrappers/jquery/pubsub.js.post.txt'],
-		    	dest: 'jquery.pubsub.js'
-		    }
+			jquery: {
+				src: ['wrappers/jquery/pubsub.js.pre.txt', 'src/pubsub.js', 'wrappers/jquery/pubsub.js.post.txt'],
+				dest: 'jquery.pubsub.js'
+			}
 		}
 	});
 
