@@ -1,6 +1,6 @@
 {
   "name": "pubsub-js",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Dependency free publish/subscribe library",
   "main": "./src/pubsub.js",
   "directories": {
@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-  	"lint": "$(npm bin)/jslint src/**/*.js test/**/*.js",
+    "lint": "$(npm bin)/jslint src/**/*.js test/**/*.js",
     "test": "npm run lint && $(npm bin)/grunt test"
   },
   "repository": {
