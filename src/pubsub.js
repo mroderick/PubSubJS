@@ -88,7 +88,7 @@ https://github.com/mroderick/PubSubJS
 			while( position !== -1 ){
 				topic = topic.substr( 0, position );
 				position = topic.lastIndexOf('.');
-				deliverMessage( message, topic, data );
+				deliverMessage( message, topic, data, immediateExceptions );
 			}
 		};
 	}
