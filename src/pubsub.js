@@ -122,6 +122,25 @@ https://github.com/mroderick/PubSubJS
 		}
 		return true;
 	}
+  
+  /**
+   * Decides if topic string has childs in messages
+   * @param  {String}  topic 
+   * @return {Boolean}      
+   */
+	function isParentTopic (topic){
+		var m, reg = new RegExp("^" + topic + "\\.");
+
+		for ( m in messages ){
+			if (messages.hasOwnProperty(m)){
+				if (reg.test(m)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 
 	/**
 	 *	PubSub.publish( message[, data] ) -> Boolean
@@ -204,13 +223,27 @@ https://github.com/mroderick/PubSubJS
 	 *
 	 *		// Example 3 - unsubscribing a topic
 	 *		PubSub.unsubscribe('mytopic');
+	 *		
+	 *		// Example 4 - unsubscribing all children of a parent topic
+	 *		PubSub.unsubscribe('mytopic');
 	 */
 	PubSub.unsubscribe = function(value){
 		var isTopic    = typeof value === 'string' && messages.hasOwnProperty(value),
+			isParent = typeof value === 'string' && isParentTopic(value),
 			isToken    = !isTopic && typeof value === 'string',
 			isFunction = typeof value === 'function',
 			result = false,
 			m, message, t;
+
+		if (isParent) {
+			for ( m in messages ){
+				if (messages.hasOwnProperty(m)){
+					if (m.match(new RegExp("^" + value + "\\."))) {
+						delete messages[m];
+					}
+				}
+			}
+		}
 
 		if (isTopic){
 			delete messages[value];
@@ -241,4 +274,5 @@ https://github.com/mroderick/PubSubJS
 
 		return result;
 	};
+
 }));
