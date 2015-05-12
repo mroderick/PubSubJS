@@ -30,7 +30,7 @@ There are several ways of getting PubSubJS
 
 * [Download a tagged version](https://github.com/mroderick/PubSubJS/tags) from GitHub
 * Install via npm (`npm install pubsub-js`)
-* Intall via bower (`bower install pubsub-js`)
+* Install via bower (`bower install pubsub-js`)
 
 ## Examples
 
