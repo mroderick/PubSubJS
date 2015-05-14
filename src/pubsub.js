@@ -15,12 +15,13 @@ https://github.com/mroderick/PubSubJS
         // CommonJS
         factory(exports);
 
-    } else {
-        // Browser globals
-        var PubSub = {};
-        root.PubSub = PubSub;
-        factory(PubSub);
     }
+
+    // Browser globals
+    var PubSub = {};
+    root.PubSub = PubSub;
+    factory(PubSub);
+    
 }(( typeof window === 'object' && window ) || this, function (PubSub){
 	'use strict';
 
