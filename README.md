@@ -96,6 +96,10 @@ PubSub.subscribe('a.b.c', myFunc3);
 PubSub.unsubscribe('a.b');
 // no further notications for 'a.b' and 'a.b.c' topics
 // notifications for 'a' will still get published
+
+PubSub.unsubscribe('a.b', true);
+// same as previous example but your removing all subscriptions
+// of the children topics
 ```
 
 ### Clear all subscriptions
