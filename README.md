@@ -58,7 +58,7 @@ PubSub.publish( 'MY TOPIC', 'hello world!' );
 PubSub.publishSync( 'MY TOPIC', 'hello world!' );
 ```
 
-### Cancel specific subscripiton
+### Cancel specific subscription
 
 ```javascript
 // create a function to receive the topic
