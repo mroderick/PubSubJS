@@ -21,7 +21,7 @@ https://github.com/mroderick/PubSubJS
     var PubSub = {};
     root.PubSub = PubSub;
     factory(PubSub);
-    
+
 }(( typeof window === 'object' && window ) || this, function (PubSub){
 	'use strict';
 
@@ -179,7 +179,7 @@ https://github.com/mroderick/PubSubJS
 	/*Public: Clear subscriptions by the topic
 	*/
 	PubSub.clearSubscriptions = function clearSubscriptions(topic){
-		var m; 
+		var m;
 		for (m in messages){
 			if (messages.hasOwnProperty(m) && m.indexOf(topic) === 0){
 				delete messages[m];
@@ -214,7 +214,7 @@ https://github.com/mroderick/PubSubJS
 			m, message, t;
 
 		if (isTopic){
-			delete messages[value];
+			PubSub.clearSubscriptions(value);
 			return;
 		}
 
