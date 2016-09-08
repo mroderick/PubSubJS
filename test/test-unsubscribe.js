@@ -115,7 +115,7 @@
 
 			PubSub.unsubscribe(topicB);
 
-			PubSub.publishSync(topicA, TestHelper.getUniqueString());
+			PubSub.publishSync(topicC, TestHelper.getUniqueString());
 
 			assert(spyA.called);
 			refute(spyB.called);
