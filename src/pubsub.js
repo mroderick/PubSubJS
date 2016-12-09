@@ -105,7 +105,7 @@ https://github.com/mroderick/PubSubJS
 			found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic]));
 		}
 
-		return found;
+		return found && messages[topic].length;
 	}
 
 	function publish( message, data, sync, immediateExceptions ){
