@@ -122,6 +122,28 @@
 			refute(spyC.called);
 		},
 
+		'with parent topic argument, must clear all child subscriptions': function() {
+			var topic = TestHelper.getUniqueString(),
+				topicA = topic + '.a',
+				topicB = topic + '.a.b',
+				topicC = topic + '.a.b.c',
+				spyB = sinon.spy(),
+				spyC = sinon.spy();
+
+			// subscribe only to  children:
+			PubSub.subscribe(topicB, spyB);
+			PubSub.subscribe(topicC, spyC);
+
+			// but unsubscribe from a parent:
+			PubSub.unsubscribe(topicA);
+
+			PubSub.publishSync(topicB, TestHelper.getUniqueString());
+			PubSub.publishSync(topicC, TestHelper.getUniqueString());
+
+			refute(spyB.called);
+			refute(spyC.called);
+		},
+
 		'must not throw exception when unsubscribing as part of publishing' : function(){
 			refute.exception(function(){
 				var topic = TestHelper.getUniqueString(),
