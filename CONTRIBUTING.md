@@ -37,7 +37,7 @@ There are grunt tasks for helping with linting and testing the codebase.
 
 ### Test setup
 
-The tests are implemented using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://cjohansen.no/sinon/). All dependencies can be installed with `npm install` (assuming you already have nodejs installed).
+The tests are implemented using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://sinonjs.org/). All dependencies can be installed with `npm install` (assuming you already have nodejs installed).
 
 ### Linting
 
