@@ -207,7 +207,18 @@ https://github.com/mroderick/PubSubJS
 	 *		PubSub.unsubscribe('mytopic');
 	 */
 	PubSub.unsubscribe = function(value){
-		var isTopic    = typeof value === 'string' && messages.hasOwnProperty(value),
+		var descendantTopicExists = function(topic) {
+				var m;
+				for ( m in messages ){
+					if ( messages.hasOwnProperty(m) && m.indexOf(topic) === 0 ){
+						// a descendant of the topic exists:
+						return true;
+					}
+				}
+
+				return false;
+			},
+			isTopic    = typeof value === 'string' && ( messages.hasOwnProperty(value) || descendantTopicExists(value) ),
 			isToken    = !isTopic && typeof value === 'string',
 			isFunction = typeof value === 'function',
 			result = false,
