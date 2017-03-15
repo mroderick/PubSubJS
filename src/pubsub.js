@@ -62,13 +62,14 @@ https://github.com/mroderick/PubSubJS
 	}
 
 	function deliverMessage( originalMessage, matchedMessage, data, immediateExceptions ){
-		var subscribers = messages[matchedMessage],
-			callSubscriber = immediateExceptions ? callSubscriberWithImmediateExceptions : callSubscriberWithDelayedExceptions,
-			s;
 
 		if ( !messages.hasOwnProperty( matchedMessage ) ) {
 			return;
 		}
+
+		var subscribers = messages[matchedMessage],
+			callSubscriber = immediateExceptions ? callSubscriberWithImmediateExceptions : callSubscriberWithDelayedExceptions,
+			s;
 
 		for (s in subscribers){
 			if ( subscribers.hasOwnProperty(s)){
@@ -86,7 +87,7 @@ https://github.com/mroderick/PubSubJS
 			deliverMessage(message, message, data, immediateExceptions);
 
 			// trim the hierarchy and deliver message to each level
-			while( position !== -1 ){
+			while( ~position ){
 				topic = topic.substr( 0, position );
 				position = topic.lastIndexOf('.');
 				deliverMessage( message, topic, data, immediateExceptions );
@@ -99,7 +100,7 @@ https://github.com/mroderick/PubSubJS
 			found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic])),
 			position = topic.lastIndexOf( '.' );
 
-		while ( !found && position !== -1 ){
+		while ( !found && ~position){
 			topic = topic.substr( 0, position );
 			position = topic.lastIndexOf( '.' );
 			found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic]));
