@@ -27,6 +27,7 @@ https://github.com/mroderick/PubSubJS
 
 	var messages = {},
 		lastUid = -1;
+	let separator = '.';
 
 	function hasKeys(obj){
 		var key;
@@ -80,7 +81,7 @@ https://github.com/mroderick/PubSubJS
 	function createDeliveryFunction( message, data, immediateExceptions ){
 		return function deliverNamespaced(){
 			var topic = String( message ),
-				position = topic.lastIndexOf( '.' );
+				position = topic.lastIndexOf( separator );
 
 			// deliver the message as it is now
 			deliverMessage(message, message, data, immediateExceptions);
@@ -88,7 +89,7 @@ https://github.com/mroderick/PubSubJS
 			// trim the hierarchy and deliver message to each level
 			while( position !== -1 ){
 				topic = topic.substr( 0, position );
-				position = topic.lastIndexOf('.');
+				position = topic.lastIndexOf( separator );
 				deliverMessage( message, topic, data, immediateExceptions );
 			}
 		};
@@ -97,11 +98,11 @@ https://github.com/mroderick/PubSubJS
 	function messageHasSubscribers( message ){
 		var topic = String( message ),
 			found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic])),
-			position = topic.lastIndexOf( '.' );
+			position = topic.lastIndexOf( separator );
 
 		while ( !found && position !== -1 ){
 			topic = topic.substr( 0, position );
-			position = topic.lastIndexOf( '.' );
+			position = topic.lastIndexOf( separator );
 			found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic]));
 		}
 
