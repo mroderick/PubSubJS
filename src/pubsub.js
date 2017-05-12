@@ -17,7 +17,9 @@ https://github.com/mroderick/PubSubJS
 
 	// CommonJS and Node.js module support
 	} else if (typeof exports === 'object'){
-		if (typeof module !== 'undefined' && module.exports) exports = module.exports = PubSub; // Node.js specific `module.exports`
+		if (module !== undefined && module.exports) {
+			exports = module.exports = PubSub; // Node.js specific `module.exports`
+		}
 		exports.PubSub = PubSub; // CommonJS module 1.1.1 spec
 		module.exports = exports = PubSub; // CommonJS
 	}
