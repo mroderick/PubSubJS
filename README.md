@@ -31,7 +31,7 @@ There are several ways of getting PubSubJS
 * Install via npm (`npm install pubsub-js`)
 * Use it via CDN directly (http://www.jsdelivr.com/#!pubsubjs)
 
-** Note: the last version of this library available via bower is v1.5.4**
+**Note: the last version of this library available via bower is v1.5.4**
 
 ## Examples
 
