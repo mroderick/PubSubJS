@@ -2,7 +2,6 @@
 
 [![Travis build status](https://img.shields.io/travis/mroderick/PubSubJS.svg)](https://travis-ci.org/mroderick/PubSubJS) [![David](https://img.shields.io/david/mroderick/pubsubjs.svg)](https://david-dm.org/mroderick/PubSubJS) [![David](https://img.shields.io/david/dev/mroderick/pubsubjs.svg)](https://david-dm.org/mroderick/PubSubJS#info=devDependencies&view=table)
 ![npm version](https://img.shields.io/npm/v/pubsub-js.svg) ![npm license](https://img.shields.io/npm/l/pubsub-js.svg) ![npm downloads per month](https://img.shields.io/npm/dm/pubsub-js.svg)
-![Bower version](https://img.shields.io/bower/v/pubsub-js.svg)
 
 PubSubJS is a [topic-based](http://en.wikipedia.org/wiki/Publish–subscribe_pattern#Message_filtering) [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe) library written in JavaScript.
 
@@ -30,7 +29,6 @@ There are several ways of getting PubSubJS
 
 * [Download a tagged version](https://github.com/mroderick/PubSubJS/tags) from GitHub
 * Install via npm (`npm install pubsub-js`)
-* Install via bower (`bower install pubsub-js`)
 * Use it via CDN directly (http://www.jsdelivr.com/#!pubsubjs)
 
 ## Examples
