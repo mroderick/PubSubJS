@@ -47,7 +47,7 @@ https://github.com/mroderick/PubSubJS
 	 */
 	function throwException( ex ){
 		return function reThrowException(){
-			throw ex;
+			throw new Error(ex.stack);
 		};
 	}
 
