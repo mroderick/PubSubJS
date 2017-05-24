@@ -7,22 +7,20 @@ https://github.com/mroderick/PubSubJS
 (function (root, factory){
 	'use strict';
 
-	var PubSub = {};
-	root.PubSub = PubSub;
-	factory(PubSub);
+    if (typeof define === 'function' && define.amd){
+        // AMD. Register as an anonymous module.
+        define(['exports'], factory);
 
-	// AMD support
-	if (typeof define === 'function' && define.amd){
-		define(function() { return PubSub; });
+    } else if (typeof exports === 'object'){
+        // CommonJS
+        factory(exports);
 
-	// CommonJS and Node.js module support
-	} else if (typeof exports === 'object'){
-		if (module !== undefined && module.exports) {
-			exports = module.exports = PubSub; // Node.js specific `module.exports`
-		}
-		exports.PubSub = PubSub; // CommonJS module 1.1.1 spec
-		module.exports = exports = PubSub; // CommonJS
-	}
+    }
+
+    // Browser globals
+    var PubSub = {};
+    root.PubSub = PubSub;
+    factory(PubSub);
 
 }(( typeof window === 'object' && window ) || this, function (PubSub){
 	'use strict';
