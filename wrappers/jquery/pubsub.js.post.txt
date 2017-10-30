@@ -16,7 +16,7 @@
 	}
 
 	function pubsub( method ){
-		if ( PubSub.hasOwnProperty( method ) && typeof PubSub[ method ] === 'function' ){
+		if ( Object.prototype.hasOwnProperty.call( PubSub, method ) && typeof PubSub[ method ] === 'function' ){
 			return PubSub[ method ].apply( self, Array.prototype.slice.call( arguments, 1 ) );
 		}
 

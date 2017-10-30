@@ -55,6 +55,23 @@
 			$.pubsub( 'publishSync', topic, data );
 
 			assert( mock.verify() );
+		},
+
+		"$.pubsub('subscribe') should still call subscribe when PubSub.hasOwnProperty has been overridden" : function(){
+			try {
+				var topic = TestHelper.getUniqueString(),
+					spy = this.spy(),
+					mock = this.mock( PubSub );
+
+				mock.expects('subscribe').once().withArgs( topic, spy );
+
+				PubSub.hasOwnProperty = function(){ return false; };
+				$.pubsub('subscribe', topic, spy);
+
+				assert( mock.verify() );
+			} finally {
+				delete PubSub.hasOwnProperty;
+			}
 		}
 	});
 }(this));
