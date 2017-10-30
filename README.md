@@ -35,6 +35,12 @@ There are several ways of getting PubSubJS
 
 ## Examples
 
+### Import `pubsub-js` module
+
+```
+import PubSub from 'pubsub-js';
+```
+
 ### Basic example
 
 ```javascript
