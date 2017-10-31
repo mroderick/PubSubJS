@@ -1,5 +1,5 @@
 
-	function reportError(message) {
+	function reportError(errorMessage) {
 		if (typeof console !== 'undefined'){
 			console.error(new Error(errorMessage));
 			return;

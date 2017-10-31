@@ -55,6 +55,24 @@
 			$.pubsub( 'publishSync', topic, data );
 
 			assert( mock.verify() );
+		},
+
+		"$.pubsub() reports errors to the console when one is available" : function(){
+			var mock = this.mock( global.console );
+			mock.expects( 'error' ).once().withArgs( new Error('Method bogus does not exist on jQuery.pubsub') );
+			$.pubsub( 'bogus' );
+		},
+
+		"$.pubsub() reports errors with jQuery when the console is not available" : function(){
+			var nativeConsole = global.console;
+			try {
+				var mock = this.mock( $ );
+				global.console = undefined;
+				mock.expects( 'error' ).once().withArgs( 'Method bogus does not exist on jQuery.pubsub' );
+				$.pubsub( 'bogus' );
+			} finally {
+				global.console = nativeConsole;
+			}
 		}
 	});
 }(this));
