@@ -172,6 +172,22 @@ https://github.com/mroderick/PubSubJS
 		return token;
 	};
 
+	/**
+	 *	PubSub.subscribeOnce( message, func ) -> PubSub
+	 *	- message (String): The message to subscribe to
+	 *	- func (Function): The function to call when a new message is published
+	 *	Subscribes the passed function to the passed message once
+	**/
+	PubSub.subscribeOnce = function( message, func ){
+		let token = pubsub.on( event, function(){
+			// before func apply, unsubscribe message
+			pubsub.unsubscribe( token );
+			func.apply( this, arguments );
+		} );
+
+		return PubSub;
+	}
+
 	/* Public: Clears all subscriptions
 	 */
 	PubSub.clearAllSubscriptions = function clearAllSubscriptions(){
