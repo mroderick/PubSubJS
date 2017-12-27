@@ -19,5 +19,8 @@ before_script:
 script:
   - npm test
 
+after_success:
+  - if [ "x$TRAVIS_NODE_VERSION" = "x8" ]; then npm run coverage && cat ./coverage/lcov.info | coveralls lib; fi
+
 git:
   depth: 10
