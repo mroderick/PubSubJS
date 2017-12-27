@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "npm run lint && $(npm bin)/grunt test"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "buster": "0.7.18",
-    "phantomjs": "1.9.13"
+    "mocha": "^4.0.1",
+    "referee": "^1.2.0",
+    "sinon": "^4.1.3"
   }
 }
