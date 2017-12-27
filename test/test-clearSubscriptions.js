@@ -1,25 +1,24 @@
-(function( global ){
-	'use strict';
+'use strict';
 
-	var PubSub = global.PubSub || require('../src/pubsub'),
-		TestHelper = global.TestHelper || require('../test/helper'),
-        refute = buster.refute;
+var PubSub = require('../src/pubsub'),
+    TestHelper = require('./helper'),
+    refute = require('referee').refute,
+    sinon = require('sinon');
 
-	buster.testCase( 'clearAllSubscriptions method', {
-		'must clear all subscriptions' : function(){
-			var topic = TestHelper.getUniqueString(),
-				spy1 = sinon.spy(),
-				spy2 = sinon.spy();
+describe('clearAllSubscriptions method', function () {
+    it('must clear all subscriptions', function () {
+        var topic = TestHelper.getUniqueString(),
+            spy1 = sinon.spy(),
+            spy2 = sinon.spy();
 
-			PubSub.subscribe(topic, spy1);
-			PubSub.subscribe(topic, spy2);
+        PubSub.subscribe(topic, spy1);
+        PubSub.subscribe(topic, spy2);
 
-			PubSub.clearAllSubscriptions();
+        PubSub.clearAllSubscriptions();
 
-			PubSub.publishSync(topic, TestHelper.getUniqueString());
+        PubSub.publishSync(topic, TestHelper.getUniqueString());
 
-			refute(spy1.called);
-			refute(spy2.called);
-		}
-	});
-}(this));
+        refute(spy1.called);
+        refute(spy2.called);
+    });
+});
