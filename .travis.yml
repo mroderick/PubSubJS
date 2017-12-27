@@ -10,8 +10,10 @@ node_js:
    - "6"
    - "8"
 
+before_install:
+  - npm install coveralls
+
 before_script:
-  - npm -q install
   # these build targets only need to run once per build, so let's conserve a few resources
   # ESLint only supports Node >=4
   - if [ "x$TRAVIS_NODE_VERSION" = "x8" ]; then npm run lint; fi
