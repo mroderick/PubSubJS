@@ -175,11 +175,11 @@ https://github.com/mroderick/PubSubJS
         return token;
     };
     
-   /* Public: get all subscriptions
-   */
-    PubSub.getSubscriptions = function getSubscriptions() {
+    /* Public: Get all subscriptions
+	 */
+    PubSub.getAllSubscriptions = function getAllSubscriptions(){
         return messages;
-    }
+    };
 
     /* Public: Clears all subscriptions
 	 */
