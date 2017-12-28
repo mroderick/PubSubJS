@@ -28,9 +28,11 @@ PubSubJS is designed to be used within a **single process**, and is not a good c
 
 There are several ways of getting PubSubJS
 
-* [Download a tagged version](https://github.com/mroderick/PubSubJS/tags) from GitHub
 * Install via npm (`npm install pubsub-js`)
-* Use it via CDN directly (http://www.jsdelivr.com/#!pubsubjs)
+* Use it directly from a CDN directly
+    - http://www.jsdelivr.com/#!pubsubjs
+    - https://cdnjs.com/libraries/pubsub-js
+* [Download a tagged version](https://github.com/mroderick/PubSubJS/tags) from GitHub
 
 **Note: the last version of this library available via bower is v1.5.4**
 
