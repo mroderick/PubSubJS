@@ -174,6 +174,12 @@ https://github.com/mroderick/PubSubJS
         // return token for unsubscribing
         return token;
     };
+    
+   /* Public: get all subscriptions
+   */
+    PubSub.getSubscriptions = function getSubscriptions() {
+        return messages;
+    }
 
     /* Public: Clears all subscriptions
 	 */
