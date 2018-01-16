@@ -30,30 +30,3 @@ And in case we didn't emphasize it enough: we love tests!
 ## Syntax
 
 Install [Editor Config](http://editorconfig.org) for your text editor, this will ensure that the correct formatting is applied for each file type.
-
-## Development
-
-There are grunt tasks for helping with linting and testing the codebase.
-
-### Test setup
-
-The tests are implemented using [BusterJS](http://busterjs.org) and the excellent [Sinon.JS](http://sinonjs.org/). All dependencies can be installed with `npm install` (assuming you already have nodejs installed).
-
-### Linting
-
-```bash
-$ grunt lint
-```
-
-### Testing with PhantomJS
-
-If you have PhantomJS installed on your system, you can run the Buster tests by running
-
-```bash
-$ grunt test
-```
-
-or by running
-```bash
-$ npm test
-```

@@ -1,163 +1,159 @@
-(function( global ){
-	"use strict";
+'use strict';
 
-	var PubSub = global.PubSub || require("../src/pubsub"),
-		TestHelper = global.TestHelper || require("../test/helper"),
-        assert = buster.assert,
-        refute = buster.refute;
+var PubSub = require('../src/pubsub'),
+    TestHelper = require('../test/helper'),
+    assert = require('referee').assert,
+    refute = require('referee').refute,
+    sinon = require('sinon');
 
-	buster.testCase( "unsubscribe method", {
+describe( 'unsubscribe method', function() {
+    it('should return token when succesful', function(){
+        var func = function(){ return undefined; },
+            message = TestHelper.getUniqueString(),
+            token = PubSub.subscribe( message, func),
+            result = PubSub.unsubscribe( token );
 
-		"should return token when succesful" : function(){
-			var func = function(){ return undefined; },
-				message = TestHelper.getUniqueString(),
-				token = PubSub.subscribe( message, func),
-				result = PubSub.unsubscribe( token );
+        assert.equals( result, token );
+    });
 
-			assert.equals( result, token );
-		},
+    it('should return false when unsuccesful', function(){
+        var unknownToken = 'my unknown token',
+            result = PubSub.unsubscribe( unknownToken ),
+            func = function(){ return undefined; },
+            message = TestHelper.getUniqueString(),
+            token = PubSub.subscribe( message, func );
 
-		"should return false when unsuccesful" : function(){
-			var unknownToken = 'my unknown token',
-				result = PubSub.unsubscribe( unknownToken ),
-				func = function(){ return undefined; },
-				message = TestHelper.getUniqueString(),
-				token = PubSub.subscribe( message, func );
+        // first, let's try a completely unknown token
+        assert.equals( result, false );
 
-			// first, let's try a completely unknown token
-			assert.equals( result, false );
+        // now let's try unsubscribing the same method twice
+        PubSub.unsubscribe( token );
+        assert.equals( PubSub.unsubscribe( token ), false );
+    });
 
-			// now let's try unsubscribing the same method twice
-			PubSub.unsubscribe( token );
-			assert.equals( PubSub.unsubscribe( token ), false );
-		},
+    it('with function argument should return true when succesful', function(){
+        var func = function(){ return undefined; },
+            message = TestHelper.getUniqueString(),
+            result;
 
+        PubSub.subscribe( message, func);
+        result = PubSub.unsubscribe( func );
 
-		"with function argument should return true when succesful" : function(){
-			var func = function(){ return undefined; },
-				message = TestHelper.getUniqueString(),
-				result;
+        assert.equals( result, true );
+    });
 
-			PubSub.subscribe( message, func);
-			result = PubSub.unsubscribe( func );
+    it('with function argument should return false when unsuccesful', function(){
+        var func = function(){ return undefined; },
+            message = TestHelper.getUniqueString(),
+            unknownToken = 'my unknown token',
+            result = PubSub.unsubscribe( unknownToken );
 
-			assert.equals( result, true );
-		},
+        // first, let's try a completely unknown token
 
-		"with function argument should return false when unsuccesful" : function(){
-			var func = function(){ return undefined; },
-				message = TestHelper.getUniqueString(),
-				unknownToken = 'my unknown token',
-				result = PubSub.unsubscribe( unknownToken );
+        assert.equals( result, false );
 
-			// first, let's try a completely unknown token
+        // now let's try unsubscribing the same method twice
+        PubSub.subscribe( message, func );
+        PubSub.subscribe( message, func );
+        PubSub.subscribe( message, func );
 
-			assert.equals( result, false );
+        // unsubscribe once, this should remove all subscriptions for message
+        PubSub.unsubscribe( func );
 
-			// now let's try unsubscribing the same method twice
-			PubSub.subscribe( message, func );
-			PubSub.subscribe( message, func );
-			PubSub.subscribe( message, func );
+        // unsubscribe again
+        assert.equals( PubSub.unsubscribe( func ), false );
+    });
 
-			// unsubscribe once, this should remove all subscriptions for message
-			PubSub.unsubscribe( func );
+    it('with topic argument, must clear all exactly matched subscriptions', function(){
+        var topic = TestHelper.getUniqueString(),
+            spy1 = sinon.spy(),
+            spy2 = sinon.spy();
 
-			// unsubscribe again
-			assert.equals( PubSub.unsubscribe( func ), false );
-		},
+        PubSub.subscribe(topic, spy1);
+        PubSub.subscribe(topic, spy2);
 
-		'with topic argument, must clear all exactly matched subscriptions': function(){
-			var topic = TestHelper.getUniqueString(),
-				spy1 = sinon.spy(),
-				spy2 = sinon.spy();
+        PubSub.unsubscribe(topic);
 
-			PubSub.subscribe(topic, spy1);
-			PubSub.subscribe(topic, spy2);
+        PubSub.publishSync(topic, TestHelper.getUniqueString());
 
-			PubSub.unsubscribe(topic);
+        refute(spy1.called);
+        refute(spy2.called);
+    });
 
-			PubSub.publishSync(topic, TestHelper.getUniqueString());
+    it('with topic argument, must only clear matched subscriptions', function(){
+        var topic1 = TestHelper.getUniqueString(),
+            topic2 = TestHelper.getUniqueString(),
+            spy1 = sinon.spy(),
+            spy2 = sinon.spy();
 
-			refute(spy1.called);
-			refute(spy2.called);
-		},
+        PubSub.subscribe(topic1, spy1);
+        PubSub.subscribe(topic2, spy2);
 
-		'with topic argument, must only clear matched subscriptions': function(){
-			var topic1 = TestHelper.getUniqueString(),
-				topic2 = TestHelper.getUniqueString(),
-				spy1 = sinon.spy(),
-				spy2 = sinon.spy();
+        PubSub.unsubscribe(topic1);
 
-			PubSub.subscribe(topic1, spy1);
-			PubSub.subscribe(topic2, spy2);
+        PubSub.publishSync(topic1, TestHelper.getUniqueString());
+        PubSub.publishSync(topic2, TestHelper.getUniqueString());
 
-			PubSub.unsubscribe(topic1);
+        refute(spy1.called);
+        assert(spy2.called);
+    });
 
-			PubSub.publishSync(topic1, TestHelper.getUniqueString());
-			PubSub.publishSync(topic2, TestHelper.getUniqueString());
+    it('with topic argument, must clear all matched hierarchical subscriptions', function(){
+        var topic = TestHelper.getUniqueString(),
+            topicA = topic + '.a',
+            topicB = topic + '.a.b',
+            topicC = topic + '.a.b.c',
+            spyA = sinon.spy(),
+            spyB = sinon.spy(),
+            spyC = sinon.spy();
 
-			refute(spy1.called);
-			assert(spy2.called);
-		},
+        PubSub.subscribe(topicA, spyA);
+        PubSub.subscribe(topicB, spyB);
+        PubSub.subscribe(topicC, spyC);
 
-		'with topic argument, must clear all matched hierarchical subscriptions': function(){
-			var topic = TestHelper.getUniqueString(),
-				topicA = topic + '.a',
-				topicB = topic + '.a.b',
-				topicC = topic + '.a.b.c',
-				spyA = sinon.spy(),
-				spyB = sinon.spy(),
-				spyC = sinon.spy();
+        PubSub.unsubscribe(topicB);
 
-			PubSub.subscribe(topicA, spyA);
-			PubSub.subscribe(topicB, spyB);
-			PubSub.subscribe(topicC, spyC);
+        PubSub.publishSync(topicC, TestHelper.getUniqueString());
 
-			PubSub.unsubscribe(topicB);
+        assert(spyA.called);
+        refute(spyB.called);
+        refute(spyC.called);
+    });
 
-			PubSub.publishSync(topicC, TestHelper.getUniqueString());
+    it('with parent topic argument, must clear all child subscriptions', function() {
+        var topic = TestHelper.getUniqueString(),
+            topicA = topic + '.a',
+            topicB = topic + '.a.b',
+            topicC = topic + '.a.b.c',
+            spyB = sinon.spy(),
+            spyC = sinon.spy();
 
-			assert(spyA.called);
-			refute(spyB.called);
-			refute(spyC.called);
-		},
+        // subscribe only to  children:
+        PubSub.subscribe(topicB, spyB);
+        PubSub.subscribe(topicC, spyC);
 
-		'with parent topic argument, must clear all child subscriptions': function() {
-			var topic = TestHelper.getUniqueString(),
-				topicA = topic + '.a',
-				topicB = topic + '.a.b',
-				topicC = topic + '.a.b.c',
-				spyB = sinon.spy(),
-				spyC = sinon.spy();
+        // but unsubscribe from a parent:
+        PubSub.unsubscribe(topicA);
 
-			// subscribe only to  children:
-			PubSub.subscribe(topicB, spyB);
-			PubSub.subscribe(topicC, spyC);
+        PubSub.publishSync(topicB, TestHelper.getUniqueString());
+        PubSub.publishSync(topicC, TestHelper.getUniqueString());
 
-			// but unsubscribe from a parent:
-			PubSub.unsubscribe(topicA);
+        refute(spyB.called);
+        refute(spyC.called);
+    });
 
-			PubSub.publishSync(topicB, TestHelper.getUniqueString());
-			PubSub.publishSync(topicC, TestHelper.getUniqueString());
+    it('must not throw exception when unsubscribing as part of publishing', function(){
+        refute.exception(function(){
+            var topic = TestHelper.getUniqueString(),
+                sub1 = function(){
+                    PubSub.unsubscribe(sub1);
+                },
+                sub2 = function(){ return undefined; };
 
-			refute(spyB.called);
-			refute(spyC.called);
-		},
+            PubSub.subscribe( topic, sub1 );
+            PubSub.subscribe( topic, sub2 );
 
-		'must not throw exception when unsubscribing as part of publishing' : function(){
-			refute.exception(function(){
-				var topic = TestHelper.getUniqueString(),
-					sub1 = function(){
-						PubSub.unsubscribe(sub1);
-					},
-					sub2 = function(){ return undefined; };
-
-				PubSub.subscribe( topic, sub1 );
-				PubSub.subscribe( topic, sub2 );
-
-				PubSub.publishSync( topic, 'hello world!' );
-			});
-		}
-	});
-
-}(this));
+            PubSub.publishSync( topic, 'hello world!' );
+        });
+    });
+});

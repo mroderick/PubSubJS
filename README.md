@@ -2,6 +2,7 @@
 
 [![Travis build status](https://img.shields.io/travis/mroderick/PubSubJS.svg)](https://travis-ci.org/mroderick/PubSubJS) [![David](https://img.shields.io/david/mroderick/pubsubjs.svg)](https://david-dm.org/mroderick/PubSubJS) [![David](https://img.shields.io/david/dev/mroderick/pubsubjs.svg)](https://david-dm.org/mroderick/PubSubJS#info=devDependencies&view=table)
 ![npm version](https://img.shields.io/npm/v/pubsub-js.svg) ![npm license](https://img.shields.io/npm/l/pubsub-js.svg) ![npm downloads per month](https://img.shields.io/npm/dm/pubsub-js.svg)
+[![Coverage Status](https://coveralls.io/repos/github/mroderick/PubSubJS/badge.svg)](https://coveralls.io/github/mroderick/PubSubJS)
 
 PubSubJS is a [topic-based](http://en.wikipedia.org/wiki/Publish–subscribe_pattern#Message_filtering) [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe) library written in JavaScript.
 
@@ -27,9 +28,11 @@ PubSubJS is designed to be used within a **single process**, and is not a good c
 
 There are several ways of getting PubSubJS
 
-* [Download a tagged version](https://github.com/mroderick/PubSubJS/tags) from GitHub
 * Install via npm (`npm install pubsub-js`)
-* Use it via CDN directly (http://www.jsdelivr.com/#!pubsubjs)
+* Use it directly from a CDN directly
+    - http://www.jsdelivr.com/#!pubsubjs
+    - https://cdnjs.com/libraries/pubsub-js
+* [Download a tagged version](https://github.com/mroderick/PubSubJS/tags) from GitHub
 
 **Note: the last version of this library available via bower is v1.5.4**
 
@@ -39,52 +42,52 @@ There are several ways of getting PubSubJS
 
 ```javascript
 // create a function to subscribe to topics
-var mySubscriber = function( msg, data ){
+var mySubscriber = function (msg, data) {
     console.log( msg, data );
 };
 
 // add the function to the list of subscribers for a particular topic
 // we're keeping the returned token, in order to be able to unsubscribe
 // from the topic later on
-var token = PubSub.subscribe( 'MY TOPIC', mySubscriber );
+var token = PubSub.subscribe('MY TOPIC', mySubscriber);
 
 // publish a topic asyncronously
-PubSub.publish( 'MY TOPIC', 'hello world!' );
+PubSub.publish('MY TOPIC', 'hello world!');
 
 // publish a topic syncronously, which is faster in some environments,
 // but will get confusing when one topic triggers new topics in the
 // same execution chain
 // USE WITH CAUTION, HERE BE DRAGONS!!!
-PubSub.publishSync( 'MY TOPIC', 'hello world!' );
+PubSub.publishSync('MY TOPIC', 'hello world!');
 ```
 
 ### Cancel specific subscription
 
 ```javascript
 // create a function to receive the topic
-var mySubscriber = function( msg, data ){
-    console.log( msg, data );
+var mySubscriber = function (msg, data) {
+    console.log(msg, data);
 };
 
 // add the function to the list of subscribers to a particular topic
 // we're keeping the returned token, in order to be able to unsubscribe
 // from the topic later on
-var token = PubSub.subscribe( 'MY TOPIC', mySubscriber );
+var token = PubSub.subscribe('MY TOPIC', mySubscriber);
 
 // unsubscribe this subscriber from this topic
-PubSub.unsubscribe( token );
+PubSub.unsubscribe(token);
 ```
 
 ### Cancel all subscriptions for a function
 
 ```javascript
 // create a function to receive the topic
-var mySubscriber = function( msg, data ){
-    console.log( msg, data );
+var mySubscriber = function(msg, data) {
+    console.log(msg, data);
 };
 
 // unsubscribe mySubscriber from ALL topics
-PubSub.unsubscribe( mySubscriber );
+PubSub.unsubscribe(mySubscriber);
 ```
 
 ### Clear all subscriptions for a topic
@@ -110,25 +113,25 @@ PubSub.clearAllSubscriptions();
 
 ```javascript
 // create a subscriber to receive all topics from a hierarchy of topics
-var myToplevelSubscriber = function( msg, data ){
-    console.log( 'top level: ', msg, data );
+var myToplevelSubscriber = function (msg, data) {
+    console.log('top level: ', msg, data);
 }
 
 // subscribe to all topics in the 'car' hierarchy
-PubSub.subscribe( 'car', myToplevelSubscriber );
+PubSub.subscribe('car', myToplevelSubscriber);
 
 // create a subscriber to receive only leaf topic from hierarchy op topics
-var mySpecificSubscriber = function( msg, data ){
-    console.log('specific: ', msg, data );
+var mySpecificSubscriber = function (msg, data) {
+    console.log('specific: ', msg, data);
 }
 
 // subscribe only to 'car.drive' topics
-PubSub.subscribe( 'car.drive', mySpecificSubscriber );
+PubSub.subscribe('car.drive', mySpecificSubscriber);
 
 // Publish some topics
-PubSub.publish( 'car.purchase', { name : 'my new car' } );
-PubSub.publish( 'car.drive', { speed : '14' } );
-PubSub.publish( 'car.sell', { newOwner : 'someone else' } );
+PubSub.publish('car.purchase', {name: 'my new car'});
+PubSub.publish('car.drive', {speed: '14'});
+PubSub.publish('car.sell', {newOwner: 'someone else'});
 
 // In this scenario, myToplevelSubscriber will be called for all
 // topics, three times in total
@@ -145,79 +148,36 @@ when you make typos.
 
 ```javascript
 // BAD
-PubSub.subscribe("hello", function( msg, data ){
-	console.log( data )
+PubSub.subscribe('hello', function (msg, data) {
+	console.log(data)
 });
 
-PubSub.publish("helo", "world");
+PubSub.publish('helo', 'world');
 
 // BETTER
-var MY_TOPIC = "hello";
-PubSub.subscribe(MY_TOPIC, function( msg, data ){
-	console.log( data )
+var MY_TOPIC = 'hello';
+PubSub.subscribe(MY_TOPIC, function (msg, data) {
+	console.log(data)
 });
 
-PubSub.publish(MY_TOPIC, "world");
+PubSub.publish(MY_TOPIC, 'world');
 ```
 
 ### Immediate Exceptions for stack traces in developer tools
 
-As of versions 1.3.2, you can force immediate exceptions (instead of delayed execeptions), which has the benefit of maintaining the stack trace when viewed in dev tools.
+As of version 1.3.2, you can force immediate exceptions (instead of delayed execeptions), which has the benefit of maintaining the stack trace when viewed in dev tools.
 
 This should be considered a development only option, as PubSubJS was designed to try to deliver your topics to all subscribers, even when some fail.
 
-Setting immediate exceptions in development is easy, just tell PubSubJS about it after it's been loaded.
+Setting immediate exceptions in development is easy, just tell PubSubJS about it after it has been loaded.
 
 ```javascript
 PubSub.immediateExceptions = true;
 ```
 
-## Plugin for jQuery
-
-By default PubSubJS can be used in any browser or CommonJS environment, including [node](http://nodejs.org). Additionally, PubSubJS can be built specifically for jQuery using Rake.
-
-    $ rake jquery
-
-or using Grunt
-
-    $ grunt jquery
-
-Produces jquery.pubsub.js
-
-### Use with jQuery
-
-```javascript
-var topic = 'greeting',
-    data = 'world',
-    subscriber = function sayHello( data ){
-        console.log( 'hello ' + data );
-    };
-
-// add a subscription
-var token = $.pubsub('subscribe', topic, subscriber );
-
-// unsubscribing
-$.pubsub('unsubscribe', token);         // remove a specific subscription
-$.pubsub('unsubscribe', subscriber);    // remove all subscriptions for subscriber
-
-// publishing a topic
-$.pubsub('publish', topic, data);
-
-// publishing topic syncronously
-$.pubsub('publishSync', topic, data);
-```
-
-In the jQuery build, the global ```PubSub``` global is still available, so you can mix and match both ```Pubsub``` and ```$.pubsub``` as needed.
-
-There is also an article about [Using PubSubJS with jQuery](http://roderick.dk/resources/using-pubsubjs-with-jquery/)
-
 ## Contributing to PubSubJS
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## Future of PubSubJS
-
-* Better and more extensive usage examples
 
 
 ## More about Publish/Subscribe

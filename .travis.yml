@@ -6,11 +6,23 @@ cache:
   - node_modules
 
 node_js:
-   - "0.12"
-   - "4.2"
+   - "4"
+   - "6"
+   - "8"
+
+before_install:
+  - npm install coveralls
 
 before_script:
-  - npm -q install
+  # these build targets only need to run once per build, so let's conserve a few resources
+  # ESLint only supports Node >=4
+  - if [ "x$TRAVIS_NODE_VERSION" = "x8" ]; then npm run lint; fi
 
 script:
   - npm test
+
+after_success:
+  - if [ "x$TRAVIS_NODE_VERSION" = "x8" ]; then npm run coverage && cat ./coverage/lcov.info | coveralls lib; fi
+
+git:
+  depth: 10
