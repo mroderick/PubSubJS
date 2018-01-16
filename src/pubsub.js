@@ -156,44 +156,6 @@ https://github.com/mroderick/PubSubJS
 	 *	Subscribes the passed function to the passed message. Every returned token is unique and should be stored if
 	 *	you need to unsubscribe
 	**/
-<<<<<<< HEAD
-	PubSub.subscribe = function( message, func ){
-		if ( typeof func !== 'function'){
-			return false;
-		}
-
-		// message is not registered yet
-		if ( !messages.hasOwnProperty( message ) ){
-			messages[message] = {};
-		}
-
-		// forcing token as String, to allow for future expansions without breaking usage
-		// and allow for easy use as key names for the 'messages' object
-		var token = 'uid_' + String(++lastUid);
-		messages[message][token] = func;
-
-		// return token for unsubscribing
-		return token;
-	};
-
-	/**
-	 *	PubSub.subscribeOnce( message, func ) -> PubSub
-	 *	- message (String): The message to subscribe to
-	 *	- func (Function): The function to call when a new message is published
-	 *	Subscribes the passed function to the passed message once
-	**/
-	PubSub.subscribeOnce = function( message, func ){
-		let token = pubsub.on( event, function(){
-			// before func apply, unsubscribe message
-			pubsub.unsubscribe( token );
-			func.apply( this, arguments );
-		} );
-
-		return PubSub;
-	}
-
-	/* Public: Clears all subscriptions
-=======
     PubSub.subscribe = function( message, func ){
         if ( typeof func !== 'function'){
             return false;
@@ -213,8 +175,22 @@ https://github.com/mroderick/PubSubJS
         return token;
     };
 
+    /**
+	 *	PubSub.subscribeOnce( message, func ) -> PubSub
+	 *	- message (String): The message to subscribe to
+	 *	- func (Function): The function to call when a new message is published
+	 *	Subscribes the passed function to the passed message once
+	**/
+    PubSub.subscribeOnce = function( message, func ){
+        var token = PubSub.subscribe( message, function(){
+            // before func apply, unsubscribe message
+            PubSub.unsubscribe( token );
+            func.apply( this, arguments );
+        });
+        return PubSub;
+    };
+
     /* Public: Clears all subscriptions
->>>>>>> remote-code/master
 	 */
     PubSub.clearAllSubscriptions = function clearAllSubscriptions(){
         messages = {};
