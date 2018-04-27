@@ -15,7 +15,7 @@ describe( 'subscribeAll method', function() {
         assert.isString( token );
     });
 
-    describe('when user subscribes for all messages using this', function() {
+    it('should subscribe for all messages', function() {
         var message = TestHelper.getUniqueString(),
             subscribeFn = sinon.spy();
 
