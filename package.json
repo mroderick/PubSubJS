@@ -9,6 +9,7 @@
   },
   "scripts": {
     "coverage": "./node_modules/.bin/nyc --reporter=lcov --reporter=text --reporter=json-summary npm test",
+    "docs": "./node_modules/.bin/jsdoc2md --template ./docs/template.hbs --files ./src/*.js > ./docs/docs.md",
     "lint": "./node_modules/.bin/eslint src/ test/",
     "test": "./node_modules/.bin/mocha"
   },
@@ -31,6 +32,7 @@
   "license": "MIT",
   "devDependencies": {
     "eslint": "4.19.1",
+    "jsdoc-to-markdown": "^4.0.1",
     "mocha": "5.1.1",
     "nyc": "11.7.1",
     "referee": "^1.2.0",
