@@ -1,12 +1,22 @@
-# PubSubJS
+<div align="center">
+  <p>
+    <h1> PubSubJS
+  </p>
 
-[![Travis build status](https://img.shields.io/travis/mroderick/PubSubJS.svg)](https://travis-ci.org/mroderick/PubSubJS) [![David](https://img.shields.io/david/mroderick/pubsubjs.svg)](https://david-dm.org/mroderick/PubSubJS) [![David](https://img.shields.io/david/dev/mroderick/pubsubjs.svg)](https://david-dm.org/mroderick/PubSubJS#info=devDependencies&view=table)
-![npm version](https://img.shields.io/npm/v/pubsub-js.svg) ![npm license](https://img.shields.io/npm/l/pubsub-js.svg) ![npm downloads per month](https://img.shields.io/npm/dm/pubsub-js.svg)
-[![Coverage Status](https://coveralls.io/repos/github/mroderick/PubSubJS/badge.svg)](https://coveralls.io/github/mroderick/PubSubJS)
+  <p>
+    <a href="https://travis-ci.org/mroderick/PubSubJS"><img src="https://img.shields.io/travis/mroderick/PubSubJS.svg?style=flat-square" alt="Travis build status" title="Travis build status" /></a><!--
+    --><a href="https://david-dm.org/mroderick/PubSubJS"><img src="https://img.shields.io/david/mroderick/pubsubjs.svg?style=flat-square" alt="Dependencies" title="Powered by David" /></a><!--
+    --><a href="https://david-dm.org/mroderick/PubSubJS#info=devDependencies&view=table"><img src="https://img.shields.io/david/dev/mroderick/pubsubjs.svg?style=flat-square" alt="DevDependencies" title="Powered by David" /></a><!--
+    --><a href="https://www.npmjs.com/package/pubsub-js"><img src="https://img.shields.io/npm/v/pubsub-js.svg?style=flat-square" alt="NPM version" title="Click to go to NPM" /></a><!--
+    --><a href="https://github.com/mroderick/PubSubJS/blob/master/LICENSE.md"><img src="https://img.shields.io/npm/l/pubsub-js.svg?style=flat-square" alt="MIT License" title="License" /></a><!--
+    --><a href="https://www.npmjs.com/package/pubsub-js"><img src="https://img.shields.io/npm/dm/pubsub-js.svg?style=flat-square" alt="NPM downloads/month" title="Click to go to NPM" /></a><!--
+    --><a href="https://coveralls.io/github/mroderick/PubSubJS"><img src="https://img.shields.io/coveralls/github/mroderick/PubSubJS.svg?style=flat-square" alt="Coverage Status" title="View Coverage"/></a>
+  </p>
+</div>
 
 PubSubJS is a [topic-based](http://en.wikipedia.org/wiki/Publish–subscribe_pattern#Message_filtering) [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe) library written in JavaScript.
 
-PubSubJS has synchronisation decoupling, so topics are published asynchronously. This helps keep your program predictable as the originator of topics will not be blocked while consumers process them.
+PubSubJS has synchronization decoupling, so topics are published asynchronously. This helps keep your program predictable as the originator of topics will not be blocked while consumers process them.
 
 For the adventurous, PubSubJS also supports synchronous topic publication. This can give a speedup in some environments (browsers, not all), but can also lead to some very difficult to reason about programs, where one topic triggers publication of another topic in the same execution chain.
 
@@ -38,6 +48,15 @@ There are several ways of getting PubSubJS
 
 ## Examples
 
+First you have to import the module:
+
+```javascript
+import PubSub from 'pubsub-js'
+
+// or when using CommonJS
+const PubSub = require('pubsub-js');
+```
+
 ### Basic example
 
 ```javascript
@@ -51,10 +70,10 @@ var mySubscriber = function (msg, data) {
 // from the topic later on
 var token = PubSub.subscribe('MY TOPIC', mySubscriber);
 
-// publish a topic asyncronously
+// publish a topic asynchronously
 PubSub.publish('MY TOPIC', 'hello world!');
 
-// publish a topic syncronously, which is faster in some environments,
+// publish a topic synchronously, which is faster in some environments,
 // but will get confusing when one topic triggers new topics in the
 // same execution chain
 // USE WITH CAUTION, HERE BE DRAGONS!!!
@@ -98,7 +117,7 @@ PubSub.subscribe('a.b', myFunc2);
 PubSub.subscribe('a.b.c', myFunc3);
 
 PubSub.unsubscribe('a.b');
-// no further notications for 'a.b' and 'a.b.c' topics
+// no further notifications for 'a.b' and 'a.b.c' topics
 // notifications for 'a' will still get published
 ```
 
@@ -147,14 +166,14 @@ when you make typos.
 ### Example of use of "constants"
 
 ```javascript
-// BAD
+// 👎 Bad usage
 PubSub.subscribe('hello', function (msg, data) {
 	console.log(data)
 });
 
-PubSub.publish('helo', 'world');
+PubSub.publish('hello', 'world');
 
-// BETTER
+// 👍 Better usage
 var MY_TOPIC = 'hello';
 PubSub.subscribe(MY_TOPIC, function (msg, data) {
 	console.log(data)
@@ -165,7 +184,7 @@ PubSub.publish(MY_TOPIC, 'world');
 
 ### Immediate Exceptions for stack traces in developer tools
 
-As of version 1.3.2, you can force immediate exceptions (instead of delayed execeptions), which has the benefit of maintaining the stack trace when viewed in dev tools.
+As of version 1.3.2, you can force immediate exceptions (instead of delayed exceptions), which has the benefit of maintaining the stack trace when viewed in dev tools.
 
 This should be considered a development only option, as PubSubJS was designed to try to deliver your topics to all subscribers, even when some fail.
 
