@@ -16,7 +16,7 @@
 
 PubSubJS is a [topic-based](http://en.wikipedia.org/wiki/Publish–subscribe_pattern#Message_filtering) [publish/subscribe](http://en.wikipedia.org/wiki/Publish/subscribe) library written in JavaScript.
 
-PubSubJS has synchronization decoupling, so topics are published asynchronously. This helps keep your program predictable as the originator of topics will not be blocked while consumers process them.
+PubSubJS has synchronisation decoupling, so topics are published asynchronously. This helps keep your program predictable as the originator of topics will not be blocked while consumers process them.
 
 For the adventurous, PubSubJS also supports synchronous topic publication. This can give a speedup in some environments (browsers, not all), but can also lead to some very difficult to reason about programs, where one topic triggers publication of another topic in the same execution chain.
 
@@ -27,11 +27,11 @@ PubSubJS is designed to be used within a **single process**, and is not a good c
 ## Key features
 
 * Dependency free
-* Synchronization decoupling
+* synchronisation decoupling
 * ES3 compatible. PubSubJS should be able to run everywhere that can execute JavaScript. Browsers, servers, ebook readers, old phones, game consoles.
 * AMD / CommonJS module support
 * No modification of subscribers (jQuery custom events modify subscribers)
-* Easy to understand and use (thanks to synchronization decoupling)
+* Easy to understand and use (thanks to synchronisation decoupling)
 * Small(ish), less than 1kb minified and gzipped
 
 ## Getting PubSubJS
