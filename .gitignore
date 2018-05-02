@@ -8,3 +8,5 @@ jquery.pubsub.js
 /out/coverage/
 .nyc_output/
 coverage
+# yarn lock file
+yarn.lock
