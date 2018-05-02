@@ -8,9 +8,9 @@
     "test": "test"
   },
   "scripts": {
-    "coverage": "nyc --reporter=lcov --reporter=text --reporter=json-summary npm test",
-    "lint": "eslint src/ test/",
-    "test": "mocha"
+    "coverage": "./node_modules/.bin/nyc --reporter=lcov --reporter=text --reporter=json-summary npm test",
+    "lint": "./node_modules/.bin/eslint src/ test/",
+    "test": "./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
