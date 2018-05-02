@@ -1,3 +1,18 @@
+# gitignore copy
+# Aptana files #
+################
+.project
+.settings/
+.tmp*
+jquery.pubsub.js
+/node_modules/
+/out/coverage/
+.nyc_output/
+coverage
+# yarn lock file
+yarn.lock
+
+# npmignore exclusive
 .editorconfig
 .travis.yml
 composer.json
