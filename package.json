@@ -8,10 +8,10 @@
     "test": "test"
   },
   "scripts": {
-    "coverage": "nyc --reporter=lcov --reporter=text --reporter=json-summary npm test",
-    "prepublishOnly": "jsdoc2md --template ./docs/template.hbs --files ./src/*.js > ./docs/docs.md",
-    "lint": "eslint src/ test/",
-    "test": "mocha"
+    "coverage": "./node_modules/.bin/nyc --reporter=lcov --reporter=text --reporter=json-summary npm test",
+    "prepublishOnly": "./node_modules/.bin/jsdoc2md --template ./docs/template.hbs --files ./src/*.js > ./docs/docs.md",
+    "lint": "./node_modules/.bin/eslint src/ test/",
+    "test": "./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
