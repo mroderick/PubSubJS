@@ -1,3 +1,4 @@
+# gitignore copy
 # Aptana files #
 ################
 .project
@@ -10,3 +11,11 @@ jquery.pubsub.js
 coverage
 # yarn lock file
 yarn.lock
+
+# npmignore exclusive
+.editorconfig
+.travis.yml
+composer.json
+iframe/
+CONTRIBUTING.md
+docs/
