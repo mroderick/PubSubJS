@@ -117,6 +117,8 @@
     }
 
     function publish( message, data, sync, immediateExceptions ){
+        message = (typeof message === 'symbol') ? message.toString() : message;
+
         var deliver = createDeliveryFunction( message, data, immediateExceptions ),
             hasSubscribers = messageHasSubscribers( message );
 
@@ -169,6 +171,8 @@
             return false;
         }
 
+        message = (typeof message === 'symbol') ? message.toString() : message;
+
         // message is not registered yet
         if ( !messages.hasOwnProperty( message ) ){
             messages[message] = {};
@@ -178,7 +182,7 @@
         // and allow for easy use as key names for the 'messages' object
         var token = 'uid_' + String(++lastUid);
         messages[message][token] = func;
-
+        
         // return token for unsubscribing
         return token;
     };
