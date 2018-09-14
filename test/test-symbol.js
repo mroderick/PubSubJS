@@ -1,3 +1,4 @@
+/* global Symbol */
 'use strict';
 
 var PubSub = require('../src/pubsub'),
@@ -11,7 +12,7 @@ describe( 'subscribe and publish', function() {
     });
     it('should work on Symbol() type message/topic', function(){
         var MESSAGE = Symbol('MESSAGE');
-        var func = function(){ return undefined; }
+        var func = function(){ return undefined; };
 
         PubSub.subscribe( MESSAGE, func );
         
