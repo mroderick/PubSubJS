@@ -182,6 +182,21 @@ PubSub.subscribe(MY_TOPIC, function (msg, data) {
 PubSub.publish(MY_TOPIC, 'world');
 ```
 
+### Example of use of "symbol constants" with ES6/7 syntax
+
+```javascript
+// event-types.js
+export const MY_TOPIC = Symbol('MY_TOPIC')
+
+// somefile.js
+import { MY_TOPIC } from './event-types.js'
+PubSub.subscribe(MY_TOPIC, function (msg, data) {
+	console.log(data)
+});
+
+PubSub.publish(MY_TOPIC, 'world');
+```
+
 ### Immediate Exceptions for stack traces in developer tools
 
 As of version 1.3.2, you can force immediate exceptions (instead of delayed exceptions), which has the benefit of maintaining the stack trace when viewed in dev tools.
