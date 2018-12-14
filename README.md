@@ -128,6 +128,15 @@ PubSub.clearAllSubscriptions();
 // all subscriptions are removed
 ```
 
+### Error Handling
+```javascript
+// isPublished is a boolean that represents if any subscribers was registered for this topic
+var isPublished = PubSub.publish('a');
+
+// token will be false if something went wrong and subscriber was not registered
+var token = PubSub.subscribe('MY TOPIC', mySubscriber); 
+```
+
 ### Hierarchical addressing
 
 ```javascript
