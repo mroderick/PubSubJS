@@ -279,7 +279,7 @@
 
                 if ( isToken && message[value] ){
                     delete message[value];
-                    result = true;
+                    result = value;
                     // tokens are unique, so we can just stop here
                     break;
                 }
