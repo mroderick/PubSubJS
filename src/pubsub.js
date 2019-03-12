@@ -193,15 +193,15 @@
      * @alias subscribeOnce
      * @param { String } message The message to subscribe to
      * @param { Function } func The function to call when a new message is published
-     * @return { PubSub }
+     * @return { token }
      */
     PubSub.subscribeOnce = function( message, func ){
         var token = PubSub.subscribe( message, function(){
             // before func apply, unsubscribe message
-            PubSub.unsubscribe( token );
+            if(!PubSub.unsubscribe( token )) return;
             func.apply( this, arguments );
         });
-        return PubSub;
+        return token;
     };
 
     /**
@@ -269,7 +269,8 @@
 
         if (isTopic){
             PubSub.clearSubscriptions(value);
-            return;
+            result = true;
+            return result;
         }
 
         for ( m in messages ){
@@ -278,7 +279,7 @@
 
                 if ( isToken && message[value] ){
                     delete message[value];
-                    result = value;
+                    result = true;
                     // tokens are unique, so we can just stop here
                     break;
                 }
