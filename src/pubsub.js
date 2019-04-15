@@ -164,6 +164,7 @@
      * @alias subscribe
      * @param { String } message The message to subscribe to
      * @param { Function } func The function to call when a new message is published
+     * @param { Object } eontext The context to call function
      * @return { String }
      */
     PubSub.subscribe = function( message, func, context ){
@@ -181,8 +182,10 @@
         // forcing token as String, to allow for future expansions without breaking usage
         // and allow for easy use as key names for the 'messages' object
         var token = 'uid_' + String(++lastUid);
-        messages[message][token] = () => func.apply(context, arguments);
-        
+        messages[message][token] = function() {
+            func.apply(context, arguments);
+        };
+
         // return token for unsubscribing
         return token;
     };
@@ -193,6 +196,7 @@
      * @alias subscribeOnce
      * @param { String } message The message to subscribe to
      * @param { Function } func The function to call when a new message is published
+     * @param { Object } eontext The context to call function
      * @return { PubSub }
      */
     PubSub.subscribeOnce = function( message, func, context ){
