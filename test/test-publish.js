@@ -208,4 +208,20 @@ describe( 'publish method', function () {
         clock.restore();
         done();
     });
+
+    it('with context argument, must execute by assignation context', function () {
+        var topic = TestHelper.getUniqueString(),
+            obj = {
+                spy: sinon.spy(),
+                testFunc: function () {
+                    this.spy();
+                }
+            };
+
+        PubSub.subscribe(topic, obj.testFunc, obj);
+
+        PubSub.publishSync(topic, TestHelper.getUniqueString);
+
+        assert(obj.spy.called);
+    });
 });

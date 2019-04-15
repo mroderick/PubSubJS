@@ -59,14 +59,14 @@
 
     function callSubscriberWithDelayedExceptions( subscriber, message, data ){
         try {
-            subscriber( message, data );
+            subscriber.func.call(subscriber.context, message, data);
         } catch( ex ){
             setTimeout( throwException( ex ), 0);
         }
     }
 
     function callSubscriberWithImmediateExceptions( subscriber, message, data ){
-        subscriber( message, data );
+        subscriber.func.call(subscriber.context, message, data );
     }
 
     function deliverMessage( originalMessage, matchedMessage, data, immediateExceptions ){
@@ -164,7 +164,7 @@
      * @alias subscribe
      * @param { String } message The message to subscribe to
      * @param { Function } func The function to call when a new message is published
-     * @param { Object } eontext The context to call function
+     * @param { Object } context The context to call function
      * @return { String }
      */
     PubSub.subscribe = function( message, func, context ){
@@ -182,8 +182,9 @@
         // forcing token as String, to allow for future expansions without breaking usage
         // and allow for easy use as key names for the 'messages' object
         var token = 'uid_' + String(++lastUid);
-        messages[message][token] = function() {
-            func.apply(context, arguments);
+        messages[message][token] = {
+            func: func,
+            context: context
         };
 
         // return token for unsubscribing
@@ -196,7 +197,7 @@
      * @alias subscribeOnce
      * @param { String } message The message to subscribe to
      * @param { Function } func The function to call when a new message is published
-     * @param { Object } eontext The context to call function
+     * @param { Object } context The context to call function
      * @return { PubSub }
      */
     PubSub.subscribeOnce = function( message, func, context ){
@@ -289,7 +290,7 @@
 
                 if (isFunction) {
                     for ( t in message ){
-                        if (message.hasOwnProperty(t) && message[t] === value){
+                        if (message.hasOwnProperty(t) && message[t].func === value){
                             delete message[t];
                             result = true;
                         }
