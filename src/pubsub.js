@@ -166,7 +166,7 @@
      * @param { Function } func The function to call when a new message is published
      * @return { String }
      */
-    PubSub.subscribe = function( message, func ){
+    PubSub.subscribe = function( message, func, context ){
         if ( typeof func !== 'function'){
             return false;
         }
@@ -181,7 +181,7 @@
         // forcing token as String, to allow for future expansions without breaking usage
         // and allow for easy use as key names for the 'messages' object
         var token = 'uid_' + String(++lastUid);
-        messages[message][token] = func;
+        messages[message][token] = () => func.apply(func, arguments);
         
         // return token for unsubscribing
         return token;
@@ -195,11 +195,11 @@
      * @param { Function } func The function to call when a new message is published
      * @return { PubSub }
      */
-    PubSub.subscribeOnce = function( message, func ){
+    PubSub.subscribeOnce = function( message, func, context ){
         var token = PubSub.subscribe( message, function(){
             // before func apply, unsubscribe message
             PubSub.unsubscribe( token );
-            func.apply( this, arguments );
+            func.apply( context, arguments );
         });
         return PubSub;
     };
