@@ -181,7 +181,7 @@
         // forcing token as String, to allow for future expansions without breaking usage
         // and allow for easy use as key names for the 'messages' object
         var token = 'uid_' + String(++lastUid);
-        messages[message][token] = () => func.apply(func, arguments);
+        messages[message][token] = () => func.apply(context, arguments);
         
         // return token for unsubscribing
         return token;
