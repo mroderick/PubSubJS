@@ -4,22 +4,15 @@ cache:
   directories:
     - node_modules
 
-node_js:
-   - "6"
-   - "8"
-   - "10"
-   - "node"
-
-before_install:
-  - npm install coveralls
-
-before_script:
-  # these build targets only need to run once per build, so let's conserve a few resources
-  # ESLint only supports Node >=4
-  - if [ "x$TRAVIS_NODE_VERSION" = "x8" ]; then npm run lint; fi
-
-after_success:
-  - if [ "x$TRAVIS_NODE_VERSION" = "x8" ]; then npm run coverage && cat ./coverage/lcov.info | coveralls lib; fi
+matrix:
+  include:
+    - node_js: "6"
+    - node_js: "8"
+      before_install: npm install coveralls
+      before_script: npm run lint
+      after_success: npm run coverage && cat ./coverage/lcov.info | coveralls lib; 
+    - node_js: "10"
+    - node_js: "node"    
 
 git:
   depth: 10
