@@ -147,7 +147,7 @@
     };
 
     /**
-     * Publishes the the message synchronously, passing the data to it's subscribers
+     * Publishes the message synchronously, passing the data to it's subscribers
      * @function
      * @alias publishSync
      * @param { String } message The message to publish
