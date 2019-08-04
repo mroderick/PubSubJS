@@ -1,6 +1,6 @@
 <div align="center">
   <p>
-    <img src="">
+    <img src="https://raw.githubusercontent.com/ssokurenko/PubSubJS/master/branding/logo.png"/ alt="PubSubJS" title="PubSubJS">
   </p>
 
   <p>
