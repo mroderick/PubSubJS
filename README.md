@@ -1,6 +1,6 @@
 <div align="center">
   <p>
-    <h1> PubSubJS
+    <img src="">
   </p>
 
   <p>
@@ -42,6 +42,7 @@ There are several ways of getting PubSubJS
 * Use it directly from a CDN directly
     - http://www.jsdelivr.com/#!pubsubjs
     - https://cdnjs.com/libraries/pubsub-js
+    - https://unpkg.com/pubsub-js
 * [Download a tagged version](https://github.com/mroderick/PubSubJS/tags) from GitHub
 
 **Note: the last version of this library available via bower is v1.5.4**
