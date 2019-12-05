@@ -229,6 +229,43 @@
         }
     };
 
+    /** 
+       Count subscriptions by the topic
+     * @function
+     * @public
+     * @alias countSubscriptions
+    */
+
+    PubSub.countSubscriptions = function countSubscriptions(topic){
+        var m;
+        var count = 0;
+        for (m in messages){
+            if (messages.hasOwnProperty(m) && m.indexOf(topic) === 0){
+                count++
+            }
+        }
+        return count;
+    };
+
+    
+    /** 
+       Count subscriptions by the topic
+     * @function
+     * @public
+     * @alias getSubscriptions
+    */
+    PubSub.getSubscriptions = function getSubscriptions(topic){
+        var m;
+        var list = [];
+        for (m in messages){
+            if (messages.hasOwnProperty(m) && m.indexOf(topic) === 0){
+                list.push(m);
+            }
+        }
+        return list;
+    };
+
+
     /**
      * Removes subscriptions
      *
