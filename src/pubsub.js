@@ -249,7 +249,7 @@
 
     
     /** 
-       Count subscriptions by the topic
+       get subscriptions by the topic
      * @function
      * @public
      * @alias getSubscriptions
