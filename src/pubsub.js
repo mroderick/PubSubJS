@@ -237,7 +237,6 @@
      * @alias countSubscriptions
      * @return { Array }
     */
-
     PubSub.countSubscriptions = function countSubscriptions(topic){
         var m;
         var count = 0;
