@@ -266,7 +266,6 @@
         return list;
     };
 
-
     /**
      * Removes subscriptions
      *
