@@ -219,6 +219,7 @@
      * @function
      * @public
      * @alias clearAllSubscriptions
+     * @return { int }
      */
     PubSub.clearSubscriptions = function clearSubscriptions(topic){
         var m;
@@ -234,6 +235,7 @@
      * @function
      * @public
      * @alias countSubscriptions
+     * @return { Array }
     */
 
     PubSub.countSubscriptions = function countSubscriptions(topic){
@@ -249,7 +251,7 @@
 
     
     /** 
-       get subscriptions by the topic
+       Gets subscriptions by the topic
      * @function
      * @public
      * @alias getSubscriptions
