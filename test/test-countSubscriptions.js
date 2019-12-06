@@ -16,5 +16,4 @@ describe('test-countSubscriptions method', function () {
 
         assert.equals(counts,1);
     });
-
 });
