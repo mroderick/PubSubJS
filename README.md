@@ -129,6 +129,21 @@ PubSub.clearAllSubscriptions();
 // all subscriptions are removed
 ```
 
+### Get Subscriptions
+
+```javascript
+PubSub.getSubscriptions('token');
+// subscriptions by token from all topics
+```
+
+### Count Subscriptions
+
+```javascript
+PubSub.countSubscriptions('token');
+// count by token from all topics
+```
+
+
 ### Error Handling
 ```javascript
 // isPublished is a boolean that represents if any subscribers was registered for this topic
@@ -167,6 +182,9 @@ PubSub.publish('car.sell', {newOwner: 'someone else'});
 // But, mySpecificSubscriber will only be called once, as it only
 // subscribes to the 'car.drive' topic
 ```
+
+
+
 
 ## Tips
 
