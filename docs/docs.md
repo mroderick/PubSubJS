@@ -135,7 +135,13 @@ Gets subscriptions by the topic
 <a name="subscribeOnce"></a>
 
 ## subscribeOnce(value)
-Removes subscriptions- When passed a token, removes a specific subscription.- When passed a function, removes all subscriptions for that function- When passed a topic, removes all subscriptions for that topic (hierarchy)
+Removes subscriptions - When passed a token, removes a specific subscription - When passed a function, removes all subscriptions for that function - When passed a topic, removes all subscriptions for that topic (hierarchy)
+
+- When passed a token, removes a specific subscription.
+
+- When passed a function, removes all subscriptions for that function
+
+- When passed a topic, removes all subscriptions for that topic (hierarchy)
 
 **Kind**: global function  
 **Access**: public  
@@ -146,15 +152,19 @@ Removes subscriptions- When passed a token, removes a specific subscription.
 
 **Example**  
 ```js
-// Unsubscribing with a tokenvar token = PubSub.subscribe('mytopic', myFunc);PubSub.unsubscribe(token);
+// Unsubscribing with a token
+var token = PubSub.subscribe('mytopic', myFunc);
+PubSub.unsubscribe(token);
 ```
 **Example**  
 ```js
-// Unsubscribing with a functionPubSub.unsubscribe(myFunc);
+// Unsubscribing with a function
+PubSub.unsubscribe(myFunc);
 ```
 **Example**  
 ```js
-// Unsubscribing from a topicPubSub.unsubscribe('mytopic');
+// Unsubscribing from a topic
+PubSub.unsubscribe('mytopic');
 ```
 
  * * *
