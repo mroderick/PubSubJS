@@ -7,7 +7,6 @@ var PubSub = require('../src/pubsub'),
     sinon = require('sinon');
 
 describe('test-countSubscriptions method', function () {
-    
     it('must be count eq 0', function () {
         var topic = TestHelper.getUniqueString(),
             spy1 = sinon.spy();
