@@ -2,7 +2,6 @@
 
 var PubSub = require('../src/pubsub'),
     TestHelper = require('./helper'),
-    refute = require('referee').refute,
     assert = require('referee').assert,
     sinon = require('sinon');
 
