@@ -11,7 +11,10 @@
     "coverage": "nyc --reporter=lcov --reporter=text --reporter=json-summary npm test",
     "prepublishOnly": "jsdoc2md --template ./docs/template.hbs --files ./src/*.js > ./docs/docs.md",
     "lint": "eslint src/ test/",
-    "test": "mocha"
+    "test": "mocha",
+    "preversion": "npm test",
+    "version": "changes --commits --footer",
+    "postversion": "git push --follow-tags && npm publish --access public"
   },
   "repository": {
     "type": "git",
@@ -31,6 +34,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@studio/changes": "^2.0.0",
     "eslint": "4.19.1",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "5.1.1",
