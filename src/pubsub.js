@@ -193,7 +193,7 @@
      * @alias subscribeOnce
      * @param { String } message The message to subscribe to
      * @param { Function } func The function to call when a new message is published
-     * @return { token }
+     * @return { PubSub }
      */
     PubSub.subscribeOnce = function( message, func ){
         var token = PubSub.subscribe( message, function(){
