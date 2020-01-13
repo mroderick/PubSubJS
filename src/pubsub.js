@@ -198,7 +198,10 @@
     PubSub.subscribeOnce = function( message, func ){
         var token = PubSub.subscribe( message, function(){
             // before func apply, unsubscribe message
-            if(!PubSub.unsubscribe( token )) return;
+            if( !PubSub.unsubscribe( token ) ){
+                return PubSub;
+            }
+
             func.apply( this, arguments );
         });
         return token;
@@ -269,8 +272,7 @@
 
         if (isTopic){
             PubSub.clearSubscriptions(value);
-            result = true;
-            return result;
+            return;
         }
 
         for ( m in messages ){
