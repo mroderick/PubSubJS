@@ -204,7 +204,7 @@
 
             func.apply( this, arguments );
         });
-        return token;
+        return PubSub;
     };
 
     /**
