@@ -8,6 +8,13 @@ var PubSub = require('../src/pubsub'),
 
 describe( 'subscribeOnce method', function() {
 
+    it( 'should return PubSub', function() {
+        var func = function(){ return undefined; },
+            message = TestHelper.getUniqueString(),
+            pubSub = PubSub.subscribeOnce( message , func );
+        assert.same( pubSub, PubSub );
+    } );
+
     it( 'must be executed only once', function() {
 
         var topic = TestHelper.getUniqueString(),
@@ -20,6 +27,18 @@ describe( 'subscribeOnce method', function() {
 
         assert( spy.calledOnce );
 
+    } );
+
+    it( 'cancellation should be possible', function() {
+
+        var  message = TestHelper.getUniqueString(),
+            spy = sinon.spy();
+
+        PubSub.subscribeOnce( message , spy );
+        
+        PubSub.publish(message, 'my payload');
+
+        assert.same( spy.callCount, 0 );
     } );
 
 } );
