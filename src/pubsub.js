@@ -71,19 +71,36 @@
 
     function findWildCardMessage(topic)
     {
-        var foundMessages = Object.keys(messages).find(function(messageItem){
-            return messageItem.indexOf('*') > -1 && matchMessage(topic,messageItem);
-        });
-        return foundMessages || []; 
+        var foundMessages = [];
+        var m;
+        for (m in messages){
+            if (messages.hasOwnProperty(m) && m.indexOf("*") >-1 ){
+                if(matchMessage(topic,m)){
+                    filteredMessages.push(m);
+                }
+            }
+        }
+        return foundMessages; 
     }
 
     function matchMessage(str, rule) {
-        var escapeRegex = (str) => str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
-        rule = rule.split("*").map(escapeRegex).join(".*");
-        rule = "^" + rule + "$"
+        var escapeRegex = function escapeRegex(str) {
+            return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+        };
+         
+        var mapArr = [];
+        var wildCardArr = rule.split("*");
+        for (var i = 0; i < wildCardArr.length; i++) {
+            var element = wildCardArr[i];
+            mapArr.push(escapeRegex(element));
+        }
+
+        rule = mapArr.join(".*");
+
+        rule = "^" + rule + "$";
         var regex = new RegExp(rule);
         return regex.test(str);
-      }
+    }
 
     function deliverMessage( originalMessage, matchedMessage, data, immediateExceptions ){
         var subscribers = messages[matchedMessage],
@@ -106,7 +123,6 @@
             var topic = String( message ),
                 position = topic.lastIndexOf( '.' );
 
-            //"firat.test.1"    
             // deliver the message as it is now
             deliverMessage(message, message, data, immediateExceptions);
 
@@ -118,10 +134,14 @@
             }
 
             
-            findWildCardMessage(message).forEach(element => {
-                deliverMessage( message, element, data, immediateExceptions );
-            });
-
+            var foundWillCardMessages = findWildCardMessage(message);
+            if(foundWillCardMessages.length>0)
+            {
+                var element;
+                for (element in foundWillCardMessages){
+                    deliverMessage( message, element, data, immediateExceptions );
+                }
+            }
         };
     }
 
@@ -136,8 +156,9 @@
             found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic]));
         }
 
-        if(!found)
+        if(!found){
            found = findWildCardMessage(message).length > 0;
+        }
 
         return found;
     }
