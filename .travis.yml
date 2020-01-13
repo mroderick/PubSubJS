@@ -6,13 +6,13 @@ cache:
 
 matrix:
   include:
-    - node_js: "6"
     - node_js: "8"
+    - node_js: "10"
       before_install: npm install coveralls
       before_script: npm run lint
-      after_success: npm run coverage && cat ./coverage/lcov.info | coveralls lib; 
-    - node_js: "10"
-    - node_js: "node"    
+      after_success: npm run coverage && cat ./coverage/lcov.info | coveralls lib;
+    - node_js: "12"
+    - node_js: "node"
 
 git:
   depth: 10
