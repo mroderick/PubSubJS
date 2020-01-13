@@ -1,6 +1,6 @@
 {
   "name": "pubsub-js",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Dependency free publish/subscribe library",
   "main": "./src/pubsub.js",
   "directories": {
@@ -11,7 +11,10 @@
     "coverage": "nyc --reporter=lcov --reporter=text --reporter=json-summary npm test",
     "prepublishOnly": "jsdoc2md --template ./docs/template.hbs --files ./src/*.js > ./docs/docs.md",
     "lint": "eslint src/ test/",
-    "test": "mocha"
+    "test": "mocha",
+    "preversion": "npm test",
+    "version": "changes --commits --footer",
+    "postversion": "git push --follow-tags && npm publish --access public"
   },
   "repository": {
     "type": "git",
@@ -31,11 +34,12 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@studio/changes": "^2.0.0",
     "eslint": "4.19.1",
-    "jsdoc-to-markdown": "^4.0.1",
+    "jsdoc-to-markdown": "^5.0.3",
     "mocha": "5.1.1",
-    "nyc": "11.7.1",
+    "nyc": "15.0.0",
     "referee": "^1.2.0",
-    "sinon": "5.0.3"
+    "sinon": "8.0.4"
   }
 }

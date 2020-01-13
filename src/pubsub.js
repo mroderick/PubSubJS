@@ -268,7 +268,7 @@
         var count = 0;
         for (m in messages){
             if (messages.hasOwnProperty(m) && m.indexOf(topic) === 0){
-                count++
+                count++;
             }
         }
         return count;
