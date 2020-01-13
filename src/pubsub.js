@@ -69,6 +69,22 @@
         subscriber( message, data );
     }
 
+    function findWildCardMessage(topic)
+    {
+        var foundMessages = Object.keys(messages).find(function(messageItem){
+            return messageItem.indexOf('*') > -1 && matchMessage(topic,messageItem);
+        });
+        return foundMessages || []; 
+    }
+
+    function matchMessage(str, rule) {
+        var escapeRegex = (str) => str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+        rule = rule.split("*").map(escapeRegex).join(".*");
+        rule = "^" + rule + "$"
+        var regex = new RegExp(rule);
+        return regex.test(str);
+      }
+
     function deliverMessage( originalMessage, matchedMessage, data, immediateExceptions ){
         var subscribers = messages[matchedMessage],
             callSubscriber = immediateExceptions ? callSubscriberWithImmediateExceptions : callSubscriberWithDelayedExceptions,
@@ -90,6 +106,7 @@
             var topic = String( message ),
                 position = topic.lastIndexOf( '.' );
 
+            //"firat.test.1"    
             // deliver the message as it is now
             deliverMessage(message, message, data, immediateExceptions);
 
@@ -99,6 +116,12 @@
                 position = topic.lastIndexOf('.');
                 deliverMessage( message, topic, data, immediateExceptions );
             }
+
+            
+            findWildCardMessage(message).forEach(element => {
+                deliverMessage( message, element, data, immediateExceptions );
+            });
+
         };
     }
 
@@ -112,6 +135,9 @@
             position = topic.lastIndexOf( '.' );
             found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic]));
         }
+
+        if(!found)
+           found = findWildCardMessage(message).length > 0;
 
         return found;
     }

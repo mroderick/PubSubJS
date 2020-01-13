@@ -79,8 +79,15 @@ PubSub.publish('MY TOPIC', 'hello world!');
 // same execution chain
 // USE WITH CAUTION, HERE BE DRAGONS!!!
 PubSub.publishSync('MY TOPIC', 'hello world!');
-```
 
+
+// if need matching subscribers in messages, you can use * char
+PubSub.publishSync('mytopic.*.all', 'hello world!');
+// mytopic.x.all
+// mytopic.y.all 
+//both them publisded
+
+```
 ### Cancel specific subscription
 
 ```javascript
