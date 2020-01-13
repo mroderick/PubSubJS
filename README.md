@@ -82,10 +82,10 @@ PubSub.publishSync('MY TOPIC', 'hello world!');
 
 
 // if need matching subscribers in messages, you can use * char
-PubSub.publishSync('mytopic.*.all', 'hello world!');
+PubSub.subscribe('mytopic.*.all', mySubscriber);
 // mytopic.x.all
 // mytopic.y.all 
-//both them publisded
+//both them subscribers
 
 ```
 ### Cancel specific subscription
