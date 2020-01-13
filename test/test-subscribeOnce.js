@@ -35,8 +35,8 @@ describe( 'subscribeOnce method', function() {
             spy = sinon.spy();
 
         PubSub.subscribeOnce( message , spy );
-        
-        PubSub.publish(message, 'my payload');
+        PubSub.unsubscribe( message );
+        PubSub.publish( message, 'my payload' );
 
         assert.same( spy.callCount, 0 );
     } );
