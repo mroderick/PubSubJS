@@ -37,7 +37,7 @@
     "@studio/changes": "^2.0.0",
     "eslint": "4.19.1",
     "jsdoc-to-markdown": "^5.0.3",
-    "mocha": "7.0.0",
+    "mocha": "7.0.1",
     "nyc": "15.0.0",
     "referee": "^1.2.0",
     "sinon": "8.1.0"
