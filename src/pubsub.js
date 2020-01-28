@@ -8,8 +8,6 @@
 (function (root, factory){
     'use strict';
 
-    var define = root.define;
-
     // AMD support
     if (typeof define === 'function' && define.amd){
         define(factory);
