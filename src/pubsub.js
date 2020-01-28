@@ -7,26 +7,24 @@
 
 (function (root, factory){
     'use strict';
-
+    
     var PubSub = {};
     root.PubSub = PubSub;
-
     factory(PubSub);
-
-    // AMD support
-    /* eslint-disable no-undef */
-    if (typeof define === 'function' && define.amd){
-        define(function() { return PubSub; });
-        /* eslint-enable no-undef */
-
-        // CommonJS and Node.js module support
-    } else if (typeof exports === 'object'){
+    // CommonJS and Node.js module support
+    if (typeof exports === 'object'){
         if (module !== undefined && module.exports) {
             exports = module.exports = PubSub; // Node.js specific `module.exports`
         }
         exports.PubSub = PubSub; // CommonJS module 1.1.1 spec
         module.exports = exports = PubSub; // CommonJS
     }
+    // AMD support
+    /* eslint-disable no-undef */
+    else if (typeof define === 'function' && define.amd){
+        define(function() { return PubSub; });
+        /* eslint-enable no-undef */
+    } 
 
 }(( typeof window === 'object' && window ) || this, function (PubSub){
     'use strict';
