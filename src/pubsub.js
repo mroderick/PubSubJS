@@ -8,28 +8,19 @@
 (function (root, factory){
     'use strict';
 
-    var PubSub = {};
-    root.PubSub = PubSub;
+    if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define(factory);
+	else {
+		var a = typeof exports === 'object' ? factory() : factory(root);
+		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+	}
 
-    var define = root.define;
-
-    factory(PubSub);
-
-    // AMD support
-    if (typeof define === 'function' && define.amd){
-        define(function() { return PubSub; });
-
-        // CommonJS and Node.js module support
-    } else if (typeof exports === 'object'){
-        if (module !== undefined && module.exports) {
-            exports = module.exports = PubSub; // Node.js specific `module.exports`
-        }
-        exports.PubSub = PubSub; // CommonJS module 1.1.1 spec
-        module.exports = exports = PubSub; // CommonJS
-    }
-
-}(( typeof window === 'object' && window ) || this, function (PubSub){
+}(( typeof window === 'object' && window ) || this, function (){
     'use strict';
+
+    var PubSub = {};
 
     var messages = {},
         lastUid = -1,
@@ -347,4 +338,6 @@
 
         return result;
     };
+
+    return PubSub;
 }));
