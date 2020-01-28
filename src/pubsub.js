@@ -14,10 +14,10 @@
     factory(PubSub);
 
     // AMD support
-    // eslint-disable no-undef
+    /* eslint-disable no-undef */
     if (typeof define === 'function' && define.amd){
         define(function() { return PubSub; });
-        // eslint-enable no-undef
+        /* eslint-enable no-undef */
 
         // CommonJS and Node.js module support
     } else if (typeof exports === 'object'){
