@@ -8,14 +8,22 @@
 (function (root, factory){
     'use strict';
 
-    if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define(factory);
-	else {
-		var a = typeof exports === 'object' ? factory() : factory(root);
-		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
-	}
+    var define = root.define;
+
+    // AMD support
+    if (typeof define === 'function' && define.amd){
+        define(factory);
+
+        // CommonJS and Node.js module support
+    } else if (typeof exports === 'object'){
+        if (module !== undefined && module.exports) {
+            exports = module.exports = factory(); // Node.js specific `module.exports`
+        }
+        exports.PubSub = PubSub; // CommonJS module 1.1.1 spec
+        module.exports = exports = factory(); // CommonJS
+    }
+
+    root.PubSub = factory();
 
 }(( typeof window === 'object' && window ) || this, function (){
     'use strict';
