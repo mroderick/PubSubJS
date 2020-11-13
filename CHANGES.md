@@ -1,5 +1,14 @@
 # Changes
 
+## 1.9.1
+
+- [`ead7906`](https://github.com/mroderick/PubSubJS/commit/ead79069b79df8c4f7d3324047cdb3b9d4c33571)
+  Fix amd module export (#173) (Sven Busse)
+    >
+    > Co-authored-by: Kevin <58685946+Kepeters@users.noreply.github.com>
+
+_Released on 2020-11-13._
+
 ## 1.9.0
 
 - [`3fb21e3`](https://github.com/mroderick/PubSubJS/commit/3fb21e309f8bb9fd32906b25b3a607bc32e8b1a7)
