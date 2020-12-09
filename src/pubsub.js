@@ -7,7 +7,7 @@
 
 (function (root, factory){
     'use strict';
-    
+
     var PubSub = {};
     root.PubSub = PubSub;
     factory(PubSub);
@@ -24,7 +24,7 @@
     else if (typeof define === 'function' && define.amd){
         define(function() { return PubSub; });
         /* eslint-enable no-undef */
-    } 
+    }
 
 }(( typeof window === 'object' && window ) || this, function (PubSub){
     'use strict';
@@ -37,7 +37,7 @@
         var key;
 
         for (key in obj){
-            if ( obj.hasOwnProperty(key) ){
+            if ( Object.prototype.hasOwnProperty.call(obj, key) ){
                 return true;
             }
         }
@@ -73,12 +73,12 @@
             callSubscriber = immediateExceptions ? callSubscriberWithImmediateExceptions : callSubscriberWithDelayedExceptions,
             s;
 
-        if ( !messages.hasOwnProperty( matchedMessage ) ) {
+        if ( !Object.prototype.hasOwnProperty.call( messages, matchedMessage ) ) {
             return;
         }
 
         for (s in subscribers){
-            if ( subscribers.hasOwnProperty(s)){
+            if ( Object.prototype.hasOwnProperty.call(subscribers, s)){
                 callSubscriber( subscribers[s], originalMessage, data );
             }
         }
@@ -105,7 +105,7 @@
 
     function hasDirectSubscribersFor( message ) {
         var topic = String( message ),
-            found = Boolean(messages.hasOwnProperty( topic ) && hasKeys(messages[topic]));
+            found = Boolean(Object.prototype.hasOwnProperty.call( messages, topic ) && hasKeys(messages[topic]));
 
         return found;
     }
@@ -182,7 +182,7 @@
         message = (typeof message === 'symbol') ? message.toString() : message;
 
         // message is not registered yet
-        if ( !messages.hasOwnProperty( message ) ){
+        if ( !Object.prototype.hasOwnProperty.call( messages, message ) ){
             messages[message] = {};
         }
 
@@ -190,7 +190,7 @@
         // and allow for easy use as key names for the 'messages' object
         var token = 'uid_' + String(++lastUid);
         messages[message][token] = func;
-        
+
         // return token for unsubscribing
         return token;
     };
@@ -236,13 +236,13 @@
     PubSub.clearSubscriptions = function clearSubscriptions(topic){
         var m;
         for (m in messages){
-            if (messages.hasOwnProperty(m) && m.indexOf(topic) === 0){
+            if (Object.prototype.hasOwnProperty.call(messages, m) && m.indexOf(topic) === 0){
                 delete messages[m];
             }
         }
     };
 
-    /** 
+    /**
        Count subscriptions by the topic
      * @function
      * @public
@@ -253,15 +253,15 @@
         var m;
         var count = 0;
         for (m in messages){
-            if (messages.hasOwnProperty(m) && m.indexOf(topic) === 0){
+            if (Object.prototype.hasOwnProperty.call(messages, m) && m.indexOf(topic) === 0){
                 count++;
             }
         }
         return count;
     };
 
-    
-    /** 
+
+    /**
        Gets subscriptions by the topic
      * @function
      * @public
@@ -271,7 +271,7 @@
         var m;
         var list = [];
         for (m in messages){
-            if (messages.hasOwnProperty(m) && m.indexOf(topic) === 0){
+            if (Object.prototype.hasOwnProperty.call(messages, m) && m.indexOf(topic) === 0){
                 list.push(m);
             }
         }
@@ -302,7 +302,7 @@
         var descendantTopicExists = function(topic) {
                 var m;
                 for ( m in messages ){
-                    if ( messages.hasOwnProperty(m) && m.indexOf(topic) === 0 ){
+                    if ( Object.prototype.hasOwnProperty.call(messages, m) && m.indexOf(topic) === 0 ){
                         // a descendant of the topic exists:
                         return true;
                     }
@@ -310,7 +310,7 @@
 
                 return false;
             },
-            isTopic    = typeof value === 'string' && ( messages.hasOwnProperty(value) || descendantTopicExists(value) ),
+            isTopic    = typeof value === 'string' && ( Object.prototype.hasOwnProperty.call(messages, value) || descendantTopicExists(value) ),
             isToken    = !isTopic && typeof value === 'string',
             isFunction = typeof value === 'function',
             result = false,
@@ -322,7 +322,7 @@
         }
 
         for ( m in messages ){
-            if ( messages.hasOwnProperty( m ) ){
+            if ( Object.prototype.hasOwnProperty.call( messages, m ) ){
                 message = messages[m];
 
                 if ( isToken && message[value] ){
@@ -334,7 +334,7 @@
 
                 if (isFunction) {
                     for ( t in message ){
-                        if (message.hasOwnProperty(t) && message[t] === value){
+                        if (Object.prototype.hasOwnProperty.call(message, t) && message[t] === value){
                             delete message[t];
                             result = true;
                         }
