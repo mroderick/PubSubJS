@@ -1,5 +1,12 @@
 # Changes
 
+## 1.9.2
+
+- [`83648dd`](https://github.com/mroderick/PubSubJS/commit/83648dd9e48762a8058904debe1b653850bbcf5c)
+  fix #115 don't directly use hasOwnProperty (jianghaoran)
+
+_Released on 2020-12-14._
+
 ## 1.9.1
 
 - [`ead7906`](https://github.com/mroderick/PubSubJS/commit/ead79069b79df8c4f7d3324047cdb3b9d4c33571)
