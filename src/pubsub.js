@@ -251,10 +251,15 @@
     */
     PubSub.countSubscriptions = function countSubscriptions(topic){
         var m;
+        // eslint-disable-next-line no-unused-vars
+        var token;
         var count = 0;
-        for (m in messages){
-            if (Object.prototype.hasOwnProperty.call(messages, m) && m.indexOf(topic) === 0){
-                count++;
+        for (m in messages) {
+            if (Object.prototype.hasOwnProperty.call(messages, m) && m.indexOf(topic) === 0) {
+                for (token in messages[m]) {
+                    count++;
+                }
+                break;
             }
         }
         return count;
