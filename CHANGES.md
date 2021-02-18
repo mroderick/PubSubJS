@@ -1,5 +1,16 @@
 # Changes
 
+## 1.9.3
+
+- [`a810919`](https://github.com/mroderick/PubSubJS/commit/a81091962dd4836da9da6dcf7aafeca4aeb9f815)
+  Fix countSubscriptions
+    >
+    > This was introduced in ad93491c760ebc0429a7e9072b2747b2c2ce0a0a, but had
+    > a bug that was not covered by unit tests.
+    >
+
+_Released on 2021-02-18._
+
 ## 1.9.2
 
 - [`83648dd`](https://github.com/mroderick/PubSubJS/commit/83648dd9e48762a8058904debe1b653850bbcf5c)
