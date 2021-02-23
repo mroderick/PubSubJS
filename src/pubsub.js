@@ -271,13 +271,18 @@
      * @function
      * @public
      * @alias getSubscriptions
+     * @return { Array }
     */
     PubSub.getSubscriptions = function getSubscriptions(topic){
         var m;
+        var token;
         var list = [];
         for (m in messages){
-            if (Object.prototype.hasOwnProperty.call(messages, m) && m.indexOf(topic) === 0){
-                list.push(m);
+            if (Object.prototype.hasOwnProperty.call(messages, m) && m.indexOf(topic) === 0) {
+                for (token in messages[m]) {
+                    list.push(messages[m][token]);
+                }
+                break;
             }
         }
         return list;
