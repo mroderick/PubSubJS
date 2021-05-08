@@ -203,7 +203,8 @@
         var deliver = createDeliveryFunction(
                 message,
                 data,
-                immediateExceptions
+                immediateExceptions,
+                mode === "await"
             ),
             hasSubscribers = messageHasSubscribers(message);
 
