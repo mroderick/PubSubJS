@@ -261,7 +261,7 @@
      * Publishes the message synchronously, passing the data to it's subscribers, but
      * returning a promise that resolves after all subscribers are called
      * @function
-     * @alias publishSync
+     * @alias publishAwait
      * @param { String } message The message to publish
      * @param {} data The data to pass to subscribers
      * @return { Promise<Boolean> }
