@@ -4,7 +4,8 @@ var PubSub = require("../src/pubsub"),
     TestHelper = require("../test/helper"),
     assert = require("referee").assert,
     refute = require("referee").refute,
-    sinon = require("sinon");
+    sinon = require("sinon"),
+    timer = require("timer");
 
 describe("publish method", function () {
     it("should return false if there are no subscribers", function () {
@@ -116,13 +117,23 @@ describe("publish method", function () {
     it("publishAwait should return promise and execute in it", function (done) {
         var message = TestHelper.getUniqueString(),
             spy = sinon.spy(),
-            data = TestHelper.getUniqueString();
+            callback = sinon.spy(async () => {
+                clock.setTimeout(spy, 1000);
+            }),
+            data = TestHelper.getUniqueString(),
+            clock = sinon.useFakeTimers();
 
-        PubSub.subscribe(message, spy);
-        PubSub.publishAwait(message, data).then(() => {
-            assert.equals(spy.callCount, 1);
-            done();
-        });
+        PubSub.subscribe(message, callback);
+        PubSub.publishAwait(message, data).then(() => {});
+
+        assert.equals(callback.callCount, 1);
+        assert.equals(spy.callCount, 0);
+
+        clock.tick(1000);
+
+        assert.equals(spy.callCount, 1);
+
+        done();
     });
 
     it("should call all subscribers, even if there are exceptions", function (done) {

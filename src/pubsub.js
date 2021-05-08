@@ -59,14 +59,14 @@
 
     function callSubscriberWithDelayedExceptions(subscriber, message, data) {
         try {
-            subscriber(message, data);
+            return subscriber(message, data);
         } catch (ex) {
             setTimeout(throwException(ex), 0);
         }
     }
 
     function callSubscriberWithImmediateExceptions(subscriber, message, data) {
-        subscriber(message, data);
+        return subscriber(message, data);
     }
 
     function deliverMessage(
