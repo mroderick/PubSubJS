@@ -114,26 +114,24 @@ describe("publish method", function () {
         assert.equals(spy.callCount, 1);
     });
 
-    it("publishAwait should return promise and execute in it", function (done) {
+    it("publishAwait should return promise and execute in it", async () => {
         var message = TestHelper.getUniqueString(),
             spy = sinon.spy(),
             callback = sinon.spy(async () => {
-                clock.setTimeout(spy, 1000);
+                await new Promise((resolve) => {
+                    spy();
+                    resolve();
+                });
             }),
             data = TestHelper.getUniqueString(),
             clock = sinon.useFakeTimers();
 
         PubSub.subscribe(message, callback);
-        PubSub.publishAwait(message, data).then(() => {});
+
+        await PubSub.publishAwait(message, data);
 
         assert.equals(callback.callCount, 1);
-        assert.equals(spy.callCount, 0);
-
-        clock.tick(1000);
-
         assert.equals(spy.callCount, 1);
-
-        done();
     });
 
     it("should call all subscribers, even if there are exceptions", function (done) {

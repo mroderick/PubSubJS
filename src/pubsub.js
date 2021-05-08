@@ -87,7 +87,7 @@
         }
 
         if (asyncAwait) {
-            return new Promise(async () => {
+            return new Promise(async (resolve) => {
                 for (s in subscribers) {
                     if (Object.prototype.hasOwnProperty.call(subscribers, s)) {
                         await callSubscriber(
@@ -124,7 +124,8 @@
                     message,
                     message,
                     data,
-                    immediateExceptions
+                    immediateExceptions,
+                    true
                 );
 
                 // trim the hierarchy and deliver message to each level
@@ -135,7 +136,8 @@
                         message,
                         topic,
                         data,
-                        immediateExceptions
+                        immediateExceptions,
+                        true
                     );
                 }
 
@@ -143,7 +145,8 @@
                     message,
                     ALL_SUBSCRIBING_MSG,
                     data,
-                    immediateExceptions
+                    immediateExceptions,
+                    true
                 );
             };
         }
