@@ -5,7 +5,7 @@
  * https://github.com/mroderick/PubSubJS
  */
 
-(function (root, factory) {
+ (function (root, factory) {
     "use strict";
 
     var PubSub = {};
@@ -87,14 +87,14 @@
         }
 
         if (asyncAwait) {
-            return new Promise(async (resolve) => {
+            return new Promise(async (resolve, reject) => {
                 for (s in subscribers) {
                     if (Object.prototype.hasOwnProperty.call(subscribers, s)) {
                         await callSubscriber(
                             subscribers[s],
                             originalMessage,
                             data
-                        );
+                        )?.catch(reject);
                     }
                 }
                 resolve();
@@ -228,10 +228,9 @@
         }
 
         if (mode === "await") {
-            return new Promise(async (resolve) => {
-                await deliver();
-                resolve(true);
-            });
+            return new Promise(async (resolve, reject) => 
+                deliver().then(() => resolve(true))?.catch(reject)
+            );
         }
 
         return true;
