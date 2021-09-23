@@ -125,8 +125,6 @@
     }
 
     function publish( message, data, sync, immediateExceptions ){
-        message = (typeof message === 'symbol') ? message.toString() : message;
-
         var deliver = createDeliveryFunction( message, data, immediateExceptions ),
             hasSubscribers = messageHasSubscribers( message );
 
@@ -178,8 +176,6 @@
         if ( typeof func !== 'function'){
             return false;
         }
-
-        message = (typeof message === 'symbol') ? message.toString() : message;
 
         // message is not registered yet
         if ( !Object.prototype.hasOwnProperty.call( messages, message ) ){
