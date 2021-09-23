@@ -144,7 +144,7 @@
      * Publishes the message, passing the data to it's subscribers
      * @function
      * @alias publish
-     * @param { String } message The message to publish
+     * @param { String | Symbol } message The message to publish
      * @param {} data The data to pass to subscribers
      * @return { Boolean }
      */
@@ -156,7 +156,7 @@
      * Publishes the message synchronously, passing the data to it's subscribers
      * @function
      * @alias publishSync
-     * @param { String } message The message to publish
+     * @param { String | Symbol } message The message to publish
      * @param {} data The data to pass to subscribers
      * @return { Boolean }
      */
@@ -168,7 +168,7 @@
      * Subscribes the passed function to the passed message. Every returned token is unique and should be stored if you need to unsubscribe
      * @function
      * @alias subscribe
-     * @param { String } message The message to subscribe to
+     * @param { String | Symbol } message The message to subscribe to
      * @param { Function } func The function to call when a new message is published
      * @return { String }
      */
@@ -199,7 +199,7 @@
      * Subscribes the passed function to the passed message once
      * @function
      * @alias subscribeOnce
-     * @param { String } message The message to subscribe to
+     * @param { String | Symbol } message The message to subscribe to
      * @param { Function } func The function to call when a new message is published
      * @return { PubSub }
      */
