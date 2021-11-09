@@ -39,7 +39,7 @@ PubSubJS is designed to be used within a **single process**, and is not a good c
 There are several ways of getting PubSubJS
 
 * Install via npm (`npm install pubsub-js`)
-* Use it directly from a CDN directly
+* Use it directly from a CDN
     - http://www.jsdelivr.com/#!pubsubjs
     - https://cdnjs.com/libraries/pubsub-js
     - https://unpkg.com/pubsub-js
