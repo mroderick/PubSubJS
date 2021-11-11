@@ -9,8 +9,14 @@
     'use strict';
 
     var PubSub = {};
-    root.PubSub = PubSub;
-    factory(PubSub);
+
+    if (root.PubSub) {
+        PubSub = root.PubSub;
+        console.warn("PubSub already loaded, using existing version");
+    } else {
+        root.PubSub = PubSub;
+        factory(PubSub);
+    }
     // CommonJS and Node.js module support
     if (typeof exports === 'object'){
         if (module !== undefined && module.exports) {
