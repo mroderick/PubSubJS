@@ -1,5 +1,14 @@
 # Changes
 
+## 1.9.4
+
+- [`ae3284d`](https://github.com/mroderick/PubSubJS/commit/ae3284d46054b189e143b405e1bfc6c09643bf77)
+  Use existing root.pubSub when present (#213) (abishek-srinivasan)
+    >
+    > This means that loading `pubsub-js` more than once in the same environment will work as the author expects. A warning will be output on the console to make the developer aware of the duplication.
+
+_Released on 2021-11-11._
+
 ## 1.9.3
 
 - [`a810919`](https://github.com/mroderick/PubSubJS/commit/a81091962dd4836da9da6dcf7aafeca4aeb9f815)
