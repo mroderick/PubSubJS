@@ -9,11 +9,11 @@
     'use strict';
 
     var PubSub = {};
-    /* If PubSub event is passed from another app, then root.PubSub will already be present and we can assign that to PubSub variable.
-    If root.PubSub is not present, then we can apply the empty object(var PubSub = {}) to root.PubSub */
+
     if (root.PubSub) {
-        PubSub = root.PubSub
-    } else{
+        PubSub = root.PubSub;
+        console.warn("PubSub already loaded, using existing version");
+    } else {
         root.PubSub = PubSub;
         factory(PubSub);
     }
