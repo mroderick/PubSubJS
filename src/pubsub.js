@@ -9,8 +9,14 @@
     'use strict';
 
     var PubSub = {};
-    root.PubSub = PubSub;
-    factory(PubSub);
+    /* If PubSub event is passed from another app, then root.PubSub will already be present and we can assign that to PubSub variable.
+    If root.PubSub is not present, then we can apply the empty object(var PubSub = {}) to root.PubSub */
+    if (root.PubSub) {
+        PubSub = root.PubSub
+    } else{
+        root.PubSub = PubSub;
+        factory(PubSub);
+    }
     // CommonJS and Node.js module support
     if (typeof exports === 'object'){
         if (module !== undefined && module.exports) {
