@@ -118,8 +118,8 @@ PubSub.subscribe('a.b', myFunc2);
 PubSub.subscribe('a.b.c', myFunc3);
 
 PubSub.unsubscribe('a.b');
-// no further notifications for 'a.b' and 'a.b.c' topics
-// notifications for 'a' will still get published
+// no further notifications for 'a.b' topic
+// notifications for 'a' and 'a.b.c' will still get published
 ```
 
 ### Clear all subscriptions
