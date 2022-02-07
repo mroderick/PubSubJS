@@ -41,5 +41,8 @@
     "nyc": "15.0.0",
     "referee": "^1.2.0",
     "sinon": "9.0.0"
+  },
+  "dependencies": {
+    "@types/pubsub-js": "^1.8.3"
   }
 }
