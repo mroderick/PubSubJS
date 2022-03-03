@@ -40,7 +40,7 @@ There are several ways of getting PubSubJS
 
 * Install via npm (`npm install pubsub-js`)
 * Use it directly from a CDN
-    - http://www.jsdelivr.com/#!pubsubjs
+    - https://www.jsdelivr.com/package/npm/pubsub-js
     - https://cdnjs.com/libraries/pubsub-js
     - https://unpkg.com/pubsub-js
 * [Download a tagged version](https://github.com/mroderick/PubSubJS/tags) from GitHub
