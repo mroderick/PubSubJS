@@ -12,7 +12,10 @@
 
     if (root.PubSub) {
         PubSub = root.PubSub;
-        console.warn("PubSub already loaded, using existing version");
+        
+        if(process && process.env && process.env.NODE_ENV !== 'production'){
+            console.warn('PubSub already loaded, using existing version');
+        }
     } else {
         root.PubSub = PubSub;
         factory(PubSub);
