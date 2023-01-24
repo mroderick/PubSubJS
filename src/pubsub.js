@@ -12,7 +12,9 @@
 
     if (root.PubSub) {
         PubSub = root.PubSub;
-        console.warn("PubSub already loaded, using existing version");
+        if (!process.env.PUBSUBJS_DISABLE_EXISTING_VERSION_WARNING) {
+            console.warn("PubSub already loaded, using existing version");
+        }
     } else {
         root.PubSub = PubSub;
         factory(PubSub);
