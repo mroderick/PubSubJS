@@ -4,10 +4,7 @@
   </p>
 
   <p>
-    <a href="https://travis-ci.org/mroderick/PubSubJS"><img src="https://img.shields.io/travis/mroderick/PubSubJS.svg?style=flat-square" alt="Travis build status" title="Travis build status" /></a><!--
-    --><a href="https://david-dm.org/mroderick/PubSubJS"><img src="https://img.shields.io/david/mroderick/pubsubjs.svg?style=flat-square" alt="Dependencies" title="Powered by David" /></a><!--
-    --><a href="https://david-dm.org/mroderick/PubSubJS#info=devDependencies&view=table"><img src="https://img.shields.io/david/dev/mroderick/pubsubjs.svg?style=flat-square" alt="DevDependencies" title="Powered by David" /></a><!--
-    --><a href="https://www.npmjs.com/package/pubsub-js"><img src="https://img.shields.io/npm/v/pubsub-js.svg?style=flat-square" alt="NPM version" title="Click to go to NPM" /></a><!--
+    <a href="https://www.npmjs.com/package/pubsub-js"><img src="https://img.shields.io/npm/v/pubsub-js.svg?style=flat-square" alt="NPM version" title="Click to go to NPM" /></a><!--
     --><a href="https://github.com/mroderick/PubSubJS/blob/master/LICENSE.md"><img src="https://img.shields.io/npm/l/pubsub-js.svg?style=flat-square" alt="MIT License" title="License" /></a><!--
     --><a href="https://www.npmjs.com/package/pubsub-js"><img src="https://img.shields.io/npm/dm/pubsub-js.svg?style=flat-square" alt="NPM downloads/month" title="Click to go to NPM" /></a><!--
     --><a href="https://coveralls.io/github/mroderick/PubSubJS"><img src="https://img.shields.io/coveralls/github/mroderick/PubSubJS.svg?style=flat-square" alt="Coverage Status" title="View Coverage"/></a>
