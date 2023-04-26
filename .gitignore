@@ -10,3 +10,6 @@ jquery.pubsub.js
 coverage
 # yarn lock file
 yarn.lock
+# ide default config file
+.idea
+.vscode
