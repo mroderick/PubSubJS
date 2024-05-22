@@ -32,7 +32,7 @@
         /* eslint-enable no-undef */
     }
 
-}(( typeof window === 'object' && window ) || this, function (PubSub){
+}(( typeof window === 'object' && window ) || this || global, function (PubSub){
     'use strict';
 
     var messages = {},
