@@ -1,5 +1,12 @@
 # Changes
 
+## 1.9.5
+
+- [`ea4d477`](https://github.com/mroderick/PubSubJS/commit/ea4d477c593b0832092105e6ab9d985ea3cf301f)
+  Add support for server side rendering (Artur Kudeł)
+
+_Released on 2024-10-28._
+
 ## 1.9.4
 
 - [`ae3284d`](https://github.com/mroderick/PubSubJS/commit/ae3284d46054b189e143b405e1bfc6c09643bf77)
