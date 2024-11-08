@@ -18,4 +18,19 @@ describe( 'subscribe and publish', function() {
         
         assert( PubSub.publish( MESSAGE ), true );
     });
+    it("should call func1 only once", function () {
+        var MESSAGE1 = Symbol("MESSAGE");
+        var MESSAGE2 = Symbol("MESSAGE");
+        var count = 0;
+        var func1 = function (msg) {
+            count++;
+            assert(count === 1, true);
+            return undefined;
+        };
+
+        PubSub.subscribe(MESSAGE1, func1);
+
+        PubSub.publish(MESSAGE1);
+        PubSub.publish(MESSAGE2);
+    });
 });
