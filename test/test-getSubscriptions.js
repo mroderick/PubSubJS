@@ -17,4 +17,17 @@ describe('getSubscriptions method', function () {
         assert.equals(subscriptions,1);
     });
 
+    it('should return all subscriptions', function() {
+        var topic = TestHelper.getUniqueString(),
+            spy1 = sinon.spy(),
+            spy2 = sinon.spy();
+
+        PubSub.subscribe(topic, spy1);
+        PubSub.subscribe(topic, spy2);
+
+        var subscriptions = PubSub.getSubscriptions(topic);
+        assert.equals(subscriptions[0], spy1);
+        assert.equals(subscriptions[1], spy2);
+    });
+
 });
