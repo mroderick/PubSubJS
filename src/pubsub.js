@@ -50,6 +50,11 @@
         return false;
     }
 
+    function isTopicOrDescendant(message, topic){
+        topic = String(topic);
+        return message === topic || message.indexOf(topic + '.') === 0;
+    }
+
     /**
      * Returns a function that throws the passed exception, for use as argument for setTimeout
      * @alias throwException
@@ -233,7 +238,7 @@
     };
 
     /**
-     * Clear subscriptions by the topic
+     * Clear subscriptions for a topic and its dot-separated descendants
      * @function
      * @public
      * @alias clearAllSubscriptions
@@ -242,7 +247,7 @@
     PubSub.clearSubscriptions = function clearSubscriptions(topic){
         var m;
         for (m in messages){
-            if (Object.prototype.hasOwnProperty.call(messages, m) && m.indexOf(topic) === 0){
+            if (Object.prototype.hasOwnProperty.call(messages, m) && isTopicOrDescendant(m, topic)){
                 delete messages[m];
             }
         }
@@ -313,7 +318,7 @@
         var descendantTopicExists = function(topic) {
                 var m;
                 for ( m in messages ){
-                    if ( Object.prototype.hasOwnProperty.call(messages, m) && m.indexOf(topic) === 0 ){
+                    if ( Object.prototype.hasOwnProperty.call(messages, m) && isTopicOrDescendant(m, topic) ){
                         // a descendant of the topic exists:
                         return true;
                     }
